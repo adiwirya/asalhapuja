@@ -17,6 +17,7 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.0.3
   hive: ^2.2.3
+  image_gallery_saver: ^1.7.1
   image_picker: ^0.8.6+1
   intl: ^0.18.0
   json_annotation: ^4.8.0
