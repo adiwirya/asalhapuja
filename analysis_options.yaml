@@ -1,0 +1,12 @@
+# include: package:flutter_lints/flutter.yaml
+
+include: package:very_good_analysis/analysis_options.yaml
+
+linter:
+  rules:
+     public_member_api_docs: false
+     sort_constructors_first: false
+     directives_ordering: false
+     type_annotate_public_apis: false
+     prefer_typing_uninitialized_variables: false
+      
