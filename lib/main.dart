@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:patrol/routes/app_pages.dart';
-import 'package:patrol/routes/app_routes.dart';
+import 'package:asalhapuja/routes/app_pages.dart';
+import 'package:asalhapuja/routes/app_routes.dart';
 
 void main() async {
   var initialRoute = await Routes.initialRoute;
