@@ -13,5 +13,15 @@ class Nav {
       page: () => const HomeScreen(),
       binding: HomeControllerBinding(),
     ),
+    GetPage(
+      name: Routes.form,
+      page: () => const FormScreen(),
+      binding: FormControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.login,
+      page: () => const LoginScreen(),
+      binding: LoginControllerBinding(),
+    ),
   ];
 }

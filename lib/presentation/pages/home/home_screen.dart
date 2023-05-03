@@ -1,9 +1,6 @@
-import 'package:asalhapuja/data/utils/camera.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
-import 'controllers/home_controller.dart';
+import 'package:asalhapuja/presentation/pages/home/controllers/home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,10 +12,7 @@ class HomeScreen extends GetView<HomeController> {
         centerTitle: true,
       ),
       body: const Center(
-        child: ElevatedButton(
-          onPressed: saveImage,
-          child: Text('Camera'),
-        ),
+        child: Text('HomeScreen is working'),
       ),
     );
   }
