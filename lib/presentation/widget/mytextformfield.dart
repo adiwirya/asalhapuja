@@ -1,3 +1,4 @@
+import 'package:asalhapuja/data/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:asalhapuja/data/utils/utils.dart';
 
@@ -40,12 +41,12 @@ class MyTextFormField extends StatelessWidget {
             Radius.circular(10),
           ),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
             Radius.circular(8),
           ),
           borderSide: BorderSide(
-            color: Colors.blue,
+            color: ThemeColors.gray.shade100,
           ),
         ),
         hintText: hintText,

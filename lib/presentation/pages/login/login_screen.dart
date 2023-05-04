@@ -11,13 +11,21 @@ class LoginScreen extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text(Const.login),
+          backgroundColor: Colors.white,
+          title: const Text(
+            Const.login,
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              // Image.asset(),
+              Image.asset(
+                Assets.assetsDC,
+              ),
               const SizedBox(height: 16),
               MyTextFormField(
                 controller: controller.email,
@@ -41,9 +49,10 @@ class LoginScreen extends GetView<LoginController> {
                 ),
               ),
               const SizedBox(height: 16),
-              ElevatedButton(
+              MyButton(
+                theme: buttonGreen,
                 onPressed: controller.login,
-                child: const Text(Const.login),
+                text: Const.login,
               ),
             ],
           ),

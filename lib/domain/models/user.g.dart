@@ -10,12 +10,12 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       nik: json['nik'] as String,
       nama: json['nama'] as String,
       password: json['password'] as String,
-      quota: json['quota'] as String,
+      regions: Region.fromJson(json['regions'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'nik': instance.nik,
       'nama': instance.nama,
       'password': instance.password,
-      'quota': instance.quota,
+      'regions': instance.regions,
     };

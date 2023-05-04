@@ -7,13 +7,13 @@ import 'package:asalhapuja/routes/app_routes.dart';
 import 'package:asalhapuja/data/utils/theme.dart';
 
 void main() async {
-  var initialRoute = await Routes.initialRoute;
+  final initialRoute = await Routes.initialRoute;
   runApp(Main(initialRoute));
 }
 
 class Main extends StatelessWidget {
   final String initialRoute;
-  Main(this.initialRoute);
+  const Main(this.initialRoute, {super.key});
 
   @override
   Widget build(BuildContext context) {

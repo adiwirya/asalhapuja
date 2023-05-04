@@ -1,3 +1,4 @@
+import 'package:asalhapuja/domain/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'user.g.dart';
 
@@ -6,13 +7,13 @@ class User {
   String nik;
   String nama;
   String password;
-  String quota;
+  Region regions;
 
   User({
     required this.nik,
     required this.nama,
     required this.password,
-    required this.quota,
+    required this.regions,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
