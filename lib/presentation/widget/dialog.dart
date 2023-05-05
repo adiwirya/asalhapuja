@@ -110,7 +110,7 @@ class LoadingDialog extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    // Lottie.asset(Assets.assetsLottieLoading),
+                    Lottie.asset(Assets.assetsLottieLoading),
                     const SizedBox(height: 15),
                   ],
                 ),

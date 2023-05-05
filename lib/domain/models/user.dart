@@ -7,7 +7,7 @@ class User {
   String nik;
   String nama;
   String password;
-  Region regions;
+  List<Region> regions;
 
   User({
     required this.nik,

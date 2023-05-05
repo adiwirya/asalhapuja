@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:asalhapuja/data/utils/colors.dart';
 
 ThemeData asalha = ThemeData(
   useMaterial3: true,
-  fontFamily: GoogleFonts.openSans().fontFamily,
   textTheme: TextTheme(
     bodyLarge: TextStyle(color: ThemeColors.gray.shade900, fontSize: 16),
     bodyMedium: TextStyle(color: ThemeColors.gray.shade900, fontSize: 12),
@@ -24,12 +21,12 @@ ThemeData asalha = ThemeData(
     titleSmall: TextStyle(color: ThemeColors.gray.shade900),
   ),
   colorScheme: ColorScheme.fromSwatch(
-    primarySwatch: Colors.blue,
+    primarySwatch: ThemeColors.warning,
     backgroundColor: Colors.white,
     errorColor: ThemeColors.error,
   ),
   appBarTheme: const AppBarTheme(
-    color: Colors.blue,
+    color: ThemeColors.warning,
     iconTheme: IconThemeData(
       color: Colors.white,
     ),
@@ -78,6 +75,20 @@ ElevatedButtonThemeData buttonGreen = ElevatedButtonThemeData(
     minimumSize: const Size.fromHeight(50),
     foregroundColor: Colors.white,
     backgroundColor: ThemeColors.success.shade500,
+    textStyle: const TextStyle(fontWeight: FontWeight.w500),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    disabledBackgroundColor: ThemeColors.gray.shade200,
+    disabledForegroundColor: Colors.white,
+  ),
+);
+
+ElevatedButtonThemeData buttonYellow = ElevatedButtonThemeData(
+  style: ElevatedButton.styleFrom(
+    minimumSize: const Size.fromHeight(50),
+    foregroundColor: Colors.white,
+    backgroundColor: ThemeColors.warning.shade500,
     textStyle: const TextStyle(fontWeight: FontWeight.w500),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),

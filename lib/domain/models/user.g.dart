@@ -10,7 +10,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       nik: json['nik'] as String,
       nama: json['nama'] as String,
       password: json['password'] as String,
-      regions: Region.fromJson(json['regions'] as Map<String, dynamic>),
+      regions: (json['regions'] as List<dynamic>)
+          .map((e) => Region.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{

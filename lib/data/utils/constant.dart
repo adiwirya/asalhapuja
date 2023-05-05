@@ -7,6 +7,6 @@ class Const {
   static const String appName = 'Asalha Puja';
   static const String appVersion = '1.0.0';
   static const String password = 'Password';
-  static const String email = 'Email';
+  static const String nik = 'Nik';
   static const String login = 'Login';
 }
