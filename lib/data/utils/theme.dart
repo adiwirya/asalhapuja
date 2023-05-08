@@ -47,15 +47,6 @@ CardTheme cardGrey = CardTheme(
   ),
 );
 
-CardTheme cardOrange = CardTheme(
-  elevation: 5,
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(10),
-  ),
-  color: Colors.blue.shade50,
-  surfaceTintColor: Colors.blue.shade50,
-);
-
 CardTheme cardWhiteBorder = CardTheme(
   shadowColor: Colors.white,
   elevation: 0,
@@ -63,10 +54,6 @@ CardTheme cardWhiteBorder = CardTheme(
   surfaceTintColor: Colors.white,
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(10),
-    side: BorderSide(
-      color: Colors.blue.shade100,
-      width: 2,
-    ),
   ),
 );
 
@@ -88,7 +75,7 @@ ElevatedButtonThemeData buttonYellow = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
     minimumSize: const Size.fromHeight(50),
     foregroundColor: Colors.white,
-    backgroundColor: ThemeColors.warning.shade500,
+    backgroundColor: ThemeColors.warning.shade600,
     textStyle: const TextStyle(fontWeight: FontWeight.w500),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
@@ -129,6 +116,10 @@ ElevatedButtonThemeData buttonWhiteRedBorder = ElevatedButtonThemeData(
   ),
 );
 
+TextStyle fs14fw600 = const TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
+);
 TextStyle fs14fw600Red = const TextStyle(
   color: ThemeColors.error,
   fontSize: 14,
@@ -139,14 +130,15 @@ TextStyle fs14fw600Green = const TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w600,
 );
-TextStyle fs14fw600 = const TextStyle(
-  fontSize: 14,
+TextStyle fs16fw600 = const TextStyle(
+  fontSize: 16,
   fontWeight: FontWeight.w600,
 );
 
-TextStyle fs12gray = const TextStyle(
-  fontSize: 12,
-  color: ThemeColors.gray,
+TextStyle fs10gray = const TextStyle(
+  fontSize: 10,
+  color: Color.fromRGBO(185, 189, 199, 1),
+  fontWeight: FontWeight.w400,
 );
 
 TextStyle fs12orange = const TextStyle(

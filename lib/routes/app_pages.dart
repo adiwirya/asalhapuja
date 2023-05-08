@@ -1,3 +1,4 @@
+import 'package:asalhapuja/presentation/pages/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -22,6 +23,11 @@ class Nav {
       name: Routes.login,
       page: () => const LoginScreen(),
       binding: LoginControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.splash,
+      page: () => const SplashScreen(),
+      binding: SplashControllerBinding(),
     ),
   ];
 }

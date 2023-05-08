@@ -16,7 +16,7 @@ class LoginController extends GetxController {
       ),
     ),
   );
-  final formKey = GlobalKey<FormState>();
+  final loginKey = GlobalKey<FormState>();
   TextEditingController nik = TextEditingController();
   TextEditingController password = TextEditingController();
   RxBool obscureText = true.obs;
@@ -24,42 +24,54 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    session();
     password.text = 'AsalHapujaF2023';
     nik.text = '0000000000000001';
   }
 
-  void session() async {
-    if (gs.read('User') != null) {
-      Get.offNamed(Routes.home);
-    }
-  }
-
   Future<void> ceklogin() async {
     try {
-      if (!formKey.currentState!.validate()) {
+      if (!loginKey.currentState!.validate()) {
         return;
       }
-      // Get.dialog(LoadingDialog());
-      final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult == ConnectivityResult.none) {
-        // Get.back();
-        Snackbar().error('Tidak ada koneksi internet');
-        return;
-      }
-      var data = {
-        'nik': nik.text,
-        'password': password.text,
-      };
-      var res = await client.login(data);
-      if (res.message == 'Success Login') {
-        User user = User.fromJson(res.data as Map<String, dynamic>);
-        await gs.write('User', user);
-        Get.offNamed(Routes.home);
+      Get.dialog(LoadingDialog());
+      if (gs.read('User') != null) {
+        print('offline');
+        User user = User.fromJson(gs.read('User') as Map<String, dynamic>);
+        User input = User(
+          nik: nik.text,
+          password: password.text,
+        );
+        if (user.nik == input.nik && user.password == input.password) {
+          await gs.write('IsLogin', 1);
+          Get.offNamed(Routes.home);
+        } else {
+          // Get.back();
+          Snackbar().error('NIK atau Password Salah');
+          return;
+        }
       } else {
-        // Get.back();
-        Snackbar().error('NIK atau Password Salah');
-        return;
+        print('online');
+        final connectivityResult = await Connectivity().checkConnectivity();
+        if (connectivityResult == ConnectivityResult.none) {
+          // Get.back();
+          Snackbar().error('Tidak ada koneksi internet');
+          return;
+        }
+        var data = {
+          'nik': nik.text,
+          'password': password.text,
+        };
+        var res = await client.login(data);
+        if (res.message == 'Success Login') {
+          User user = User.fromJson(res.data as Map<String, dynamic>);
+          await gs.write('User', user);
+          await gs.write('IsLogin', 1);
+          Get.offNamed(Routes.home);
+        } else {
+          // Get.back();
+          Snackbar().error('NIK atau Password Salah');
+          return;
+        }
       }
     } on DioError catch (e) {
       // Get.back();

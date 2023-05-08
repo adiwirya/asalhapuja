@@ -11,25 +11,22 @@ class LoginScreen extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Text(
-            Const.login,
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
-        ),
+        appBar: AppBar(),
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Form(
-            key: controller.formKey,
+            key: controller.loginKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const SizedBox(height: 16),
-                // Image.asset(Assets.assetsImagesLogo),
-                const SizedBox(height: 16),
+                const SizedBox(height: 40),
+                Center(
+                  child: Image.asset(
+                    Assets.assetsImagesLogo,
+                    height: 100,
+                  ),
+                ),
+                const SizedBox(height: 64),
                 const Text(Const.nik),
                 const SizedBox(height: 16),
                 MyTextFormField(
@@ -55,12 +52,13 @@ class LoginScreen extends GetView<LoginController> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 64),
                 MyButton(
-                  theme: buttonGreen,
+                  theme: buttonYellow,
                   onPressed: controller.ceklogin,
-                  text: Const.login,
+                  text: Const.masuk,
                 ),
+                const LogoVer(logo: false)
               ],
             ),
           ),

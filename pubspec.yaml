@@ -47,15 +47,15 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - assets/
+    - assets/images/
+    - assets/lottie/
+    - assets/images/logo.png
+
 flutter_icons:
   android: "launcher_icon"
   image_path: "assets/images/logo.png"
-
-assets:
-  - assets/
-  - assets/images/
-  - assets/lottie/
-  - assets/images/logo.png
 
 flutter_assets:
   assets_path: assets/

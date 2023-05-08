@@ -8,10 +8,10 @@ part of 'user.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
       nik: json['nik'] as String,
-      nama: json['nama'] as String,
       password: json['password'] as String,
-      regions: (json['regions'] as List<dynamic>)
-          .map((e) => Region.fromJson(e as Map<String, dynamic>))
+      nama: json['nama'] as String?,
+      regions: (json['regions'] as List<dynamic>?)
+          ?.map((e) => Region.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

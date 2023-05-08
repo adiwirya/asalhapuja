@@ -1,9 +1,12 @@
+import 'package:asalhapuja/presentation/pages/form/controllers/form_controller.dart';
+import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:lottie/lottie.dart';
 import 'package:asalhapuja/routes/app_routes.dart';
+import 'package:remixicon/remixicon.dart';
 
 class QuestionDialog extends StatelessWidget {
   const QuestionDialog({
@@ -112,6 +115,87 @@ class LoadingDialog extends StatelessWidget {
                     const SizedBox(height: 10),
                     Lottie.asset(Assets.assetsLottieLoading),
                     const SizedBox(height: 15),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SelectPic extends StatelessWidget {
+  const SelectPic({
+    required this.controller,
+    super.key,
+  });
+
+  final FormController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Material(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+                    Text(
+                      'Choose',
+                      style: fs16fw600,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(8),
+                          child: BoxCard(
+                            text: 'Kamera',
+                            assets: Assets.assetsImagesUserAdd,
+                            width: 100,
+                            height: 100,
+                            theme: cardWhiteBorder,
+                            onTap: controller.imageFromCamera,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8),
+                          child: BoxCard(
+                            text: 'Galeri',
+                            assets: Assets.assetsImagesUserAdd,
+                            width: 100,
+                            height: 100,
+                            theme: cardWhiteBorder,
+                            onTap: controller.imageFromGallery,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    TextButton(
+                      onPressed: () => Get.back(),
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

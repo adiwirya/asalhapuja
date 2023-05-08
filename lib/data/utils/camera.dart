@@ -12,17 +12,36 @@ void saveImage(XFile photo) async {
   log('res: $res');
 }
 
-Future getImage() async {
-  final picker = ImagePicker();
-  final photo = await picker.pickImage(
-    source: ImageSource.camera,
-    // maxHeight: 400,
-    // maxWidth: 400,
-    imageQuality: 25,
-  );
-  if (photo! == null) {
+Future getImageFromCamera() async {
+  try {
+    final picker = ImagePicker();
+    final photo = await picker.pickImage(
+      source: ImageSource.camera,
+      // maxHeight: 400,
+      // maxWidth: 400,
+      imageQuality: 25,
+    );
     return photo;
-  } else {
+  } catch (e) {
+    Get.snackbar(
+      'Error',
+      'No image selected',
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+}
+
+Future getImageFromgallery() async {
+  try {
+    final picker = ImagePicker();
+    final photo = await picker.pickImage(
+      source: ImageSource.gallery,
+      // maxHeight: 400,
+      // maxWidth: 400,
+      imageQuality: 25,
+    );
+    return photo;
+  } catch (e) {
     Get.snackbar(
       'Error',
       'No image selected',

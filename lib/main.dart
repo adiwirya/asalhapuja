@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'package:asalhapuja/routes/app_pages.dart';
 import 'package:asalhapuja/routes/app_routes.dart';
@@ -7,6 +8,7 @@ import 'package:asalhapuja/data/utils/theme.dart';
 
 void main() async {
   final initialRoute = await Routes.initialRoute;
+  await GetStorage.init();
   runApp(Main(initialRoute));
 }
 
