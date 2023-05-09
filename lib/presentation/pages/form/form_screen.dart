@@ -1,12 +1,9 @@
 import 'dart:io';
 
-import 'package:asalhapuja/data/utils/colors.dart';
-import 'package:asalhapuja/data/utils/theme.dart';
 import 'package:asalhapuja/data/utils/utils.dart';
-import 'package:asalhapuja/presentation/widget/mybutton.dart';
-import 'package:asalhapuja/presentation/widget/mydropdownsearch.dart';
-import 'package:asalhapuja/presentation/widget/mytextformfield.dart';
+import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:asalhapuja/presentation/pages/form/controllers/form_controller.dart';
 import 'package:remixicon/remixicon.dart';
@@ -34,9 +31,10 @@ class FormScreen extends GetView<FormController> {
                   style: fs14fw600,
                 ),
                 const SizedBox(height: 16),
+                // RowBorder(),
                 Obx(
                   () => GestureDetector(
-                    onTap: () => controller.getImage(),
+                    onTap: () => controller.imageFromCamera(),
                     child: Container(
                       height: 100,
                       width: 100,
@@ -70,13 +68,14 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  Const.nik,
+                  Const.noKTP,
                   style: fs14fw600,
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
                   controller: controller.ktp,
                   hintText: Const.desknoKTP,
+                  maxLength: 16,
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -87,6 +86,7 @@ class FormScreen extends GetView<FormController> {
                 MyTextFormField(
                   controller: controller.nama,
                   hintText: Const.desknamaLengkap,
+                  onChanged: (value) => controller.setNamaCetak(value),
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -97,6 +97,7 @@ class FormScreen extends GetView<FormController> {
                 MyTextFormField(
                   controller: controller.namaCetak,
                   hintText: Const.desknamaCetak,
+                  maxLength: 25,
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -208,6 +209,78 @@ class RadioButton extends StatelessWidget {
         ),
         Text(text2),
       ],
+    );
+  }
+}
+
+class RowBorder extends StatelessWidget {
+  const RowBorder({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: Colors.grey,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: LogoButtonGray(
+                icon: Remix.image_2_line,
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(Const.fotoPeserta),
+                  Text(Const.lihatFoto),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: SvgPicture.asset(Assets.assetsImagesCameraOrange),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LogoButtonGray extends StatelessWidget {
+  const LogoButtonGray({
+    required this.icon,
+    super.key,
+  });
+
+  final IconData icon;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: ThemeColors.gray.shade50,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(
+          color: ThemeColors.gray.shade100,
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Icon(
+          icon,
+          color: Color.fromRGBO(208, 211, 217, 1),
+        ),
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:asalhapuja/domain/models/result.dart';
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
 import 'package:asalhapuja/domain/models/models.dart';
+import 'dart:io';
 
 part 'server_repository.g.dart';
 
@@ -16,7 +17,18 @@ abstract class Server {
   );
 
   @POST(BaseURL.form)
+  @MultiPart()
   Future<Result> form(
-    @Body() Form form,
+    @Part() String region_f_id,
+    @Part() String nik_koordinator,
+    @Part() String organization,
+    @Part() String ktp,
+    @Part() String name,
+    @Part() String printed_name,
+    @Part() String gender,
+    @Part() String address,
+    @Part() String phone_number,
+    @Part() String meal,
+    @Part() File photo,
   );
 }

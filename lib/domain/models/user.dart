@@ -5,15 +5,15 @@ part 'user.g.dart';
 @JsonSerializable()
 class User {
   String nik;
-  String? nama;
+  String nama;
   String password;
-  List<Region>? regions;
+  List<Region> regions;
 
   User({
     required this.nik,
     required this.password,
-    this.nama,
-    this.regions,
+    required this.nama,
+    required this.regions,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

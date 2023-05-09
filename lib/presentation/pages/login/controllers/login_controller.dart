@@ -1,4 +1,5 @@
 import 'package:asalhapuja/data/utils/utils.dart';
+import 'package:asalhapuja/domain/db_helper.dart';
 import 'package:asalhapuja/domain/models/models.dart';
 import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:asalhapuja/routes/app_routes.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:asalhapuja/domain/repository/server_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:restart_app/restart_app.dart';
 
 class LoginController extends GetxController {
   final client = Server(
@@ -37,11 +39,7 @@ class LoginController extends GetxController {
       if (gs.read('User') != null) {
         print('offline');
         User user = User.fromJson(gs.read('User') as Map<String, dynamic>);
-        User input = User(
-          nik: nik.text,
-          password: password.text,
-        );
-        if (user.nik == input.nik && user.password == input.password) {
+        if (user.nik == nik.text && user.password == password.text) {
           await gs.write('IsLogin', 1);
           Get.offNamed(Routes.home);
         } else {
@@ -64,8 +62,12 @@ class LoginController extends GetxController {
         var res = await client.login(data);
         if (res.message == 'Success Login') {
           User user = User.fromJson(res.data as Map<String, dynamic>);
-          await gs.write('User', user);
+          await gs.write('User', user.toJson());
           await gs.write('IsLogin', 1);
+          for (Region region in user.regions) {
+            await DBHelper.instance.insertRegion(region);
+          }
+          Restart.restartApp();
           Get.offNamed(Routes.home);
         } else {
           // Get.back();

@@ -44,17 +44,76 @@ class _Server implements Server {
   }
 
   @override
-  Future<Result> form(form) async {
+  Future<Result> form(
+    region_f_id,
+    nik_koordinator,
+    organization,
+    ktp,
+    name,
+    printed_name,
+    gender,
+    address,
+    phone_number,
+    meal,
+    photo,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(form.toJson());
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'region_f_id',
+      region_f_id,
+    ));
+    _data.fields.add(MapEntry(
+      'nik_koordinator',
+      nik_koordinator,
+    ));
+    _data.fields.add(MapEntry(
+      'organization',
+      organization,
+    ));
+    _data.fields.add(MapEntry(
+      'ktp',
+      ktp,
+    ));
+    _data.fields.add(MapEntry(
+      'name',
+      name,
+    ));
+    _data.fields.add(MapEntry(
+      'printed_name',
+      printed_name,
+    ));
+    _data.fields.add(MapEntry(
+      'gender',
+      gender,
+    ));
+    _data.fields.add(MapEntry(
+      'address',
+      address,
+    ));
+    _data.fields.add(MapEntry(
+      'phone_number',
+      phone_number,
+    ));
+    _data.fields.add(MapEntry(
+      'meal',
+      meal,
+    ));
+    _data.files.add(MapEntry(
+      'photo',
+      MultipartFile.fromFileSync(
+        photo.path,
+        filename: photo.path.split(Platform.pathSeparator).last,
+      ),
+    ));
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<Result>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,

@@ -6,7 +6,7 @@ part of 'form.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Form _$FormFromJson(Map<String, dynamic> json) => Form(
+Forms _$FormsFromJson(Map<String, dynamic> json) => Forms(
       nik_koordinator: json['nik_koordinator'] as String,
       organization: json['organization'] as String,
       ktp: json['ktp'] as String,
@@ -17,9 +17,11 @@ Form _$FormFromJson(Map<String, dynamic> json) => Form(
       phone_number: json['phone_number'] as String,
       meal: json['meal'] as String,
       photo: json['photo'] as String,
-    );
+      region_f_id: json['region_f_id'] as int,
+    )..isUpload = json['isUpload'] as int;
 
-Map<String, dynamic> _$FormToJson(Form instance) => <String, dynamic>{
+Map<String, dynamic> _$FormsToJson(Forms instance) => <String, dynamic>{
+      'region_f_id': instance.region_f_id,
       'nik_koordinator': instance.nik_koordinator,
       'organization': instance.organization,
       'ktp': instance.ktp,
@@ -30,4 +32,5 @@ Map<String, dynamic> _$FormToJson(Form instance) => <String, dynamic>{
       'phone_number': instance.phone_number,
       'meal': instance.meal,
       'photo': instance.photo,
+      'isUpload': instance.isUpload,
     };

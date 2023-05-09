@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:json_annotation/json_annotation.dart';
 part 'form.g.dart';
 
 @JsonSerializable()
-class Form {
+class Forms {
+  int region_f_id;
   String nik_koordinator;
   String organization;
   String ktp;
@@ -14,8 +14,9 @@ class Form {
   String phone_number;
   String meal;
   String photo;
+  int isUpload = 0;
 
-  Form({
+  Forms({
     required this.nik_koordinator,
     required this.organization,
     required this.ktp,
@@ -26,8 +27,9 @@ class Form {
     required this.phone_number,
     required this.meal,
     required this.photo,
+    required this.region_f_id,
   });
 
-  factory Form.fromJson(Map<String, dynamic> json) => _$FormFromJson(json);
-  Map<String, dynamic> toJson() => _$FormToJson(this);
+  factory Forms.fromJson(Map<String, dynamic> json) => _$FormsFromJson(json);
+  Map<String, dynamic> toJson() => _$FormsToJson(this);
 }

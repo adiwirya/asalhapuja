@@ -1,15 +1,18 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart' as path;
 
-void saveImage(XFile photo) async {
+Future<String> saveImage(File photo, String nik) async {
   final directory = await getApplicationDocumentsDirectory();
-  final file = File(photo.path);
-  final res = await file.copy('${directory.path}/${photo.name}');
+  var basename = path.basename(photo.path);
+  final res = await photo.copy('${directory.path}/${nik}.jpg');
   log('res: $res');
+  return res.path;
 }
 
 Future getImageFromCamera() async {
@@ -17,8 +20,8 @@ Future getImageFromCamera() async {
     final picker = ImagePicker();
     final photo = await picker.pickImage(
       source: ImageSource.camera,
-      // maxHeight: 400,
-      // maxWidth: 400,
+      maxHeight: 3000,
+      maxWidth: 3000,
       imageQuality: 25,
     );
     return photo;
@@ -36,8 +39,8 @@ Future getImageFromgallery() async {
     final picker = ImagePicker();
     final photo = await picker.pickImage(
       source: ImageSource.gallery,
-      // maxHeight: 400,
-      // maxWidth: 400,
+      maxHeight: 3000,
+      maxWidth: 3000,
       imageQuality: 25,
     );
     return photo;
