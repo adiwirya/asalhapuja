@@ -1,5 +1,4 @@
 import 'package:asalhapuja/presentation/pages/splash/splash_screen.dart';
-import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 

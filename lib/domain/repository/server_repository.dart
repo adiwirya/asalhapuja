@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:asalhapuja/data/utils/url.dart';
 import 'package:asalhapuja/domain/models/result.dart';
 import 'package:retrofit/http.dart';

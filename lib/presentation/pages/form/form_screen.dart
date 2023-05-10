@@ -231,8 +231,8 @@ class RowBorder extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
+            const Padding(
+              padding: EdgeInsets.all(8),
               child: LogoButtonGray(
                 icon: Remix.image_2_line,
               ),
@@ -240,7 +240,7 @@ class RowBorder extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   Text(Const.fotoPeserta),
                   Text(Const.lihatFoto),
                 ],
@@ -266,7 +266,7 @@ class LogoButtonGray extends StatelessWidget {
   final IconData icon;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: ThemeColors.gray.shade50,
         borderRadius: BorderRadius.circular(6),
@@ -275,10 +275,10 @@ class LogoButtonGray extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: Icon(
           icon,
-          color: Color.fromRGBO(208, 211, 217, 1),
+          color: const Color.fromRGBO(208, 211, 217, 1),
         ),
       ),
     );

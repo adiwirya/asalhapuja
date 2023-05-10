@@ -1,13 +1,11 @@
-import 'package:asalhapuja/data/utils/theme.dart';
 import 'package:asalhapuja/data/utils/utils.dart';
-import 'package:asalhapuja/presentation/widget/logoVer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:asalhapuja/presentation/pages/home/controllers/home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -35,7 +33,7 @@ class HomeScreen extends GetView<HomeController> {
                     padding: const EdgeInsets.all(10),
                     child: Obx(
                       () => Text(
-                        controller.name.value,
+                        'Hi, ${controller.name.value}',
                         style: fs16fw600,
                       ),
                     ),

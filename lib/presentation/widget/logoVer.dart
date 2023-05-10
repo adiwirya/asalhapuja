@@ -26,7 +26,7 @@ class LogoVer extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              Text('${Const.version} ${Const.appVersion}'),
+              const Text('${Const.version} ${Const.appVersion}'),
             ],
           ),
         ),

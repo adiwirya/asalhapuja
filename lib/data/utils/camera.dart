@@ -1,16 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart' as path;
 
 Future<String> saveImage(File photo, String nik) async {
   final directory = await getApplicationDocumentsDirectory();
-  var basename = path.basename(photo.path);
-  final res = await photo.copy('${directory.path}/${nik}.jpg');
+  final res = await photo.copy('${directory.path}/$nik.jpg');
   log('res: $res');
   return res.path;
 }

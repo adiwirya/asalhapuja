@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:asalhapuja/domain/db_helper.dart';
 import 'package:asalhapuja/domain/models/models.dart';
@@ -37,8 +39,8 @@ class LoginController extends GetxController {
       }
       Get.dialog(LoadingDialog());
       if (gs.read('User') != null) {
-        print('offline');
-        User user = User.fromJson(gs.read('User') as Map<String, dynamic>);
+        log('offline');
+        final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
         if (user.nik == nik.text && user.password == password.text) {
           await gs.write('IsLogin', 1);
           Get.offNamed(Routes.home);
@@ -48,23 +50,23 @@ class LoginController extends GetxController {
           return;
         }
       } else {
-        print('online');
+        log('online');
         final connectivityResult = await Connectivity().checkConnectivity();
         if (connectivityResult == ConnectivityResult.none) {
           // Get.back();
           Snackbar().error('Tidak ada koneksi internet');
           return;
         }
-        var data = {
+        final data = {
           'nik': nik.text,
           'password': password.text,
         };
-        var res = await client.login(data);
+        final res = await client.login(data);
         if (res.message == 'Success Login') {
-          User user = User.fromJson(res.data as Map<String, dynamic>);
+          final user = User.fromJson(res.data as Map<String, dynamic>);
           await gs.write('User', user.toJson());
           await gs.write('IsLogin', 1);
-          for (Region region in user.regions) {
+          for (final region in user.regions) {
             await DBHelper.instance.insertRegion(region);
           }
           Restart.restartApp();

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:asalhapuja/data/utils/utils.dart';
@@ -5,10 +6,10 @@ import 'package:asalhapuja/domain/db_helper.dart';
 import 'package:asalhapuja/domain/models/models.dart';
 import 'package:asalhapuja/domain/repository/server_repository.dart';
 import 'package:asalhapuja/presentation/widget/widgets.dart';
+import 'package:asalhapuja/routes/app_routes.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as path;
 
 class FormController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -34,7 +35,7 @@ class FormController extends GetxController {
   );
   @override
   void onInit() {
-    User user = User.fromJson(gs.read('User') as Map<String, dynamic>);
+    final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
     listRegion.value = user.regions;
     vihara.value = listRegion[0].vihara;
     viharaId.value = listRegion[0].id;
@@ -57,29 +58,47 @@ class FormController extends GetxController {
   }
 
   void submit() async {
-    User user = User.fromJson(gs.read('User') as Map<String, dynamic>);
+    final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
     final isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;
     }
-    print(BaseURL.form);
-    var paths = await saveImage(File(imagePath.value), ktp.text);
-    var data = Forms(
-      nik_koordinator: user.nik,
-      organization: vihara.value,
-      ktp: ktp.text,
-      name: nama.text,
-      printed_name: namaCetak.text,
-      gender: jenisKelamin.value,
-      address: alamat.text,
-      phone_number: nohp.text,
-      meal: meal.value,
-      photo: paths,
-      region_f_id: viharaId.value,
-    );
-    await DBHelper.instance.insertPeserta(data);
-    Get.back();
-
+    if (imagePath.value == '') {
+      Snackbar().error('Foto belum diambil');
+      return;
+    }
+    try {
+      final check = await DBHelper.instance.checkNik(ktp.text);
+      if (check > 0) {
+        Snackbar().error('NIK sudah terdaftar');
+        return;
+      }
+      var quota = await DBHelper.instance.getQouta(viharaId.value);
+      if (quota == 0) {
+        Snackbar().error('Kuota ${vihara.value} sudah penuh');
+        return;
+      }
+      final paths = await saveImage(File(imagePath.value), ktp.text);
+      final data = Forms(
+        nik_koordinator: user.nik,
+        organization: vihara.value,
+        ktp: ktp.text,
+        name: nama.text,
+        printed_name: namaCetak.text,
+        gender: jenisKelamin.value,
+        address: alamat.text,
+        phone_number: nohp.text,
+        meal: meal.value,
+        photo: paths,
+        region_f_id: viharaId.value,
+      );
+      await DBHelper.instance.insertPeserta(data);
+      quota = quota - 1;
+      final msg = await DBHelper.instance.updateQouta(viharaId.value, quota);
+      Get.offAllNamed(Routes.home);
+    } catch (e) {
+      Snackbar().error(e.toString());
+    }
     // try {
     //   var res = await client.form(
     //     viharaId.value.toString(),
@@ -97,7 +116,6 @@ class FormController extends GetxController {
     // } on DioError catch (e) {
     //   // Get.back();
     //   if (e.response!.statusCode == 302) {
-    //     Get.back();
     //     return;
     //   } else {
     //     Snackbar().error(e.message);
@@ -121,7 +139,7 @@ class FormController extends GetxController {
 
   void setVihara(String value) {
     vihara.value = value;
-    for (Region region in listRegion) {
+    for (final region in listRegion) {
       if (region.vihara == vihara.value) {
         viharaId.value = region.id;
         break;
@@ -130,14 +148,16 @@ class FormController extends GetxController {
   }
 
   void getImage() {
-    Get.dialog(SelectPic(
-      controller: FormController(),
-    ));
+    Get.dialog(
+      SelectPic(
+        controller: FormController(),
+      ),
+    );
   }
 
   void imageFromGallery() async {
-    var photo = await getImageFromgallery();
-    print(photo.path);
+    final photo = await getImageFromgallery();
+    log(photo.path.toString());
     isPhoto.value = true;
     // image = File(photo.path as String);
     imagePath.value = photo.path as String;
@@ -145,8 +165,8 @@ class FormController extends GetxController {
   }
 
   void imageFromCamera() async {
-    var photo = await getImageFromCamera();
-    print(photo.path);
+    final photo = await getImageFromCamera();
+    log(photo.path.toString());
     isPhoto.value = true;
     // image = File(photo.path as String);
     imagePath.value = photo.path as String;

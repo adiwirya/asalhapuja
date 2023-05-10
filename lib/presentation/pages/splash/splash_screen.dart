@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:asalhapuja/presentation/pages/splash/controllers/splash_controller.dart';
@@ -17,7 +16,7 @@ class SplashScreen extends GetView<SplashController> {
             child: Center(
               child: Text(
                 controller.name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,

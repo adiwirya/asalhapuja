@@ -1,14 +1,9 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:asalhapuja/domain/models/models.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:asalhapuja/data/utils/utils.dart';
 
 class DBHelper {
   DBHelper._privateConstrctor();
@@ -78,7 +73,7 @@ class DBHelper {
     WITHOUT ROWID;
     ''');
 
-    List<dynamic> res = await batch.commit();
+    final res = await batch.commit();
     log('res: $res');
   }
 
@@ -87,12 +82,12 @@ class DBHelper {
     await DBHelper.instance.database.then((db) async {
       data = await db.query('region');
     });
-    List<Region> region = [];
-    int len = data.length as int;
+    final region = <Region>[];
+    final len = data.length as int;
     for (var i = 0; i < len; i++) {
       region.add(Region.fromJson(data[i] as Map<String, dynamic>));
     }
-    print(region);
+    log(region.toString());
     return region;
   }
 
@@ -101,8 +96,8 @@ class DBHelper {
     await DBHelper.instance.database.then((db) async {
       data = await db.query('peserta');
     });
-    List<Forms> peserta = [];
-    int len = data.length as int;
+    final peserta = <Forms>[];
+    final len = data.length as int;
     for (var i = 0; i < len; i++) {
       peserta.add(Forms.fromJson(data[i] as Map<String, dynamic>));
     }
@@ -132,6 +127,14 @@ class DBHelper {
     return;
   }
 
+  Future<int> checkNik(String nik) async {
+    var data;
+    await DBHelper.instance.database.then((db) async {
+      data = await db.query('peserta', where: 'nik = ?', whereArgs: [nik]);
+    });
+    return data.length as int;
+  }
+
   Future insertRegion(Region region) async {
     var data;
     await DBHelper.instance.database.then((db) async {
@@ -145,11 +148,11 @@ class DBHelper {
           ]);
       // data = await db.insert('region', region.toJson());
     });
-    print(data);
+    log(data.toString());
     return;
   }
 
-  Future<int> updateQouta(int id, int quota) async {
+  Future<String> updateQouta(int id, int quota) async {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.update(
@@ -159,7 +162,20 @@ class DBHelper {
         whereArgs: [id],
       );
     });
-    return quota;
+    return 'Update Success';
+  }
+
+  Future<int> getQouta(int id) async {
+    var data;
+    await DBHelper.instance.database.then((db) async {
+      data = await db.query(
+        'region',
+        columns: ['quota'],
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    });
+    return data[0]['quota'] as int;
   }
 
   Future updatePeserta(int id) async {
@@ -172,6 +188,6 @@ class DBHelper {
         whereArgs: [id],
       );
     });
-    return;
+    return ;
   }
 }

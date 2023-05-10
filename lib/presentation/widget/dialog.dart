@@ -2,16 +2,13 @@ import 'package:asalhapuja/presentation/pages/form/controllers/form_controller.d
 import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:lottie/lottie.dart';
-import 'package:asalhapuja/routes/app_routes.dart';
-import 'package:remixicon/remixicon.dart';
 
 class QuestionDialog extends StatelessWidget {
   const QuestionDialog({
-    super.key,
     required this.text,
+    super.key,
     this.onPressed,
   });
 
@@ -163,7 +160,7 @@ class SelectPic extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: BoxCard(
                             text: 'Kamera',
                             assets: Assets.assetsImagesUserAdd,
@@ -174,7 +171,7 @@ class SelectPic extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: BoxCard(
                             text: 'Galeri',
                             assets: Assets.assetsImagesUserAdd,
@@ -189,7 +186,7 @@ class SelectPic extends StatelessWidget {
                     const SizedBox(height: 15),
                     TextButton(
                       onPressed: () => Get.back(),
-                      child: Text(
+                      child: const Text(
                         'Cancel',
                         style: TextStyle(
                           color: Colors.black,
@@ -299,7 +296,7 @@ class FailedDialog extends StatelessWidget {
                     const Text(
                       'Tidak ada Data \n Ditampilkan',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),

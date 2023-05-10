@@ -103,7 +103,7 @@ ElevatedButtonThemeData buttonWhiteRedBorder = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
     minimumSize: const Size.fromHeight(50),
     foregroundColor: ThemeColors.error,
-    backgroundColor: Color.fromARGB(255, 255, 255, 255),
+    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
     textStyle: const TextStyle(
       fontWeight: FontWeight.w500,
     ),
