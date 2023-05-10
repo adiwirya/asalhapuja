@@ -120,25 +120,27 @@ class HomeScreen extends GetView<HomeController> {
                 left: 16,
                 right: 16,
               ),
-              child: Obx(
-                () => ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.regions.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: SvgPicture.asset(
-                        Assets.assetsImagesVihara,
-                      ),
-                      tileColor: Colors.white,
-                      title: Text(
-                        controller.regions[index].vihara,
-                        style: fs16fw600,
-                      ),
-                      trailing: Text(
-                        controller.regions[index].quota.toString(),
-                      ),
-                    );
-                  },
+              child: Material(
+                child: Obx(
+                  () => ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.regions.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: SvgPicture.asset(
+                          Assets.assetsImagesVihara,
+                        ),
+                        tileColor: Colors.white,
+                        title: Text(
+                          controller.regions[index].vihara,
+                          style: fs16fw600,
+                        ),
+                        trailing: Text(
+                          controller.regions[index].quota.toString(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
