@@ -1,4 +1,3 @@
-
 class Routes {
   static Future<String> get initialRoute async {
     return splash;
@@ -8,4 +7,5 @@ class Routes {
   static const form = '/form';
   static const login = '/login';
   static const splash = '/splash';
+  static const upload = '/upload';
 }

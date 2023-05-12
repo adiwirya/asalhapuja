@@ -32,11 +32,11 @@ class LogoVer extends StatelessWidget {
         ),
       );
     } else {
-      return Expanded(
+      return const Expanded(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
+            children: [
               Text('${Const.version} ${Const.appVersion}'),
             ],
           ),

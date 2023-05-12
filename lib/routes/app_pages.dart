@@ -1,5 +1,3 @@
-import 'package:asalhapuja/presentation/pages/splash/splash_screen.dart';
-
 import 'package:get/get.dart';
 
 import 'package:asalhapuja/presentation/pages/screens.dart';
@@ -26,6 +24,11 @@ class Nav {
     GetPage(
       name: Routes.splash,
       page: () => const SplashScreen(),
+      binding: SplashControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.upload,
+      page: () => const UploadScreen(),
       binding: SplashControllerBinding(),
     ),
   ];

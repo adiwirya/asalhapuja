@@ -79,7 +79,7 @@ class HomeScreen extends GetView<HomeController> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => controller.logout(),
+                  onTap: () => controller.upload(),
                   child: Card(
                     surfaceTintColor: Colors.white,
                     child: SizedBox(
@@ -93,12 +93,12 @@ class HomeScreen extends GetView<HomeController> {
                             SvgPicture.asset(Assets.assetsImagesLogout),
                             const SizedBox(height: 14),
                             Text(
-                              Const.logout,
+                              Const.uploadData,
                               style: fs16fw600,
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              Const.keluar,
+                              Const.uploadData,
                               style: fs10gray,
                             ),
                           ],

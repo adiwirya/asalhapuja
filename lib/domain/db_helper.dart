@@ -104,7 +104,7 @@ class DBHelper {
     return peserta;
   }
 
-  Future insertPeserta(Forms peserta) async {
+  Future<void> insertPeserta(Forms peserta) async {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.rawInsert(
@@ -124,7 +124,6 @@ class DBHelper {
             peserta.photo,
           ]);
     });
-    return;
   }
 
   Future<int> checkNik(String nik) async {
@@ -135,7 +134,7 @@ class DBHelper {
     return data.length as int;
   }
 
-  Future insertRegion(Region region) async {
+  Future<void> insertRegion(Region region) async {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.rawInsert(
@@ -149,13 +148,11 @@ class DBHelper {
       // data = await db.insert('region', region.toJson());
     });
     log(data.toString());
-    return;
   }
 
   Future<String> updateQouta(int id, int quota) async {
-    var data;
     await DBHelper.instance.database.then((db) async {
-      data = await db.update(
+      await db.update(
         'region',
         {'quota': quota},
         where: 'id = ?',
@@ -178,16 +175,15 @@ class DBHelper {
     return data[0]['quota'] as int;
   }
 
-  Future updatePeserta(int id) async {
-    var data;
+  Future<String> updatePeserta(String id) async {
     await DBHelper.instance.database.then((db) async {
-      data = await db.update(
+      await db.update(
         'peserta',
         {'isUpload': 1},
         where: 'nik = ?',
         whereArgs: [id],
       );
     });
-    return ;
+    return 'Perserta Upload Success';
   }
 }

@@ -15,13 +15,13 @@ abstract class Server {
 
   @POST(BaseURL.login)
   Future<Result> login(
-    @Body() data,
+    @Body() Map<String, String> data,
   );
 
   @POST(BaseURL.form)
   @MultiPart()
-  Future<Result> form(
-    @Part() String region_f_id,
+  Future<dynamic> form(
+    @Part() int region_f_id,
     @Part() String nik_koordinator,
     @Part() String organization,
     @Part() String ktp,

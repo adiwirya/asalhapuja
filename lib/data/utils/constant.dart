@@ -40,4 +40,5 @@ class Const {
   static const String logout = 'Logout';
   static const String keluar = 'Keluar dari aplikasi \n';
   static const String infoVihara = 'Informasi Vihara';
+  static const String uploadData = 'Upload Data';
 }

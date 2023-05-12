@@ -33,7 +33,6 @@ class BoxCard extends StatelessWidget {
             height: height,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
                   height: 8,

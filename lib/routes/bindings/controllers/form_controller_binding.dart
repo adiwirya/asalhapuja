@@ -6,7 +6,7 @@ class FormControllerBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<FormController>(
-      () => FormController(),
+      FormController.new,
     );
   }
 }

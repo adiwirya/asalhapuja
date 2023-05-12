@@ -185,7 +185,7 @@ class SelectPic extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
                     TextButton(
-                      onPressed: () => Get.back(),
+                      onPressed: Get.back,
                       child: const Text(
                         'Cancel',
                         style: TextStyle(

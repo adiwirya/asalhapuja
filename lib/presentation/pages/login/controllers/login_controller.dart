@@ -37,7 +37,7 @@ class LoginController extends GetxController {
       if (!loginKey.currentState!.validate()) {
         return;
       }
-      Get.dialog(LoadingDialog());
+      Get.dialog(const LoadingDialog());
       if (gs.read('User') != null) {
         log('offline');
         final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
@@ -69,8 +69,8 @@ class LoginController extends GetxController {
           for (final region in user.regions) {
             await DBHelper.instance.insertRegion(region);
           }
-          Restart.restartApp();
-          Get.offNamed(Routes.home);
+          await Restart.restartApp();
+           Get.offNamed(Routes.home);
         } else {
           // Get.back();
           Snackbar().error('NIK atau Password Salah');

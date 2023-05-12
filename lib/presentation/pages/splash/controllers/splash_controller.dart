@@ -16,7 +16,7 @@ class SplashController extends GetxController {
   }
 }
 
-void session() async {
+Future<void> session() async {
   if (gs.read('IsLogin') == null) {
     Get.offNamed(Routes.login);
   } else {

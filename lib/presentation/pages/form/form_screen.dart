@@ -32,24 +32,47 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 // RowBorder(),
-                Obx(
-                  () => GestureDetector(
-                    onTap: () => controller.imageFromCamera(),
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      color: ThemeColors.gray.shade50,
-                      child: controller.isPhoto.value
-                          ? Image.file(File(controller.imagePath.value))
-                          : Center(
-                              child: Icon(
-                                Remix.image_add_fill,
-                                color: ThemeColors.warning.shade500,
-                                size: 40,
-                              ),
-                            ),
+                Row(
+                  children: [
+                    Obx(
+                      () => GestureDetector(
+                        onTap: () => controller.imageFromCamera(),
+                        child: Container(
+                          height: 100,
+                          width: 100,
+                          color: ThemeColors.gray.shade50,
+                          child: controller.isPhoto.value
+                              ? Image.file(File(controller.imagePath.value))
+                              : Center(
+                                  child: Icon(
+                                    Remix.image_add_fill,
+                                    color: ThemeColors.warning.shade500,
+                                    size: 40,
+                                  ),
+                                ),
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(width: 32),
+                    Column(
+                      children: [
+                        FilledButton(
+                          onPressed: () => controller.imageFromCamera(),
+                          child: Text(
+                            'Camera',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        FilledButton(
+                          onPressed: () => controller.imageFromGallery(),
+                          child: Text(
+                            'Gallery ',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
                 const SizedBox(height: 16),
                 Text(

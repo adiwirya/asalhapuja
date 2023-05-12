@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:asalhapuja/domain/db_helper.dart';
@@ -35,29 +36,39 @@ class FormController extends GetxController {
   );
   @override
   void onInit() {
+    String generateRandomString(int length) {
+      final random = Random();
+      const availableChars = '1234567890';
+      final randomString = List.generate(length,
+              (index) => availableChars[random.nextInt(availableChars.length)])
+          .join();
+
+      return randomString;
+    }
+
     final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
     listRegion.value = user.regions;
     vihara.value = listRegion[0].vihara;
     viharaId.value = listRegion[0].id;
-    ktp.text = '3326160101810021';
-    nama.text = 'Slamet Riyadi';
-    namaCetak.text = 'Slamet Riyadi';
-    alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
-    nohp.text = '081234567890';
-    meal.value = 'V';
-    jenisKelamin.value = 'L';
+    // ktp.text = generateRandomString(16);
+    // nama.text = 'Adi Wirya';
+    // namaCetak.text = 'Adi Wirya';
+    // alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
+    // nohp.text = '081234567890';
+    // meal.value = 'V';
+    // jenisKelamin.value = 'L';
 
     super.onInit();
   }
 
   void setNamaCetak(String value) {
-    final _debouncer = Debouncer(milliseconds: 1);
+    final debouncer = Debouncer(milliseconds: 1);
     if (value.length < 26) {
-      _debouncer.run(() => namaCetak.text = value);
+      debouncer.run(() => namaCetak.text = value);
     }
   }
 
-  void submit() async {
+  Future<void> submit() async {
     final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
     final isValid = formKey.currentState!.validate();
     if (!isValid) {
@@ -99,34 +110,6 @@ class FormController extends GetxController {
     } catch (e) {
       Snackbar().error(e.toString());
     }
-    // try {
-    //   var res = await client.form(
-    //     viharaId.value.toString(),
-    //     user.nik,
-    //     vihara.value,
-    //     ktp.text,
-    //     nama.text,
-    //     namaCetak.text,
-    //     jenisKelamin.value,
-    //     alamat.text,
-    //     nohp.text,
-    //     meal.value,
-    //     File(imagePath.value),
-    //   );
-    // } on DioError catch (e) {
-    //   // Get.back();
-    //   if (e.response!.statusCode == 302) {
-    //     return;
-    //   } else {
-    //     Snackbar().error(e.message);
-    //     print(e.toString());
-    //     return;
-    //   }
-    // } catch (e) {
-    //   // Get.back();
-    //   Snackbar().error(e.toString());
-    //   return;
-    // }
   }
 
   void setMeal(String value) {
@@ -155,21 +138,25 @@ class FormController extends GetxController {
     );
   }
 
-  void imageFromGallery() async {
+  Future<void> imageFromGallery() async {
+    // Get.back();
     final photo = await getImageFromgallery();
-    log(photo.path.toString());
     isPhoto.value = true;
     // image = File(photo.path as String);
     imagePath.value = photo.path as String;
-    // Get.back();
+    print('$imagePath - $isPhoto');
+    update();
   }
 
-  void imageFromCamera() async {
+  Future<void> imageFromCamera() async {
+    // Get.back();
     final photo = await getImageFromCamera();
-    log(photo.path.toString());
+    // print(photo.path.toString());
     isPhoto.value = true;
     // image = File(photo.path as String);
     imagePath.value = photo.path as String;
-    // Get.back();
+    print('$imagePath - $isPhoto');
+    update();
+    imagePath.refresh();
   }
 }

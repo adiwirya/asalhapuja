@@ -1,6 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:asalhapuja/data/utils/colors.dart';
 import 'package:asalhapuja/data/utils/utils.dart';
 
 class MyDropdownSearch extends StatelessWidget {

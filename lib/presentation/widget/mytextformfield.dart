@@ -1,4 +1,3 @@
-import 'package:asalhapuja/data/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:asalhapuja/data/utils/utils.dart';
 
@@ -35,6 +34,7 @@ class MyTextFormField extends StatelessWidget {
       onChanged: onChanged,
       textInputAction: done ? TextInputAction.done : TextInputAction.next,
       decoration: InputDecoration(
+        counterText: '',
         contentPadding: const EdgeInsets.all(8),
         border: const OutlineInputBorder(
           borderSide: BorderSide(

@@ -25,7 +25,8 @@ class _Server implements Server {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = data;
+    final _data = <String, dynamic>{};
+    _data.addAll(data);
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<Result>(Options(
       method: 'POST',
@@ -44,7 +45,7 @@ class _Server implements Server {
   }
 
   @override
-  Future<Result> form(
+  Future<dynamic> form(
     region_f_id,
     nik_koordinator,
     organization,
@@ -63,7 +64,7 @@ class _Server implements Server {
     final _data = FormData();
     _data.fields.add(MapEntry(
       'region_f_id',
-      region_f_id,
+      region_f_id.toString(),
     ));
     _data.fields.add(MapEntry(
       'nik_koordinator',
@@ -108,21 +109,20 @@ class _Server implements Server {
         filename: photo.path.split(Platform.pathSeparator).last,
       ),
     ));
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Result>(Options(
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
       contentType: 'multipart/form-data',
     )
-            .compose(
-              _dio.options,
-              'https://register.asalhapuja.or.id/api/register/panitia-jateng/F',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Result.fromJson(_result.data!);
+        .compose(
+          _dio.options,
+          'https://register.asalhapuja.or.id/api/register/panitia-jateng/F',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
     return value;
   }
 
