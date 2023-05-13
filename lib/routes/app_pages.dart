@@ -5,7 +5,7 @@ import 'package:asalhapuja/routes/bindings/controllers/controllers_bindings.dart
 import 'package:asalhapuja/routes/app_routes.dart';
 
 class Nav {
-  static List<GetPage> routes = [
+  static List<GetPage<dynamic>> routes = [
     GetPage(
       name: Routes.home,
       page: () => const HomeScreen(),

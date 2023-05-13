@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:math';
 
@@ -50,13 +49,13 @@ class FormController extends GetxController {
     listRegion.value = user.regions;
     vihara.value = listRegion[0].vihara;
     viharaId.value = listRegion[0].id;
-    // ktp.text = generateRandomString(16);
-    // nama.text = 'Adi Wirya';
-    // namaCetak.text = 'Adi Wirya';
-    // alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
-    // nohp.text = '081234567890';
-    // meal.value = 'V';
-    // jenisKelamin.value = 'L';
+    ktp.text = generateRandomString(16);
+    nama.text = 'Adi Wirya';
+    namaCetak.text = 'Adi Wirya';
+    alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
+    nohp.text = '081234567890';
+    meal.value = 'V';
+    jenisKelamin.value = 'L';
 
     super.onInit();
   }

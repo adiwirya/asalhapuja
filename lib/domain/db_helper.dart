@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_uninitialized_variable, unused_local_variable
+
 import 'dart:developer';
 
 import 'package:path_provider/path_provider.dart';
@@ -39,7 +41,7 @@ class DBHelper {
     );
   }
 
-  Future _onCreate(Database db, int version) async {
+  Future<dynamic> _onCreate(Database db, int version) async {
     final batch = db.batch();
     // batch.execute('DROP DATABASE IF EXISTS patrol.db');
 

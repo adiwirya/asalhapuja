@@ -45,7 +45,7 @@ class LoginController extends GetxController {
           await gs.write('IsLogin', 1);
           Get.offNamed(Routes.home);
         } else {
-          // Get.back();
+          Get.back();
           Snackbar().error('NIK atau Password Salah');
           return;
         }
@@ -53,7 +53,7 @@ class LoginController extends GetxController {
         log('online');
         final connectivityResult = await Connectivity().checkConnectivity();
         if (connectivityResult == ConnectivityResult.none) {
-          // Get.back();
+          Get.back();
           Snackbar().error('Tidak ada koneksi internet');
           return;
         }
@@ -70,15 +70,15 @@ class LoginController extends GetxController {
             await DBHelper.instance.insertRegion(region);
           }
           await Restart.restartApp();
-           Get.offNamed(Routes.home);
+          Get.offNamed(Routes.home);
         } else {
-          // Get.back();
+          Get.back();
           Snackbar().error('NIK atau Password Salah');
           return;
         }
       }
     } on DioError catch (e) {
-      // Get.back();
+      Get.back();
       if (e.response!.statusCode == 401) {
         Snackbar().error('NIK atau Password Salah');
       } else {
@@ -86,7 +86,7 @@ class LoginController extends GetxController {
       }
       return;
     } catch (e) {
-      // Get.back();
+      Get.back();
       Snackbar().error(e.toString());
       return;
     }

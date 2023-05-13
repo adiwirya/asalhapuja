@@ -80,7 +80,7 @@ class HomeController extends GetxController {
 
           continue;
         } else {
-          Snackbar().error(e.message);
+          Snackbar().error(e.message!);
           print(e.toString());
           continue;
         }

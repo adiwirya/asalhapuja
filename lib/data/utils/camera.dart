@@ -12,7 +12,7 @@ Future<String> saveImage(File photo, String nik) async {
   return res.path;
 }
 
-Future getImageFromCamera() async {
+Future<dynamic> getImageFromCamera() async {
   try {
     final picker = ImagePicker();
     final photo = await picker.pickImage(
@@ -31,7 +31,7 @@ Future getImageFromCamera() async {
   }
 }
 
-Future getImageFromgallery() async {
+Future<dynamic> getImageFromgallery() async {
   try {
     final picker = ImagePicker();
     final photo = await picker.pickImage(
