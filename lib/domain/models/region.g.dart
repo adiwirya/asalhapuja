@@ -11,6 +11,7 @@ Region _$RegionFromJson(Map<String, dynamic> json) => Region(
       kabupaten: json['kabupaten'] as String,
       vihara: json['vihara'] as String,
       quota: json['quota'] as int,
+      sisa: json['sisa'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$RegionToJson(Region instance) => <String, dynamic>{
@@ -18,4 +19,5 @@ Map<String, dynamic> _$RegionToJson(Region instance) => <String, dynamic>{
       'kabupaten': instance.kabupaten,
       'vihara': instance.vihara,
       'quota': instance.quota,
+      'sisa': instance.sisa,
     };

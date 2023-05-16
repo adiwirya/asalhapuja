@@ -120,15 +120,20 @@ TextStyle fs14fw600 = const TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w600,
 );
-TextStyle fs14fw600Red = const TextStyle(
+TextStyle fs14fw400 = const TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+);
+
+TextStyle fs14fw400Red = const TextStyle(
   color: ThemeColors.error,
   fontSize: 14,
-  fontWeight: FontWeight.w600,
+  fontWeight: FontWeight.w400,
 );
-TextStyle fs14fw600Green = const TextStyle(
+TextStyle fs14fw400Green = const TextStyle(
   color: ThemeColors.success,
   fontSize: 14,
-  fontWeight: FontWeight.w600,
+  fontWeight: FontWeight.w400,
 );
 TextStyle fs16fw600 = const TextStyle(
   fontSize: 16,

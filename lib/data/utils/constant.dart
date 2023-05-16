@@ -41,4 +41,8 @@ class Const {
   static const String keluar = 'Keluar dari aplikasi \n';
   static const String infoVihara = 'Informasi Vihara';
   static const String uploadData = 'Upload Data';
+  static const String listData = 'List Data';
+  static const String koutaTersedia = 'Kouta Tersedia';
+  static const String koutaHabis = 'Kouta Habis';
+  // static const String uploadData = ;
 }

@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 String? emptyValue(String? value) {
   if (value == null || value.isEmpty) {
-    return "Value can't be empty";
+    return 'Input Tidak Boleh Kosong';
   } else {
     return null;
   }

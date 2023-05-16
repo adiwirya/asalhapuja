@@ -7,6 +7,7 @@ class MyTextFormField extends StatelessWidget {
     super.key,
     this.done = false,
     this.obscureText = false,
+    this.validate = true,
     this.maxLines = 1,
     this.suffixIcon,
     this.hintText,
@@ -15,6 +16,7 @@ class MyTextFormField extends StatelessWidget {
   });
 
   final TextEditingController controller;
+  final bool validate;
   final bool done;
   final bool obscureText;
   final int maxLines;
@@ -28,7 +30,7 @@ class MyTextFormField extends StatelessWidget {
     return TextFormField(
       maxLength: maxLength,
       controller: controller,
-      validator: emptyValue,
+      validator: validate ? emptyValue : null,
       obscureText: obscureText,
       maxLines: maxLines,
       onChanged: onChanged,
@@ -38,7 +40,7 @@ class MyTextFormField extends StatelessWidget {
         contentPadding: const EdgeInsets.all(8),
         border: const OutlineInputBorder(
           borderSide: BorderSide(
-            width: 0.5,
+            width: 1.5,
           ),
           borderRadius: BorderRadius.all(
             Radius.circular(10),
@@ -49,7 +51,7 @@ class MyTextFormField extends StatelessWidget {
             Radius.circular(8),
           ),
           borderSide: BorderSide(
-            color: ThemeColors.gray.shade100,
+            color: ThemeColors.gray.shade900,
           ),
         ),
         hintText: hintText,

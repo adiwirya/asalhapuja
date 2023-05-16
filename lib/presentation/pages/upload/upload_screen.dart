@@ -23,12 +23,24 @@ class UploadScreen extends GetView<UploadController> {
               child: Icon(Remix.file_upload_fill, size: 100),
             ),
             const SizedBox(height: 28),
-            const Text(
-              '',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
+            Obx(
+              () => Text(
+                'Data di db : ${controller.forms.length}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            Obx(
+              () => Text(
+                'Data blm di upload : ${controller.blmUpload}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
               ),
             ),
             const SizedBox(height: 28),

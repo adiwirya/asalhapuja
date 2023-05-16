@@ -29,14 +29,14 @@ class MyDropdownSearch extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
-              color: ThemeColors.gray.shade100,
-              width: 0.5,
+              color: ThemeColors.gray.shade900,
+              width: 1.5,
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
-              color: ThemeColors.gray.shade100,
+              color: ThemeColors.gray.shade900,
             ),
           ),
           hintText: hint,

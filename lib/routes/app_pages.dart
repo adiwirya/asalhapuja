@@ -29,7 +29,12 @@ class Nav {
     GetPage(
       name: Routes.upload,
       page: () => const UploadScreen(),
-      binding: SplashControllerBinding(),
+      binding: UploadControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.list,
+      page: () => const ListScreen(),
+      binding: ListFormControllerBinding(),
     ),
   ];
 }

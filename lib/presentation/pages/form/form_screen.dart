@@ -38,8 +38,8 @@ class FormScreen extends GetView<FormController> {
                       () => GestureDetector(
                         onTap: () => controller.imageFromCamera(),
                         child: Container(
-                          height: 100,
                           width: 100,
+                          height: 133,
                           color: ThemeColors.gray.shade50,
                           child: controller.isPhoto.value
                               ? Image.file(File(controller.imagePath.value))
@@ -53,19 +53,19 @@ class FormScreen extends GetView<FormController> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 32),
+                    const SizedBox(width: 32),
                     Column(
                       children: [
                         FilledButton(
                           onPressed: () => controller.imageFromCamera(),
-                          child: Text(
+                          child: const Text(
                             'Camera',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
                         FilledButton(
                           onPressed: () => controller.imageFromGallery(),
-                          child: Text(
+                          child: const Text(
                             'Gallery ',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -156,6 +156,7 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
+                  validate: false,
                   controller: controller.nohp,
                   hintText: Const.desknoHP,
                 ),
@@ -260,10 +261,10 @@ class RowBorder extends StatelessWidget {
                 icon: Remix.image_2_line,
               ),
             ),
-            Expanded(
+            const Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(Const.fotoPeserta),
                   Text(Const.lihatFoto),
                 ],

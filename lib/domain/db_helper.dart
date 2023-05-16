@@ -71,6 +71,8 @@ class DBHelper {
     kabupaten   TEXT    NOT NULL,
     vihara      TEXT    NOT NULL,
     quota       INTEGER NOT NULL
+    sisa        INTEGER NOT NULL
+                        DEFAULT (0),
     )
     WITHOUT ROWID;
     ''');
@@ -82,7 +84,7 @@ class DBHelper {
   Future<List<Region>> getRegion() async {
     var data;
     await DBHelper.instance.database.then((db) async {
-      data = await db.query('region');
+      data = await db.query('region', orderBy: 'id');
     });
     final region = <Region>[];
     final len = data.length as int;
@@ -104,6 +106,19 @@ class DBHelper {
       peserta.add(Forms.fromJson(data[i] as Map<String, dynamic>));
     }
     return peserta;
+  }
+
+  Future<int> getBlmUpload() async {
+    var data;
+    await DBHelper.instance.database.then((db) async {
+      data = await db.query('peserta', where: 'isUpload = ?', whereArgs: [0]);
+    });
+    final peserta = <Forms>[];
+    final len = data.length as int;
+    for (var i = 0; i < len; i++) {
+      peserta.add(Forms.fromJson(data[i] as Map<String, dynamic>));
+    }
+    return peserta.length;
   }
 
   Future<void> insertPeserta(Forms peserta) async {

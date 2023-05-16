@@ -21,7 +21,7 @@ class _Server implements Server {
   String? baseUrl;
 
   @override
-  Future<Result> login(data) async {
+  Future<Result> login(Map<String, String> data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -46,17 +46,17 @@ class _Server implements Server {
 
   @override
   Future<dynamic> form(
-    region_f_id,
-    nik_koordinator,
-    organization,
-    ktp,
-    name,
-    printed_name,
-    gender,
-    address,
-    phone_number,
-    meal,
-    photo,
+    int region_f_id,
+    String nik_koordinator,
+    String organization,
+    String ktp,
+    String name,
+    String printed_name,
+    String gender,
+    String address,
+    String phone_number,
+    String meal,
+    File photo,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

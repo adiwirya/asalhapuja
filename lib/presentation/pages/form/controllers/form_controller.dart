@@ -49,13 +49,13 @@ class FormController extends GetxController {
     listRegion.value = user.regions;
     vihara.value = listRegion[0].vihara;
     viharaId.value = listRegion[0].id;
-    // ktp.text = generateRandomString(16);
-    // nama.text = 'Adi Wirya';
-    // namaCetak.text = 'Adi Wirya';
-    // alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
-    // nohp.text = '081234567890';
-    // meal.value = 'V';
-    // jenisKelamin.value = 'L';
+    ktp.text = generateRandomString(16);
+    nama.text = 'Adi Wirya';
+    namaCetak.text = 'Adi Wirya';
+    alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
+    nohp.text = '081234567890';
+    meal.value = 'V';
+    jenisKelamin.value = 'L';
 
     super.onInit();
   }
@@ -71,6 +71,7 @@ class FormController extends GetxController {
     final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
     final isValid = formKey.currentState!.validate();
     if (!isValid) {
+      Snackbar().error('Input tidak valid');
       return;
     }
     if (imagePath.value == '') {
@@ -105,6 +106,7 @@ class FormController extends GetxController {
       await DBHelper.instance.insertPeserta(data);
       quota = quota - 1;
       final msg = await DBHelper.instance.updateQouta(viharaId.value, quota);
+      Snackbar().success('Data berhasil disimpan');
       Get.offAllNamed(Routes.home);
     } catch (e) {
       Snackbar().error(e.toString());

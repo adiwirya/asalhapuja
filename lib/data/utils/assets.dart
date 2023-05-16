@@ -1,25 +1,42 @@
 class Assets {
   Assets._();
-  
-  /// Assets for assetsImagesBgCandi
-  /// assets/images/BgCandi.png
-  static const String assetsImagesBgCandi = 'assets/images/BgCandi.png';
+
+  /// Assets for assetsImagesAppLogo
+  /// assets/images/appLogo.png
+  static const String assetsImagesAppLogo = 'assets/images/appLogo.png';
 
   /// Assets for assetsImagesCameraOrange
   /// assets/images/camera-orange.svg
-  static const String assetsImagesCameraOrange = 'assets/images/camera-orange.svg';
+  static const String assetsImagesCameraOrange =
+      'assets/images/camera-orange.svg';
 
   /// Assets for assetsImagesCandi1
   /// assets/images/candi1.png
   static const String assetsImagesCandi1 = 'assets/images/candi1.png';
 
+  /// Assets for assetsImagesContohFoto
+  /// assets/images/contohFoto.png
+  static const String assetsImagesContohFoto = 'assets/images/contohFoto.png';
+
+  /// Assets for assetsImagesIcon
+  /// assets/images/icon.png
+  static const String assetsImagesIcon = 'assets/images/icon.png';
+
+  /// Assets for assetsImagesListdata
+  /// assets/images/listdata.svg
+  static const String assetsImagesListdata = 'assets/images/listdata.svg';
+
   /// Assets for assetsImagesLogo
   /// assets/images/logo.png
   static const String assetsImagesLogo = 'assets/images/logo.png';
 
-  /// Assets for assetsImagesLogout
-  /// assets/images/logout.svg
-  static const String assetsImagesLogout = 'assets/images/logout.svg';
+  /// Assets for assetsImagesUpload
+  /// assets/images/upload.svg
+  static const String assetsImagesUpload = 'assets/images/upload.svg';
+
+  /// Assets for assetsImagesUploadlogo
+  /// assets/images/uploadlogo.svg
+  static const String assetsImagesUploadlogo = 'assets/images/uploadlogo.svg';
 
   /// Assets for assetsImagesUserAdd
   /// assets/images/user-add.svg

@@ -21,7 +21,7 @@ class HomeScreen extends GetView<HomeController> {
                 Assets.assetsImagesCandi1,
               ),
               Positioned(
-                top: 200,
+                top: height * 0.27,
                 child: DecoratedBox(
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -43,77 +43,57 @@ class HomeScreen extends GetView<HomeController> {
             ],
           ),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () => controller.form(),
-                  child: Card(
-                    surfaceTintColor: Colors.white,
-                    child: SizedBox(
-                      width: width / 2.2,
-                      height: 190,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SvgPicture.asset(Assets.assetsImagesUserAdd),
-                            const SizedBox(height: 14),
-                            Text(
-                              Const.tambahPeserta,
-                              style: fs16fw600,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              Const.deskform,
-                              style: fs10gray,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => controller.upload(),
-                  child: Card(
-                    surfaceTintColor: Colors.white,
-                    child: SizedBox(
-                      width: width / 2.2,
-                      height: 190,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SvgPicture.asset(Assets.assetsImagesLogout),
-                            const SizedBox(height: 14),
-                            Text(
-                              Const.uploadData,
-                              style: fs16fw600,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              Const.uploadData,
-                              style: fs10gray,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          RowMenu(
+            asset: Assets.assetsImagesUserAdd,
+            text: Const.tambahPeserta,
+            onPressed: controller.form,
+          ),
+          RowMenu(
+            asset: Assets.assetsImagesUpload,
+            text: Const.uploadData,
+            onPressed: controller.upload,
+          ),
+          RowMenu(
+            asset: Assets.assetsImagesListdata,
+            text: Const.listData,
+            onPressed: controller.list,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
             child: Text(Const.infoVihara, style: fs16fw600),
           ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+            child: Row(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 16,
+                      height: 16,
+                      color: ThemeColors.success,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text(Const.koutaTersedia),
+                  ],
+                ),
+                const SizedBox(width: 24),
+                Row(
+                  children: [
+                    Container(
+                      width: 16,
+                      height: 16,
+                      color: ThemeColors.error,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text(Const.koutaHabis),
+                  ],
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -126,19 +106,46 @@ class HomeScreen extends GetView<HomeController> {
                     shrinkWrap: true,
                     itemCount: controller.regions.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: SvgPicture.asset(
-                          Assets.assetsImagesVihara,
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
                         ),
-                        tileColor: Colors.white,
-                        title: Text(
-                          controller.regions[index].vihara,
-                          style: fs16fw600,
-                        ),
-                        trailing: Text(
-                          controller.regions[index].quota.toString(),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(Assets.assetsImagesVihara),
+                            const SizedBox(width: 16),
+                            Text(
+                              controller.regions[index].vihara,
+                              style: fs14fw400,
+                            ),
+                            Expanded(child: Container()),
+                            Text(
+                              controller.regions[index].quota.toString(),
+                              style: fs14fw400Green,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              controller.regions[index].quota.toString(),
+                              style: fs14fw400Red,
+                            ),
+                          ],
                         ),
                       );
+                      // return ListTile(
+                      //   leading: SvgPicture.asset(
+                      //     Assets.assetsImagesVihara,
+                      //   ),
+                      //   tileColor: Colors.white,
+                      //   title: Text(
+                      //     controller.regions[index].vihara,
+                      //     style: fs16fw600,
+                      //   ),
+                      //   trailing: Text(
+                      //     controller.regions[index].quota.toString(),
+                      //     style: fs14fw600Green,
+                      //   ),
+                      // );
                     },
                   ),
                 ),
@@ -146,6 +153,53 @@ class HomeScreen extends GetView<HomeController> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class RowMenu extends StatelessWidget {
+  const RowMenu({
+    required this.asset,
+    required this.text,
+    required this.onPressed,
+    super.key,
+  });
+
+  final String text;
+  final String asset;
+  final Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onPressed,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(asset),
+                    const SizedBox(width: 24),
+                    Text(
+                      text,
+                      style: fs14fw600,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
