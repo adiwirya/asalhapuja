@@ -60,6 +60,7 @@ class DBHelper {
     phone_number    TEXT        NOT NULL,
     meal            TEXT (2)    NOT NULL,
     photo           TEXT        NOT NULL,
+    tahun_ikut      TEXT        NOT NULL,
     isUpload        INTEGER (1) DEFAULT (0) 
     )
     WITHOUT ROWID;
@@ -68,11 +69,7 @@ class DBHelper {
     batch.execute('''
     CREATE TABLE IF NOT EXISTS region (
     id INTEGER    PRIMARY KEY,
-    kabupaten   TEXT    NOT NULL,
-    vihara      TEXT    NOT NULL,
-    quota       INTEGER NOT NULL
-    sisa        INTEGER NOT NULL
-                        DEFAULT (0),
+    vihara      TEXT    NOT NULL
     )
     WITHOUT ROWID;
     ''');
@@ -125,7 +122,7 @@ class DBHelper {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.rawInsert(
-          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)',
           [
             peserta.ktp,
             peserta.region_f_id,
@@ -139,6 +136,7 @@ class DBHelper {
             peserta.phone_number,
             peserta.meal,
             peserta.photo,
+            peserta.tahun_ikut,
           ]);
     });
   }
@@ -154,43 +152,40 @@ class DBHelper {
   Future<void> insertRegion(Region region) async {
     var data;
     await DBHelper.instance.database.then((db) async {
-      data = await db.rawInsert(
-          'INSERT INTO region (id, kabupaten, vihara, quota) VALUES (?, ?, ?, ?)',
-          [
-            region.id,
-            region.kabupaten,
-            region.vihara,
-            region.quota,
-          ]);
+      data =
+          await db.rawInsert('INSERT INTO region (id, vihara) VALUES (?, ?)', [
+        region.id,
+        region.vihara,
+      ]);
       // data = await db.insert('region', region.toJson());
     });
     log(data.toString());
   }
 
-  Future<String> updateQouta(int id, int quota) async {
-    await DBHelper.instance.database.then((db) async {
-      await db.update(
-        'region',
-        {'quota': quota},
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-    });
-    return 'Update Success';
-  }
+  // Future<String> updateQouta(int id, int quota) async {
+  //   await DBHelper.instance.database.then((db) async {
+  //     await db.update(
+  //       'region',
+  //       {'quota': quota},
+  //       where: 'id = ?',
+  //       whereArgs: [id],
+  //     );
+  //   });
+  //   return 'Update Success';
+  // }
 
-  Future<int> getQouta(int id) async {
-    var data;
-    await DBHelper.instance.database.then((db) async {
-      data = await db.query(
-        'region',
-        columns: ['quota'],
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-    });
-    return data[0]['quota'] as int;
-  }
+  // Future<int> getQouta(int id) async {
+  //   var data;
+  //   await DBHelper.instance.database.then((db) async {
+  //     data = await db.query(
+  //       'region',
+  //       columns: ['quota'],
+  //       where: 'id = ?',
+  //       whereArgs: [id],
+  //     );
+  //   });
+  //   return data[0]['quota'] as int;
+  // }
 
   Future<String> updatePeserta(String id) async {
     await DBHelper.instance.database.then((db) async {

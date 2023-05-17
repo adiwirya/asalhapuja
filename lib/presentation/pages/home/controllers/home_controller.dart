@@ -11,10 +11,9 @@ class HomeController extends GetxController {
   RxString name = ''.obs;
   RxList<Region> regions = <Region>[].obs;
 
+  final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
   @override
   Future<void> onInit() async {
-    final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
-
     name.value = user.nama;
     regions.value = await DBHelper.instance.getRegion();
     super.onInit();

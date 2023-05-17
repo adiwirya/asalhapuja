@@ -26,6 +26,8 @@ class FormController extends GetxController {
   File image = File('');
   RxString imagePath = ''.obs;
   RxList<Region> listRegion = <Region>[].obs;
+  RxList<bool> isChecked =
+      [false, false, false, false, false, false, false, false].obs;
   final client = Server(
     Dio(
       BaseOptions(
@@ -84,8 +86,8 @@ class FormController extends GetxController {
         Snackbar().error('NIK sudah terdaftar');
         return;
       }
-      var quota = await DBHelper.instance.getQouta(viharaId.value);
-      if (quota == 0) {
+
+      if (user.quota == 0) {
         Snackbar().error('Kuota ${vihara.value} sudah penuh');
         return;
       }
@@ -102,10 +104,13 @@ class FormController extends GetxController {
         meal: meal.value,
         photo: paths,
         region_f_id: viharaId.value,
+        tahun_ikut: '',
       );
       await DBHelper.instance.insertPeserta(data);
-      quota = quota - 1;
-      final msg = await DBHelper.instance.updateQouta(viharaId.value, quota);
+      user
+        ..quota = user.quota - 1
+        ..sisa = user.sisa + 1;
+      await gs.write('User', user.toJson());
       Snackbar().success('Data berhasil disimpan');
       Get.offAllNamed(Routes.home);
     } catch (e) {
@@ -119,6 +124,11 @@ class FormController extends GetxController {
 
   void setJenis(String value) {
     jenisKelamin.value = value;
+  }
+
+  void setChecked(bool value, int index) {
+    isChecked[index] = value;
+    update();
   }
 
   void setVihara(String value) {

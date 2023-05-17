@@ -59,9 +59,8 @@ CardTheme cardWhiteBorder = CardTheme(
 
 ElevatedButtonThemeData buttonGreen = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
-    minimumSize: const Size.fromHeight(50),
     foregroundColor: Colors.white,
-    backgroundColor: ThemeColors.success.shade500,
+    backgroundColor: ThemeColors.success.shade700,
     textStyle: const TextStyle(fontWeight: FontWeight.w500),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
@@ -120,6 +119,7 @@ TextStyle fs14fw600 = const TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w600,
 );
+
 TextStyle fs14fw400 = const TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w400,
@@ -130,11 +130,13 @@ TextStyle fs14fw400Red = const TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w400,
 );
+
 TextStyle fs14fw400Green = const TextStyle(
   color: ThemeColors.success,
   fontSize: 14,
   fontWeight: FontWeight.w400,
 );
+
 TextStyle fs16fw600 = const TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w600,

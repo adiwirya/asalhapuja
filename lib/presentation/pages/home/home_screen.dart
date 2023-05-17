@@ -101,54 +101,77 @@ class HomeScreen extends GetView<HomeController> {
                 right: 16,
               ),
               child: Material(
-                child: Obx(
-                  () => ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.regions.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(Assets.assetsImagesVihara),
-                            const SizedBox(width: 16),
-                            Text(
-                              controller.regions[index].vihara,
-                              style: fs14fw400,
-                            ),
-                            Expanded(child: Container()),
-                            Text(
-                              controller.regions[index].quota.toString(),
-                              style: fs14fw400Green,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              controller.regions[index].quota.toString(),
-                              style: fs14fw400Red,
-                            ),
-                          ],
-                        ),
-                      );
-                      // return ListTile(
-                      //   leading: SvgPicture.asset(
-                      //     Assets.assetsImagesVihara,
-                      //   ),
-                      //   tileColor: Colors.white,
-                      //   title: Text(
-                      //     controller.regions[index].vihara,
-                      //     style: fs16fw600,
-                      //   ),
-                      //   trailing: Text(
-                      //     controller.regions[index].quota.toString(),
-                      //     style: fs14fw600Green,
-                      //   ),
-                      // );
-                    },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(Assets.assetsImagesVihara),
+                      const SizedBox(width: 16),
+                      Text(
+                        controller.user.kota,
+                        style: fs14fw400,
+                      ),
+                      Expanded(child: Container()),
+                      Text(
+                        controller.user.quota.toString(),
+                        style: fs14fw400Green,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        controller.user.sisa.toString(),
+                        style: fs14fw400Red,
+                      ),
+                    ],
                   ),
                 ),
+                // child: Obx(
+                //   () => ListView.builder(
+                //     shrinkWrap: true,
+                //     itemCount: controller.regions.length,
+                //     itemBuilder: (context, index) {
+                //       return Padding(
+                //         padding: const EdgeInsets.symmetric(
+                //           horizontal: 16,
+                //           vertical: 8,
+                //         ),
+                //         child: Row(
+                //           children: [
+                //             SvgPicture.asset(Assets.assetsImagesVihara),
+                //             const SizedBox(width: 16),
+                //             Text(
+                //               controller.user.kota,
+                //               style: fs14fw400,
+                //             ),
+                //             Expanded(child: Container()),
+                //             Text(
+                //               controller.user.qouta.toString(),
+                //               style: fs14fw400Green,
+                //             ),
+                //             const SizedBox(width: 8),
+                //             Text(
+                //               controller.user.sisa.toString(),
+                //               style: fs14fw400Red,
+                //             ),
+                //           ],
+                //         ),
+                //       );
+                // return ListTile(
+                //   leading: SvgPicture.asset(
+                //     Assets.assetsImagesVihara,
+                //   ),
+                //   tileColor: Colors.white,
+                //   title: Text(
+                //     controller.regions[index].vihara,
+                //     style: fs16fw600,
+                //   ),
+                //   trailing: Text(
+                //     controller.regions[index].quota.toString(),
+                //     style: fs14fw600Green,
+                //   ),
+                // );
               ),
             ),
           ),
@@ -162,18 +185,18 @@ class RowMenu extends StatelessWidget {
   const RowMenu({
     required this.asset,
     required this.text,
-    required this.onPressed,
+    this.onPressed,
     super.key,
   });
 
   final String text;
   final String asset;
-  final Function onPressed;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onPressed,
+      onTap: onPressed,
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: DecoratedBox(

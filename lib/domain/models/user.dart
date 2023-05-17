@@ -7,6 +7,9 @@ class User {
   String nik;
   String nama;
   String password;
+  String kota;
+  int quota;
+  int sisa;
   List<Region> regions;
 
   User({
@@ -14,6 +17,9 @@ class User {
     required this.password,
     required this.nama,
     required this.regions,
+    required this.kota,
+    required this.quota,
+    this.sisa = 0,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

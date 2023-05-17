@@ -20,7 +20,7 @@ class Const {
   static const String desknoKTP = 'Masukkan No KTP';
   static const String jenisKelamin = 'Jenis Kelamin';
   static const String l = 'L';
-  static const String laki = 'Laki_laki';
+  static const String laki = 'Laki-Laki';
   static const String p = 'P';
   static const String perempuan = 'Perempuan';
   static const String alamat = 'Alamat';
@@ -33,7 +33,10 @@ class Const {
   static const String nv = 'NV';
   static const String nonVegetarian = 'Non Vegetarian';
   static const String submit = 'Submit';
-  static const String fotoPeserta = 'Foto Peserta';
+  static const String uploadFoto = 'Upload Foto';
+  static const String contohFoto = 'Contoh Foto';
+  static const String galeri = 'Galeri  ';
+  static const String kamera = 'Kamera';
   static const String lihatFoto = 'Lihat Foto';
   static const String deskform = 'Form untuk \nmenambahkan peserta.';
   static const String tambahPeserta = 'Tambah Peserta';
@@ -44,5 +47,8 @@ class Const {
   static const String listData = 'List Data';
   static const String koutaTersedia = 'Kouta Tersedia';
   static const String koutaHabis = 'Kouta Habis';
+  static const String pernahIkut = 'Pernah Ikut Tahun';
+  // static const String uploadData = ;
+  // static const String uploadData = ;
   // static const String uploadData = ;
 }

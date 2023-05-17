@@ -26,52 +26,76 @@ class FormScreen extends GetView<FormController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 16),
-                Text(
-                  Const.fotoPeserta,
-                  style: fs14fw600,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      Const.uploadFoto,
+                      style: fs14fw600,
+                    ),
+                    Text(
+                      Const.contohFoto,
+                      style: fs14fw600,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
-                // RowBorder(),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Obx(
-                      () => GestureDetector(
-                        onTap: () => controller.imageFromCamera(),
-                        child: Container(
-                          width: 100,
-                          height: 133,
-                          color: ThemeColors.gray.shade50,
-                          child: controller.isPhoto.value
-                              ? Image.file(File(controller.imagePath.value))
-                              : Center(
-                                  child: Icon(
-                                    Remix.image_add_fill,
-                                    color: ThemeColors.warning.shade500,
-                                    size: 40,
-                                  ),
-                                ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 32),
-                    Column(
+                    Row(
                       children: [
-                        FilledButton(
-                          onPressed: () => controller.imageFromCamera(),
-                          child: const Text(
-                            'Camera',
-                            style: TextStyle(color: Colors.white),
+                        Obx(
+                          () => Container(
+                            width: 80,
+                            height: 80,
+                            color: ThemeColors.gray.shade50,
+                            child: controller.isPhoto.value
+                                ? Image.file(File(controller.imagePath.value))
+                                : Center(
+                                    child: Icon(
+                                      Remix.image_fill,
+                                      color: ThemeColors.gray.shade200,
+                                      size: 40,
+                                    ),
+                                  ),
                           ),
                         ),
-                        FilledButton(
-                          onPressed: () => controller.imageFromGallery(),
-                          child: const Text(
-                            'Gallery ',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                        const SizedBox(width: 12),
+                        Column(
+                          children: [
+                            Theme(
+                              data: Theme.of(context)
+                                  .copyWith(elevatedButtonTheme: buttonGreen),
+                              child: ElevatedButton(
+                                onPressed: () => controller.imageFromGallery(),
+                                child: const Text(
+                                  Const.galeri,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            Theme(
+                              data: Theme.of(context).copyWith(
+                                elevatedButtonTheme: buttonGreen,
+                              ),
+                              child: ElevatedButton(
+                                onPressed: () => controller.imageFromCamera(),
+                                child: const Text(
+                                  Const.kamera,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                    )
+                    ),
+                    Image.asset(
+                      Assets.assetsImagesContohFoto,
+                      width: 80,
+                      height: 80,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -176,6 +200,16 @@ class FormScreen extends GetView<FormController> {
                     onChanged: controller.setMeal,
                   ),
                 ),
+                const SizedBox(height: 16),
+                Text(
+                  Const.pernahIkut,
+                  style: fs14fw600,
+                ),
+                const SizedBox(height: 16),
+                Obx(() => Check(
+                      values: controller.isChecked.value,
+                      onChanged: controller.setChecked,
+                    )),
               ],
             ),
           ),
@@ -189,6 +223,105 @@ class FormScreen extends GetView<FormController> {
           onPressed: controller.submit,
         ),
       ),
+    );
+  }
+}
+
+class Check extends StatelessWidget {
+  const Check({
+    required this.onChanged,
+    required this.values,
+    super.key,
+  });
+
+  final List<bool> values;
+  final Function onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Checkbox(
+              value: values[0],
+              onChanged: (value) {
+                onChanged(value, 0); //selected value
+              },
+            ),
+            const Text('2015'),
+            const SizedBox(width: 60),
+            Checkbox(
+              value: values[4],
+              onChanged: (value) {
+                onChanged(value, 4); //selected value
+              },
+            ),
+            const Text('2019'),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Checkbox(
+              value: values[1],
+              onChanged: (value) {
+                onChanged(value, 1); //selected value
+              },
+            ),
+            const Text('2016'),
+            const SizedBox(width: 60),
+            Checkbox(
+              value: values[5],
+              onChanged: (value) {
+                onChanged(value, 5); //selected value
+              },
+            ),
+            const Text('2020'),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Checkbox(
+              value: values[2],
+              onChanged: (value) {
+                onChanged(value, 2); //selected value
+              },
+            ),
+            const Text('2017'),
+            const SizedBox(width: 60),
+            Checkbox(
+              value: values[6],
+              onChanged: (value) {
+                onChanged(value, 6); //selected value
+              },
+            ),
+            const Text('2021'),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Checkbox(
+              value: values[3],
+              onChanged: (value) {
+                onChanged(value, 3); //selected value
+              },
+            ),
+            const Text('2018'),
+            const SizedBox(width: 60),
+            Checkbox(
+              value: values[7],
+              onChanged: (value) {
+                onChanged(value, 7); //selected value
+              },
+            ),
+            const Text('2022'),
+          ],
+        ),
+        const SizedBox(height: 8),
+      ],
     );
   }
 }
@@ -214,7 +347,6 @@ class RadioButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Radio(
           value: value1,
@@ -224,6 +356,7 @@ class RadioButton extends StatelessWidget {
           },
         ),
         Text(text1),
+        const SizedBox(width: 40),
         Radio(
           value: value2,
           groupValue: groupValue,
@@ -265,7 +398,7 @@ class RowBorder extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(Const.fotoPeserta),
+                  Text(Const.uploadData),
                   Text(Const.lihatFoto),
                 ],
               ),
