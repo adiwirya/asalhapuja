@@ -48,7 +48,11 @@ class Const {
   static const String koutaTersedia = 'Kouta Tersedia';
   static const String koutaHabis = 'Kouta Habis';
   static const String pernahIkut = 'Pernah Ikut Tahun';
-  // static const String uploadData = ;
-  // static const String uploadData = ;
+  static const String informasiUpload = 'Informasi Upload';
+  static const String dataDB = 'Data di database';
+  static const String dataUpload = 'Data belum di upload';
+  static const String upload = 'Upload';
+  static const String data = 'Data';
+  static const String banyakData = 'Banyak Data';
   // static const String uploadData = ;
 }

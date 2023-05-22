@@ -74,7 +74,7 @@ ElevatedButtonThemeData buttonYellow = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
     minimumSize: const Size.fromHeight(50),
     foregroundColor: Colors.white,
-    backgroundColor: ThemeColors.warning.shade600,
+    backgroundColor: ThemeColors.warning.shade500,
     textStyle: const TextStyle(fontWeight: FontWeight.w500),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
@@ -115,9 +115,9 @@ ElevatedButtonThemeData buttonWhiteRedBorder = ElevatedButtonThemeData(
   ),
 );
 
-TextStyle fs14fw600 = const TextStyle(
+TextStyle fs14fw500 = const TextStyle(
   fontSize: 14,
-  fontWeight: FontWeight.w600,
+  fontWeight: FontWeight.w500,
 );
 
 TextStyle fs14fw400 = const TextStyle(
@@ -137,15 +137,31 @@ TextStyle fs14fw400Green = const TextStyle(
   fontWeight: FontWeight.w400,
 );
 
-TextStyle fs16fw600 = const TextStyle(
+TextStyle fs16fw500 = const TextStyle(
   fontSize: 16,
-  fontWeight: FontWeight.w600,
+  fontWeight: FontWeight.w500,
 );
 
 TextStyle fs10gray = const TextStyle(
   fontSize: 10,
   color: Color.fromRGBO(185, 189, 199, 1),
   fontWeight: FontWeight.w400,
+);
+
+TextStyle fs12grayW500 = const TextStyle(
+  fontSize: 12,
+  color: Color(0xFF667085),
+  fontWeight: FontWeight.w500,
+);
+
+TextStyle fs14gray = const TextStyle(
+  fontSize: 14,
+  color: Color(0xFF667085),
+);
+
+TextStyle fs12gray = const TextStyle(
+  fontSize: 12,
+  color: Color(0xFF979CA0),
 );
 
 TextStyle fs12orange = const TextStyle(

@@ -92,10 +92,31 @@ class DBHelper {
     return region;
   }
 
-  Future<List<Forms>> getPeserta() async {
+  Future<List<Forms>> getPeserta(String vihara) async {
     var data;
     await DBHelper.instance.database.then((db) async {
-      data = await db.query('peserta');
+      data = await db.query(
+        'peserta',
+        orderBy: 'isUpload',
+        where: 'organization = ?',
+        whereArgs: [vihara],
+      );
+    });
+    final peserta = <Forms>[];
+    final len = data.length as int;
+    for (var i = 0; i < len; i++) {
+      peserta.add(Forms.fromJson(data[i] as Map<String, dynamic>));
+    }
+    return peserta;
+  }
+
+  Future<List<Forms>> getPesertaAll() async {
+    var data;
+    await DBHelper.instance.database.then((db) async {
+      data = await db.query(
+        'peserta',
+        orderBy: 'isUpload',
+      );
     });
     final peserta = <Forms>[];
     final len = data.length as int;
@@ -122,7 +143,7 @@ class DBHelper {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.rawInsert(
-          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)',
+          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
           [
             peserta.ktp,
             peserta.region_f_id,

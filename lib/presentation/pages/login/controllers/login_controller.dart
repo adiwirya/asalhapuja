@@ -65,7 +65,7 @@ class LoginController extends GetxController {
         final res = await client.login(data);
         if (res.message == 'Success Login') {
           final user = User.fromJson(res.data as Map<String, dynamic>);
-          await gs.write('User', user.toJson());
+          await gs.write('User', user.toJson() as Map<String, dynamic>);
           await gs.write('IsLogin', 1);
           for (final region in user.regions) {
             await DBHelper.instance.insertRegion(region);

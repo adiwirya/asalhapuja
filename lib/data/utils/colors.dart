@@ -63,5 +63,8 @@ class ThemeColors {
       800: Color(0xFF86670F),
       900: Color(0xFF664F0C),
     },
+
+    // gray50 = Color(0xFFF0F1F3),
+
   );
 }

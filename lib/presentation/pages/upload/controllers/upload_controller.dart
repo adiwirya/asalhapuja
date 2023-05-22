@@ -24,7 +24,7 @@ class UploadController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    forms.value = await DBHelper.instance.getPeserta();
+    forms.value = await DBHelper.instance.getPesertaAll();
     blmUpload.value = await DBHelper.instance.getBlmUpload();
     super.onInit();
   }
@@ -34,6 +34,7 @@ class UploadController extends GetxController {
     var check = await testupload();
     // Get.back();
     if (check == 1) {
+      Get.back();
       Snackbar().success('Upload Selesai');
     }
   }

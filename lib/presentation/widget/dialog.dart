@@ -154,7 +154,7 @@ class SelectPic extends StatelessWidget {
                     const SizedBox(height: 10),
                     Text(
                       'Choose',
-                      style: fs16fw600,
+                      style: fs16fw500,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

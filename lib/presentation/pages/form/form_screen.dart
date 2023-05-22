@@ -31,11 +31,11 @@ class FormScreen extends GetView<FormController> {
                   children: [
                     Text(
                       Const.uploadFoto,
-                      style: fs14fw600,
+                      style: fs14fw500,
                     ),
                     Text(
                       Const.contohFoto,
-                      style: fs14fw600,
+                      style: fs14fw500,
                     ),
                   ],
                 ),
@@ -51,12 +51,15 @@ class FormScreen extends GetView<FormController> {
                             height: 80,
                             color: ThemeColors.gray.shade50,
                             child: controller.isPhoto.value
-                                ? Image.file(File(controller.imagePath.value))
+                                ? Image.file(
+                                    File(controller.imagePath.value),
+                                    fit: BoxFit.cover,
+                                  )
                                 : Center(
                                     child: Icon(
                                       Remix.image_fill,
                                       color: ThemeColors.gray.shade200,
-                                      size: 40,
+                                      size: 30,
                                     ),
                                   ),
                           ),
@@ -101,7 +104,7 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Text(
                   Const.vihara,
-                  style: fs14fw600,
+                  style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
                 MyDropdownSearch(
@@ -116,7 +119,7 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Text(
                   Const.noKTP,
-                  style: fs14fw600,
+                  style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
@@ -127,7 +130,7 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Text(
                   Const.namaLengkap,
-                  style: fs14fw600,
+                  style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
@@ -138,7 +141,7 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Text(
                   Const.namaCetak,
-                  style: fs14fw600,
+                  style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
@@ -149,7 +152,7 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Text(
                   Const.jenisKelamin,
-                  style: fs14fw600,
+                  style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
                 Obx(
@@ -165,7 +168,7 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Text(
                   Const.alamat,
-                  style: fs14fw600,
+                  style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
@@ -176,7 +179,7 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Text(
                   Const.noHP,
-                  style: fs14fw600,
+                  style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
@@ -187,7 +190,7 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Text(
                   Const.makanan,
-                  style: fs14fw600,
+                  style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
                 Obx(
@@ -203,7 +206,7 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Text(
                   Const.pernahIkut,
-                  style: fs14fw600,
+                  style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
                 Obx(() => Check(
@@ -245,6 +248,7 @@ class Check extends StatelessWidget {
           children: [
             Checkbox(
               value: values[0],
+              checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 0); //selected value
               },
@@ -253,6 +257,7 @@ class Check extends StatelessWidget {
             const SizedBox(width: 60),
             Checkbox(
               value: values[4],
+              checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 4); //selected value
               },
@@ -260,11 +265,11 @@ class Check extends StatelessWidget {
             const Text('2019'),
           ],
         ),
-        const SizedBox(height: 8),
         Row(
           children: [
             Checkbox(
               value: values[1],
+              checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 1); //selected value
               },
@@ -273,6 +278,7 @@ class Check extends StatelessWidget {
             const SizedBox(width: 60),
             Checkbox(
               value: values[5],
+              checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 5); //selected value
               },
@@ -280,11 +286,11 @@ class Check extends StatelessWidget {
             const Text('2020'),
           ],
         ),
-        const SizedBox(height: 8),
         Row(
           children: [
             Checkbox(
               value: values[2],
+              checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 2); //selected value
               },
@@ -293,6 +299,7 @@ class Check extends StatelessWidget {
             const SizedBox(width: 60),
             Checkbox(
               value: values[6],
+              checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 6); //selected value
               },
@@ -300,11 +307,11 @@ class Check extends StatelessWidget {
             const Text('2021'),
           ],
         ),
-        const SizedBox(height: 8),
         Row(
           children: [
             Checkbox(
               value: values[3],
+              checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 3); //selected value
               },
@@ -313,6 +320,7 @@ class Check extends StatelessWidget {
             const SizedBox(width: 60),
             Checkbox(
               value: values[7],
+              checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 7); //selected value
               },
@@ -320,7 +328,6 @@ class Check extends StatelessWidget {
             const Text('2022'),
           ],
         ),
-        const SizedBox(height: 8),
       ],
     );
   }

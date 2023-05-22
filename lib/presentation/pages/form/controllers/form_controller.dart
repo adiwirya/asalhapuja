@@ -10,6 +10,9 @@ import 'package:asalhapuja/routes/app_routes.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:restart_app/restart_app.dart';
 
 class FormController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -92,6 +95,14 @@ class FormController extends GetxController {
         return;
       }
       final paths = await saveImage(File(imagePath.value), ktp.text);
+      var tahun = 2015;
+      List<String> tahun_ikut = [];
+      for (int i = 0; i < isChecked.length; i++) {
+        if (isChecked[i]) {
+          tahun_ikut.add(tahun.toString());
+        }
+        tahun = tahun + 1;
+      }
       final data = Forms(
         nik_koordinator: user.nik,
         organization: vihara.value,
@@ -104,15 +115,21 @@ class FormController extends GetxController {
         meal: meal.value,
         photo: paths,
         region_f_id: viharaId.value,
-        tahun_ikut: '',
+        tahun_ikut: tahun_ikut.toString(),
       );
       await DBHelper.instance.insertPeserta(data);
+
       user
         ..quota = user.quota - 1
         ..sisa = user.sisa + 1;
-      await gs.write('User', user.toJson());
+      await gs.write('User', user.toJson() as Map<String, dynamic>);
+      final databasePath = await getApplicationDocumentsDirectory();
+      final db = File(join(databasePath.path, 'asalhapuja.db'));
+      final directory = await getExternalStorageDirectory();
+      await db.copy('${directory!.path}/asalhapuja.db');
       Snackbar().success('Data berhasil disimpan');
-      Get.offAllNamed(Routes.home);
+      // Get.offAllNamed(Routes.home);
+      await Restart.restartApp();
     } catch (e) {
       Snackbar().error(e.toString());
     }
@@ -152,9 +169,13 @@ class FormController extends GetxController {
   Future<void> imageFromGallery() async {
     // Get.back();
     final photo = await getImageFromgallery();
-    isPhoto.value = true;
     // image = File(photo.path as String);
-    imagePath.value = photo.path as String;
+    if (photo != null) {
+      isPhoto.value = true;
+      imagePath.value = photo.path as String;
+    } else {
+      Snackbar().error('Foto belum diambil');
+    }
     print('$imagePath - $isPhoto');
     update();
   }
@@ -163,9 +184,12 @@ class FormController extends GetxController {
     // Get.back();
     final photo = await getImageFromCamera();
     // print(photo.path.toString());
-    isPhoto.value = true;
-    // image = File(photo.path as String);
-    imagePath.value = photo.path as String;
+    if (photo != null) {
+      isPhoto.value = true;
+      imagePath.value = photo.path as String;
+    } else {
+      Snackbar().error('Foto belum diambil');
+    }
     print('$imagePath - $isPhoto');
     update();
     imagePath.refresh();

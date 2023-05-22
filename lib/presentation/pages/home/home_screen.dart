@@ -21,7 +21,7 @@ class HomeScreen extends GetView<HomeController> {
                 Assets.assetsImagesCandi1,
               ),
               Positioned(
-                top: height * 0.27,
+                top: height * 0.24,
                 child: DecoratedBox(
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -32,9 +32,18 @@ class HomeScreen extends GetView<HomeController> {
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Obx(
-                      () => Text(
-                        'Hi, ${controller.name.value}',
-                        style: fs16fw600,
+                      () => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hi, ${controller.name.value}',
+                            style: fs16fw500,
+                          ),
+                          Text(
+                            controller.kota.value,
+                            style: fs12grayW500,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -58,75 +67,101 @@ class HomeScreen extends GetView<HomeController> {
             text: Const.listData,
             onPressed: controller.list,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
-            child: Text(Const.infoVihara, style: fs16fw600),
-          ),
-          const SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
-            child: Row(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 16,
-                      height: 16,
-                      color: ThemeColors.success,
-                    ),
-                    const SizedBox(width: 8),
-                    const Text(Const.koutaTersedia),
-                  ],
-                ),
-                const SizedBox(width: 24),
-                Row(
-                  children: [
-                    Container(
-                      width: 16,
-                      height: 16,
-                      color: ThemeColors.error,
-                    ),
-                    const SizedBox(width: 8),
-                    const Text(Const.koutaHabis),
-                  ],
-                )
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
+        ],
+      ),
+    );
+  }
+}
+
+class RowMenu extends StatelessWidget {
+  const RowMenu({
+    required this.asset,
+    required this.text,
+    this.onPressed,
+    super.key,
+  });
+
+  final String text;
+  final String asset;
+  final Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0, 1),
               ),
-              child: Material(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(Assets.assetsImagesVihara),
-                      const SizedBox(width: 16),
-                      Text(
-                        controller.user.kota,
-                        style: fs14fw400,
-                      ),
-                      Expanded(child: Container()),
-                      Text(
-                        controller.user.quota.toString(),
-                        style: fs14fw400Green,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        controller.user.sisa.toString(),
-                        style: fs14fw400Red,
-                      ),
-                    ],
-                  ),
+            ],
+            color: Colors.white,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(asset),
+                    const SizedBox(width: 24),
+                    Text(
+                      text,
+                      style: fs14fw500,
+                    ),
+                  ],
                 ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+ // Expanded(
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(
+          //       left: 16,
+          //       right: 16,
+          //     ),
+          //     child: Material(
+          //       child: Padding(
+          //         padding: const EdgeInsets.symmetric(
+          //           horizontal: 16,
+          //           vertical: 8,
+          //         ),
+          //         child: Row(
+          //           children: [
+          //             SvgPicture.asset(Assets.assetsImagesVihara),
+          //             const SizedBox(width: 16),
+          //             Text(
+          //               controller.user.kota,
+          //               style: fs14fw400,
+          //             ),
+          //             Expanded(child: Container()),
+          //             Text(
+          //               controller.user.quota.toString(),
+          //               style: fs14fw400Green,
+          //             ),
+          //             const SizedBox(width: 8),
+          //             Text(
+          //               controller.user.sisa.toString(),
+          //               style: fs14fw400Red,
+          //             ),
+          //           ],
+          //         ),
+          //       ),
                 // child: Obx(
                 //   () => ListView.builder(
                 //     shrinkWrap: true,
@@ -165,65 +200,13 @@ class HomeScreen extends GetView<HomeController> {
                 //   tileColor: Colors.white,
                 //   title: Text(
                 //     controller.regions[index].vihara,
-                //     style: fs16fw600,
+                //     style: fs16fw500,
                 //   ),
                 //   trailing: Text(
                 //     controller.regions[index].quota.toString(),
                 //     style: fs14fw600Green,
                 //   ),
                 // );
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class RowMenu extends StatelessWidget {
-  const RowMenu({
-    required this.asset,
-    required this.text,
-    this.onPressed,
-    super.key,
-  });
-
-  final String text;
-  final String asset;
-  final Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(asset),
-                    const SizedBox(width: 24),
-                    Text(
-                      text,
-                      style: fs14fw600,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+        //       ),
+        //     ),
+        //   ),

@@ -2,8 +2,8 @@ import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:asalhapuja/presentation/pages/upload/controllers/upload_controller.dart';
 import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:remixicon/remixicon.dart';
 
 class UploadScreen extends GetView<UploadController> {
   const UploadScreen({super.key});
@@ -12,41 +12,68 @@ class UploadScreen extends GetView<UploadController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Upload'),
+        title: const Text(Const.upload),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             const SizedBox(height: 28),
-            const Center(
-              child: Icon(Remix.file_upload_fill, size: 100),
+            Center(
+              child: SvgPicture.asset(Assets.assetsImagesUploadlogo),
             ),
             const SizedBox(height: 28),
-            Obx(
-              () => Text(
-                'Data di db : ${controller.forms.length}',
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
+            DecoratedBox(
+              decoration: const BoxDecoration(
+                color: Color(0xFFF0F1F3),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
-            ),
-            Obx(
-              () => Text(
-                'Data blm di upload : ${controller.blmUpload}',
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          Const.informasiUpload,
+                          style: fs14fw500,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(Const.dataDB),
+                        Obx(
+                          () => Text(
+                            '${controller.forms.length}',
+                            style: fs14fw500,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(Const.dataUpload),
+                        Obx(
+                          () => Text(
+                            '${controller.blmUpload}',
+                            style: fs14fw500,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
             const SizedBox(height: 28),
             MyButton(
-              theme: buttonGreen,
-              text: 'Upload',
+              theme: buttonYellow,
+              text: Const.upload,
               onPressed: () {
                 controller.upload();
               },
