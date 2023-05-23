@@ -32,7 +32,7 @@ class Const {
   static const String vegetarian = 'Vegetarian';
   static const String nv = 'NV';
   static const String nonVegetarian = 'Non Vegetarian';
-  static const String submit = 'Submit';
+  static const String submit = 'Simpan';
   static const String uploadFoto = 'Upload Foto';
   static const String contohFoto = 'Contoh Foto';
   static const String galeri = 'Galeri  ';
@@ -45,14 +45,15 @@ class Const {
   static const String infoVihara = 'Informasi Vihara';
   static const String uploadData = 'Upload Data';
   static const String listData = 'List Data';
-  static const String koutaTersedia = 'Kouta Tersedia';
-  static const String koutaHabis = 'Kouta Habis';
   static const String pernahIkut = 'Pernah Ikut Tahun';
   static const String informasiUpload = 'Informasi Upload';
   static const String dataDB = 'Data di database';
+  static const String dataServer = 'Data di Server';
+  static const String dataLokal = 'Data di Lokal';
   static const String dataUpload = 'Data belum di upload';
   static const String upload = 'Upload';
   static const String data = 'Data';
   static const String banyakData = 'Banyak Data';
+  static const String kouta = 'Kouta';
   // static const String uploadData = ;
 }

@@ -15,7 +15,7 @@ class FormScreen extends GetView<FormController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Form'),
+        title: Text(controller.title.value),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -107,14 +107,18 @@ class FormScreen extends GetView<FormController> {
                   style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
-                MyDropdownSearch(
-                  hint: Const.deskvihara,
-                  icon: const Icon(Remix.arrow_down_s_line),
-                  selectedItem: controller.vihara.value,
-                  onChanged: (value) => controller.setVihara(value!),
-                  items: (String filter) async {
-                    return controller.listRegion.map((e) => e.vihara).toList();
-                  },
+                Obx(
+                  () => MyDropdownSearch(
+                    hint: Const.deskvihara,
+                    icon: const Icon(Remix.arrow_down_s_line),
+                    selectedItem: controller.vihara.value,
+                    onChanged: (value) => controller.setVihara(value!),
+                    items: (String filter) async {
+                      return controller.listRegion
+                          .map((e) => e.vihara)
+                          .toList();
+                    },
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -122,33 +126,57 @@ class FormScreen extends GetView<FormController> {
                   style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
-                MyTextFormField(
-                  controller: controller.ktp,
-                  hintText: Const.desknoKTP,
-                  maxLength: 16,
-                ),
+                if (controller.isEdit.value)
+                  MyTextFormField(
+                    controller: controller.ktp,
+                    hintText: Const.desknoKTP,
+                    maxLength: 16,
+                    enabled: false,
+                  )
+                else
+                  MyTextFormField(
+                    controller: controller.ktp,
+                    hintText: Const.desknoKTP,
+                    maxLength: 16,
+                  ),
                 const SizedBox(height: 16),
                 Text(
                   Const.namaLengkap,
                   style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
-                MyTextFormField(
-                  controller: controller.nama,
-                  hintText: Const.desknamaLengkap,
-                  onChanged: (value) => controller.setNamaCetak(value),
-                ),
+                if (controller.isEdit.value)
+                  MyTextFormField(
+                    controller: controller.nama,
+                    hintText: Const.desknamaLengkap,
+                    onChanged: (value) => controller.setNamaCetak(value),
+                    enabled: false,
+                  )
+                else
+                  MyTextFormField(
+                    controller: controller.nama,
+                    hintText: Const.desknamaLengkap,
+                    onChanged: (value) => controller.setNamaCetak(value),
+                  ),
                 const SizedBox(height: 16),
                 Text(
                   Const.namaCetak,
                   style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
-                MyTextFormField(
-                  controller: controller.namaCetak,
-                  hintText: Const.desknamaCetak,
-                  maxLength: 25,
-                ),
+                if (controller.isEdit.value)
+                  MyTextFormField(
+                    controller: controller.namaCetak,
+                    hintText: Const.desknamaCetak,
+                    maxLength: 25,
+                    enabled: false,
+                  )
+                else
+                  MyTextFormField(
+                    controller: controller.namaCetak,
+                    hintText: Const.desknamaCetak,
+                    maxLength: 25,
+                  ),
                 const SizedBox(height: 16),
                 Text(
                   Const.jenisKelamin,
@@ -209,10 +237,12 @@ class FormScreen extends GetView<FormController> {
                   style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
-                Obx(() => Check(
-                      values: controller.isChecked.value,
-                      onChanged: controller.setChecked,
-                    )),
+                Obx(
+                  () => Check(
+                    values: controller.isChecked.value,
+                    onChanged: controller.setChecked,
+                  ),
+                ),
               ],
             ),
           ),
@@ -222,7 +252,7 @@ class FormScreen extends GetView<FormController> {
         padding: const EdgeInsets.all(8),
         child: MyButton(
           theme: buttonYellow,
-          text: Const.submit,
+          text: controller.btnText.value,
           onPressed: controller.submit,
         ),
       ),

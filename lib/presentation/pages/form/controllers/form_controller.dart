@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -12,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:restart_app/restart_app.dart';
 
 class FormController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -24,8 +24,11 @@ class FormController extends GetxController {
   RxString vihara = ''.obs;
   RxInt viharaId = 0.obs;
   RxString meal = ''.obs;
+  RxString title = ''.obs;
+  RxString btnText = ''.obs;
   RxString jenisKelamin = ''.obs;
   RxBool isPhoto = false.obs;
+  RxBool isEdit = false.obs;
   File image = File('');
   RxString imagePath = ''.obs;
   RxList<Region> listRegion = <Region>[].obs;
@@ -39,28 +42,59 @@ class FormController extends GetxController {
     ),
   );
   @override
-  void onInit() {
-    String generateRandomString(int length) {
-      final random = Random();
-      const availableChars = '1234567890';
-      final randomString = List.generate(length,
-              (index) => availableChars[random.nextInt(availableChars.length)])
-          .join();
-
-      return randomString;
-    }
-
+  void onInit() async {
+    var nik = Get.arguments;
     final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
     listRegion.value = user.regions;
-    vihara.value = listRegion[0].vihara;
-    viharaId.value = listRegion[0].id;
-    ktp.text = generateRandomString(16);
-    nama.text = 'Adi Wirya';
-    namaCetak.text = 'Adi Wirya';
-    alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
-    nohp.text = '081234567890';
-    meal.value = 'V';
-    jenisKelamin.value = 'L';
+    print(nik);
+    if (nik != null) {
+      isEdit.value = true;
+      title.value = 'Edit Data';
+      btnText.value = 'Ubah';
+      var data = await DBHelper.instance.getPesertabyNik(nik as String);
+      ktp.text = data.ktp;
+      nama.text = data.name;
+      namaCetak.text = data.printed_name;
+      alamat.text = data.address;
+      nohp.text = data.phone_number;
+      meal.value = data.meal;
+      jenisKelamin.value = data.gender;
+      vihara.value = data.organization;
+      imagePath.value = data.photo;
+      isPhoto.value = true;
+      for (final region in listRegion) {
+        if (region.vihara == vihara.value) {
+          viharaId.value = region.id;
+          break;
+        }
+      }
+      var listTahun = jsonDecode(data.tahun_ikut) as List<dynamic>;
+      var tahun = 2015;
+      for (int i = 0; i < isChecked.length; i++) {
+        for (int j = 0; j < listTahun.length; j++) {
+          if (listTahun[j] == tahun) {
+            isChecked[i] = true;
+          }
+        }
+        tahun = tahun + 1;
+      }
+      print(isChecked);
+      print(listTahun);
+    } else {
+      title.value = 'Form Data';
+      btnText.value = 'Simpan';
+      vihara.value = listRegion[0].vihara;
+      viharaId.value = listRegion[0].id;
+      vihara.value = listRegion[0].vihara;
+      viharaId.value = listRegion[0].id;
+      ktp.text = generateRandomString(16);
+      nama.text = 'Adi Wirya';
+      namaCetak.text = 'Adi Wirya';
+      alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
+      nohp.text = '081234567890';
+      meal.value = 'V';
+      jenisKelamin.value = 'L';
+    }
 
     super.onInit();
   }
@@ -73,6 +107,66 @@ class FormController extends GetxController {
   }
 
   Future<void> submit() async {
+    if (isEdit.value) {
+      ubah();
+    } else {
+      simpan();
+    }
+    return;
+  }
+
+  Future<void> ubah() async {
+    final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      Snackbar().error('Input tidak valid');
+      return;
+    }
+    if (imagePath.value == '') {
+      Snackbar().error('Foto belum diambil');
+      return;
+    }
+    try {
+      final paths = await saveImage(File(imagePath.value), ktp.text);
+      List<String> tahun_ikut = [];
+      var tahun = 2015;
+      for (int i = 0; i < isChecked.length; i++) {
+        if (isChecked[i]) {
+          tahun_ikut.add(tahun.toString());
+        }
+        tahun = tahun + 1;
+      }
+      final data = Forms(
+        nik_koordinator: user.nik,
+        organization: vihara.value,
+        ktp: ktp.text,
+        name: nama.text,
+        printed_name: namaCetak.text,
+        gender: jenisKelamin.value,
+        address: alamat.text,
+        phone_number: nohp.text,
+        meal: meal.value,
+        photo: paths,
+        region_f_id: viharaId.value,
+        tahun_ikut: tahun_ikut.toString(),
+      );
+      await DBHelper.instance.replacePeserta(data);
+
+      await gs.write('User', user.toJson());
+      final databasePath = await getApplicationDocumentsDirectory();
+      final db = File(join(databasePath.path, 'asalhapuja.db'));
+      final directory = await getExternalStorageDirectory();
+      await db.copy('${directory!.path}/asalhapuja.db');
+      Snackbar().success('Data berhasil diubah');
+      const Duration(seconds: 3);
+      Get.offAllNamed(Routes.home);
+    } catch (e) {
+      Snackbar().error(e.toString());
+    }
+    return;
+  }
+
+  Future<void> simpan() async {
     final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
     final isValid = formKey.currentState!.validate();
     if (!isValid) {
@@ -95,6 +189,8 @@ class FormController extends GetxController {
         return;
       }
       final paths = await saveImage(File(imagePath.value), ktp.text);
+
+      //check
       var tahun = 2015;
       List<String> tahun_ikut = [];
       for (int i = 0; i < isChecked.length; i++) {
@@ -103,6 +199,7 @@ class FormController extends GetxController {
         }
         tahun = tahun + 1;
       }
+
       final data = Forms(
         nik_koordinator: user.nik,
         organization: vihara.value,
@@ -119,17 +216,15 @@ class FormController extends GetxController {
       );
       await DBHelper.instance.insertPeserta(data);
 
-      user
-        ..quota = user.quota - 1
-        ..sisa = user.sisa + 1;
-      await gs.write('User', user.toJson() as Map<String, dynamic>);
+      user.sisa = user.sisa - 1;
+      await gs.write('User', user.toJson());
       final databasePath = await getApplicationDocumentsDirectory();
       final db = File(join(databasePath.path, 'asalhapuja.db'));
       final directory = await getExternalStorageDirectory();
       await db.copy('${directory!.path}/asalhapuja.db');
       Snackbar().success('Data berhasil disimpan');
-      // Get.offAllNamed(Routes.home);
-      await Restart.restartApp();
+      const Duration(seconds: 3);
+      Get.offAllNamed(Routes.home);
     } catch (e) {
       Snackbar().error(e.toString());
     }
@@ -193,5 +288,16 @@ class FormController extends GetxController {
     print('$imagePath - $isPhoto');
     update();
     imagePath.refresh();
+  }
+
+  String generateRandomString(int length) {
+    final random = Random();
+    const availableChars = '1234567890';
+    final randomString = List.generate(
+      length,
+      (index) => availableChars[random.nextInt(availableChars.length)],
+    ).join();
+
+    return randomString;
   }
 }

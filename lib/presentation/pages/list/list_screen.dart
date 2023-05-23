@@ -2,6 +2,7 @@ import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:asalhapuja/domain/models/form.dart';
 import 'package:asalhapuja/presentation/pages/list/controllers/list_controller.dart';
 import 'package:asalhapuja/presentation/widget/mydropdownsearch.dart';
+import 'package:asalhapuja/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:remixicon/remixicon.dart';
@@ -53,6 +54,20 @@ class ListScreen extends GetView<ListController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
+                        Const.kouta,
+                        style: fs14gray,
+                      ),
+                      Text(
+                        '${controller.user.quota} ${Const.data}',
+                        style: fs14gray,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
                         Const.banyakData,
                         style: fs14gray,
                       ),
@@ -62,6 +77,36 @@ class ListScreen extends GetView<ListController> {
                           style: fs14gray,
                         ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Divider(color: Color(0xFFF0F1F3), thickness: 1),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 16,
+                            height: 16,
+                            color: ThemeColors.success,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(Const.dataServer),
+                        ],
+                      ),
+                      const SizedBox(width: 24),
+                      Row(
+                        children: [
+                          Container(
+                            width: 16,
+                            height: 16,
+                            color: ThemeColors.error,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(Const.dataLokal),
+                        ],
+                      )
                     ],
                   )
                 ],
@@ -75,9 +120,15 @@ class ListScreen extends GetView<ListController> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) =>
-                          listCard(
-                        peserta: controller.peserta[index],
-                        index: index + 1,
+                          GestureDetector(
+                        onTap: () => Get.toNamed(
+                          Routes.form,
+                          arguments: controller.peserta[index].ktp,
+                        ),
+                        child: listCard(
+                          peserta: controller.peserta[index],
+                          index: index + 1,
+                        ),
                       ),
                       itemCount: controller.peserta.length,
                     ),

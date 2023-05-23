@@ -13,6 +13,7 @@ class MyTextFormField extends StatelessWidget {
     this.hintText,
     this.onChanged,
     this.maxLength = 100,
+    this.enabled = true,
   });
 
   final TextEditingController controller;
@@ -24,10 +25,11 @@ class MyTextFormField extends StatelessWidget {
   final String? hintText;
   final ValueChanged<String>? onChanged;
   final int maxLength;
-
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: enabled,
       maxLength: maxLength,
       controller: controller,
       validator: validate ? emptyValue : null,

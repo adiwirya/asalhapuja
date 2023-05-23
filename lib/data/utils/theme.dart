@@ -3,6 +3,7 @@ import 'package:asalhapuja/data/utils/colors.dart';
 
 ThemeData asalha = ThemeData(
   useMaterial3: true,
+  fontFamily: 'OpenSans',
   textTheme: TextTheme(
     bodyLarge: TextStyle(color: ThemeColors.gray.shade900, fontSize: 16),
     bodyMedium: TextStyle(color: ThemeColors.gray.shade900, fontSize: 12),

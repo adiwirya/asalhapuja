@@ -9,4 +9,5 @@ class Routes {
   static const splash = '/splash';
   static const upload = '/upload';
   static const list = '/list';
+  static const edit = '/edit';
 }

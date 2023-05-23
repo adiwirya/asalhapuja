@@ -97,7 +97,6 @@ class DBHelper {
     await DBHelper.instance.database.then((db) async {
       data = await db.query(
         'peserta',
-        orderBy: 'isUpload',
         where: 'organization = ?',
         whereArgs: [vihara],
       );
@@ -107,6 +106,23 @@ class DBHelper {
     for (var i = 0; i < len; i++) {
       peserta.add(Forms.fromJson(data[i] as Map<String, dynamic>));
     }
+    return peserta;
+  }
+
+  Future<Forms> getPesertabyNik(String nik) async {
+    var data;
+    await DBHelper.instance.database.then((db) async {
+      data = await db.query(
+        'peserta',
+        orderBy: 'isUpload',
+        where: 'ktp = ?',
+        whereArgs: [nik],
+        limit: 1,
+      );
+    });
+
+    Forms peserta = Forms.fromJson(data[0] as Map<String, dynamic>);
+
     return peserta;
   }
 
@@ -144,6 +160,29 @@ class DBHelper {
     await DBHelper.instance.database.then((db) async {
       data = await db.rawInsert(
           'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+          [
+            peserta.ktp,
+            peserta.region_f_id,
+            peserta.nik_koordinator,
+            peserta.organization,
+            peserta.ktp,
+            peserta.name,
+            peserta.printed_name,
+            peserta.gender,
+            peserta.address,
+            peserta.phone_number,
+            peserta.meal,
+            peserta.photo,
+            peserta.tahun_ikut,
+          ]);
+    });
+  }
+
+  Future<void> replacePeserta(Forms peserta) async {
+    var data;
+    await DBHelper.instance.database.then((db) async {
+      data = await db.rawQuery(
+          'REPLACE INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
           [
             peserta.ktp,
             peserta.region_f_id,

@@ -36,5 +36,10 @@ class Nav {
       page: () => const ListScreen(),
       binding: ListFormControllerBinding(),
     ),
+    // GetPage(
+    //   name: Routes.edit,
+    //   page: () => const EditScreen(),
+    //   binding: EditFormControllerBinding(),
+    // ),
   ];
 }

@@ -1,3 +1,4 @@
+import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:asalhapuja/domain/db_helper.dart';
 import 'package:asalhapuja/domain/models/models.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class ListController extends GetxController {
   RxString vihara = 'Semua'.obs;
   RxInt viharaId = 0.obs;
   RxList<Forms> peserta = <Forms>[].obs;
+  final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
 
   @override
   void onInit() async {
@@ -17,6 +19,7 @@ class ListController extends GetxController {
       ..add(Region(id: 0, vihara: 'Semua'));
     peserta.value = await DBHelper.instance.getPesertaAll();
     print(peserta);
+    
     super.onInit();
   }
 
@@ -28,6 +31,8 @@ class ListController extends GetxController {
       peserta.value = await DBHelper.instance.getPeserta(value);
     }
   }
+
+  toDetail(String nik) {}
 
   @override
   void onClose() {

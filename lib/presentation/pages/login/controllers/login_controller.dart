@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:asalhapuja/domain/repository/server_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:restart_app/restart_app.dart';
 
 class LoginController extends GetxController {
   final client = Server(
@@ -44,7 +43,8 @@ class LoginController extends GetxController {
         final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
         if (user.nik == nik.text && user.password == password.text) {
           await gs.write('IsLogin', 1);
-          Get.offNamed(Routes.home);
+          Snackbar().success('Login Berhasil');
+          Get.offAllNamed(Routes.home);
         } else {
           Get.back();
           Snackbar().error('NIK atau Password Salah');
@@ -65,13 +65,14 @@ class LoginController extends GetxController {
         final res = await client.login(data);
         if (res.message == 'Success Login') {
           final user = User.fromJson(res.data as Map<String, dynamic>);
-          await gs.write('User', user.toJson() as Map<String, dynamic>);
+          user.sisa = user.quota;
+          await gs.write('User', user.toJson());
           await gs.write('IsLogin', 1);
           for (final region in user.regions) {
             await DBHelper.instance.insertRegion(region);
           }
-          await Restart.restartApp();
-          Get.offNamed(Routes.home);
+          // await Restart.restartApp();
+          Get.offAllNamed(Routes.home);
         } else {
           Get.back();
           Snackbar().error('NIK atau Password Salah');
