@@ -6,8 +6,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 
 Future<String> saveImage(File photo, String nik) async {
-  final directory = await getApplicationDocumentsDirectory();
-  final res = await photo.copy('${directory.path}/$nik.jpg');
+  final directory = await getExternalStorageDirectory();
+  final res = await photo.copy('${directory!.path}/$nik.jpg');
   log('res: $res');
   return res.path;
 }
