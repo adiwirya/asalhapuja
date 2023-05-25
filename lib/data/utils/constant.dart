@@ -55,5 +55,6 @@ class Const {
   static const String data = 'Data';
   static const String banyakData = 'Banyak Data';
   static const String kouta = 'Kouta';
+  static const String koutaSisa = 'Kouta Sisa';
   // static const String uploadData = ;
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -85,11 +86,9 @@ class FormController extends GetxController {
       btnText.value = 'Simpan';
       vihara.value = listRegion[0].vihara;
       viharaId.value = listRegion[0].id;
-      vihara.value = listRegion[0].vihara;
-      viharaId.value = listRegion[0].id;
       ktp.text = generateRandomString(16);
-      nama.text = 'Adi Wirya';
-      namaCetak.text = 'Adi Wirya';
+      nama.text = 'Dominic';
+      namaCetak.text = 'Dominic';
       alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
       nohp.text = '081234567890';
       meal.value = 'V';
@@ -158,8 +157,9 @@ class FormController extends GetxController {
       final directory = await getExternalStorageDirectory();
       await db.copy('${directory!.path}/asalhapuja.db');
       Snackbar().success('Data berhasil diubah');
-      const Duration(seconds: 3);
-      Get.offAllNamed(Routes.home);
+      await Timer(const Duration(seconds: 3), () {
+        Get.offAllNamed(Routes.home);
+      });
     } catch (e) {
       Snackbar().error(e.toString());
     }
@@ -184,7 +184,7 @@ class FormController extends GetxController {
         return;
       }
 
-      if (user.quota == 0) {
+      if (user.quota_sisa == 0) {
         Snackbar().error('Kuota ${vihara.value} sudah penuh');
         return;
       }
@@ -216,15 +216,16 @@ class FormController extends GetxController {
       );
       await DBHelper.instance.insertPeserta(data);
 
-      user.sisa = user.sisa - 1;
+      user.quota_sisa = user.quota_sisa - 1;
       await gs.write('User', user.toJson());
       final databasePath = await getApplicationDocumentsDirectory();
       final db = File(join(databasePath.path, 'asalhapuja.db'));
       final directory = await getExternalStorageDirectory();
       await db.copy('${directory!.path}/asalhapuja.db');
       Snackbar().success('Data berhasil disimpan');
-      const Duration(seconds: 3);
-      Get.offAllNamed(Routes.home);
+      await Timer(const Duration(seconds: 3), () {
+        Get.offAllNamed(Routes.home);
+      });
     } catch (e) {
       Snackbar().error(e.toString());
     }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -34,8 +35,11 @@ class UploadController extends GetxController {
     var check = await testupload();
     // Get.back();
     if (check == 1) {
-      Get.back();
-      Snackbar().success('Upload Selesai');
+      if (count.value == forms.length) {
+        Get.back();
+        Snackbar().success('Upload Selesai');
+        await Timer(const Duration(seconds: 3), () {});
+      }
     }
   }
 
@@ -44,17 +48,19 @@ class UploadController extends GetxController {
     if (connectivityResult == ConnectivityResult.none) {
       Get.back();
       Snackbar().error('Tidak ada koneksi internet');
+      await Timer(const Duration(seconds: 3), () {});
       return 0;
     }
     if (blmUpload.value == 0) {
       Get.back();
       Snackbar().error('Tidak ada data yang diupload');
+      await Timer(const Duration(seconds: 3), () {});
       return 0;
     }
     for (var i = 0; i < forms.length; i++) {
       try {
         if (forms[i].isUpload == 0) {
-          await client.form(
+          var log = await client.form(
             forms[i].region_f_id,
             forms[i].nik_koordinator,
             forms[i].organization,
@@ -65,9 +71,13 @@ class UploadController extends GetxController {
             forms[i].address,
             forms[i].phone_number,
             forms[i].meal,
+            forms[i].tahun_ikut,
             File(forms[i].photo),
           );
+          print(log);
           count = count + 1;
+          var msg = await DBHelper.instance.updatePeserta(forms[i].ktp);
+          log(msg);
         }
         print('Count $count');
       } on DioError catch (e) {
@@ -76,16 +86,20 @@ class UploadController extends GetxController {
           log('upload $i ${e.response!.statusCode}');
           var msg = await DBHelper.instance.updatePeserta(forms[i].ktp);
           log(msg);
+          count = count + 1;
 
           continue;
         } else {
-          Snackbar().error(e.message!);
+          Get.back();
           print(e.toString());
+          Snackbar().error(e.toString());
+          Timer(const Duration(seconds: 3), () {});
           continue;
         }
       } catch (e) {
-        // Get.back();
+        Get.back();
         Snackbar().error(e.toString());
+        await Timer(const Duration(seconds: 3), () {});
         continue;
       }
     }

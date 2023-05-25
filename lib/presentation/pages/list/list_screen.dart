@@ -58,7 +58,21 @@ class ListScreen extends GetView<ListController> {
                         style: fs14gray,
                       ),
                       Text(
-                        '${controller.user.quota} ${Const.data}',
+                        '${controller.user.quota_maksimal} ${Const.data}',
+                        style: fs14gray,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        Const.koutaSisa,
+                        style: fs14gray,
+                      ),
+                      Text(
+                        '${controller.user.quota_sisa} ${Const.data}',
                         style: fs14gray,
                       ),
                     ],

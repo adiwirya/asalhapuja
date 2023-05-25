@@ -65,7 +65,7 @@ class LoginController extends GetxController {
         final res = await client.login(data);
         if (res.message == 'Success Login') {
           final user = User.fromJson(res.data as Map<String, dynamic>);
-          user.sisa = user.quota;
+
           await gs.write('User', user.toJson());
           await gs.write('IsLogin', 1);
           for (final region in user.regions) {

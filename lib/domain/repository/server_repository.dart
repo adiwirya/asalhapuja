@@ -31,6 +31,7 @@ abstract class Server {
     @Part() String address,
     @Part() String phone_number,
     @Part() String meal,
+    @Part() String tahun_ikut,
     @Part() File photo,
   );
 }

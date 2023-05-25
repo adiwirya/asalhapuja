@@ -14,8 +14,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           .map((e) => Region.fromJson(e as Map<String, dynamic>))
           .toList(),
       kota: json['kota'] as String,
-      quota: json['quota'] as int,
-      sisa: json['sisa'] as int? ?? 0,
+      quota_maksimal: json['quota_maksimal'] as int,
+      quota_sisa: json['quota_sisa'] as int,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -23,7 +23,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'nama': instance.nama,
       'password': instance.password,
       'kota': instance.kota,
-      'quota': instance.quota,
-      'sisa': instance.sisa,
+      'quota_maksimal': instance.quota_maksimal,
+      'quota_sisa': instance.quota_sisa,
       'regions': instance.regions,
     };

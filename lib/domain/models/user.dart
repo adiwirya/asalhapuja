@@ -8,8 +8,8 @@ class User {
   String nama;
   String password;
   String kota;
-  int quota;
-  int sisa;
+  int quota_maksimal;
+  int quota_sisa;
   List<Region> regions;
 
   User({
@@ -18,8 +18,8 @@ class User {
     required this.nama,
     required this.regions,
     required this.kota,
-    required this.quota,
-    this.sisa = 0,
+    required this.quota_maksimal,
+    required this.quota_sisa,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -29,8 +29,8 @@ class User {
       'nama': nama,
       'password': password,
       'kota': kota,
-      'quota': quota,
-      'sisa': sisa,
+      'quota_maksimal': quota_maksimal,
+      'quota_sisa': quota_sisa,
       'regions': regions.map((region) => region.toJson()).toList(),
     };
   }
