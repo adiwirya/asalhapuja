@@ -9,6 +9,7 @@ import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class UploadController extends GetxController {
   RxList<Forms> forms = <Forms>[].obs;
@@ -18,9 +19,20 @@ class UploadController extends GetxController {
   final client = Server(
     Dio(
       BaseOptions(
-        contentType: 'application/json',
+        contentType: 'multipart/form-data',
       ),
-    ),
+    )..interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: true,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+          request: true,
+        ),
+      ),
   );
 
   @override
@@ -36,9 +48,14 @@ class UploadController extends GetxController {
     // Get.back();
     if (check == 1) {
       if (count.value == forms.length) {
+        blmUpload.value = await DBHelper.instance.getBlmUpload();
         Get.back();
         Snackbar().success('Upload Selesai');
         await Timer(const Duration(seconds: 3), () {});
+      } else {
+        blmUpload.value = await DBHelper.instance.getBlmUpload();
+        var gagal = forms.length - count.value;
+        Snackbar().error('Upload ada $gagal Gagal');
       }
     }
   }
@@ -59,6 +76,8 @@ class UploadController extends GetxController {
     }
     for (var i = 0; i < forms.length; i++) {
       try {
+        final result =
+            forms[i].tahun_ikut.replaceAll('[', '').replaceAll(']', '');
         if (forms[i].isUpload == 0) {
           var log = await client.form(
             forms[i].region_f_id,
@@ -71,7 +90,7 @@ class UploadController extends GetxController {
             forms[i].address,
             forms[i].phone_number,
             forms[i].meal,
-            forms[i].tahun_ikut,
+            result,
             File(forms[i].photo),
           );
           print(log);

@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:asalhapuja/domain/repository/server_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class LoginController extends GetxController {
   final client = Server(
@@ -17,7 +18,18 @@ class LoginController extends GetxController {
       BaseOptions(
         contentType: 'application/json',
       ),
-    ),
+    )..interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: true,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+          request: true,
+        ),
+      ),
   );
   final loginKey = GlobalKey<FormState>();
   TextEditingController nik = TextEditingController();
