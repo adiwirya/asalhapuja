@@ -246,10 +246,6 @@ class listCard extends StatelessWidget {
                         peserta.organization,
                         style: fs12gray,
                       ),
-                      Text(
-                        'Jakarta',
-                        style: fs12gray,
-                      ),
                       if (peserta.meal == 'V')
                         Text(
                           Const.vegetarian,

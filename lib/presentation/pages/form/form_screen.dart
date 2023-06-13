@@ -103,7 +103,7 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  Const.vihara,
+                  Const.kota,
                   style: fs14fw500,
                 ),
                 const SizedBox(height: 16),
