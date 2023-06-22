@@ -272,13 +272,12 @@ class listCard extends StatelessWidget {
                 ],
               ),
             );
-
             return check;
           }
         },
-        background: Container(
+        background: const ColoredBox(
           color: Colors.red,
-          child: const Icon(
+          child: Icon(
             Remix.delete_bin_line,
             color: Colors.white,
           ),
@@ -322,10 +321,28 @@ class listCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            peserta.name,
-                            style: fs14fw500,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                peserta.name,
+                                style: fs14fw500,
+                              ),
+                              if (peserta.isUpload == 1)
+                                Container(
+                                  width: 8,
+                                  height: 16,
+                                  color: ThemeColors.success,
+                                )
+                              else
+                                Container(
+                                  width: 8,
+                                  height: 16,
+                                  color: ThemeColors.error,
+                                ),
+                            ],
                           ),
+                          const SizedBox(width: 8),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -345,10 +362,12 @@ class listCard extends StatelessWidget {
                                 ),
                             ],
                           ),
+                          const SizedBox(width: 8),
                           Text(
                             peserta.organization,
                             style: fs12gray,
                           ),
+                          const SizedBox(width: 8),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -363,6 +382,8 @@ class listCard extends StatelessWidget {
                                   style: fs12gray,
                                 ),
                               Switch(
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
                                 activeColor: Colors.white,
                                 activeTrackColor: ThemeColors.success,
                                 inactiveThumbColor: ThemeColors.gray,
@@ -383,20 +404,6 @@ class listCard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: width * 0.89, top: height * 0.035),
-              child: peserta.isUpload == 1
-                  ? Container(
-                      width: 8,
-                      height: 16,
-                      color: ThemeColors.success,
-                    )
-                  : Container(
-                      width: 8,
-                      height: 16,
-                      color: ThemeColors.error,
-                    ),
-            )
           ],
         ),
       ),

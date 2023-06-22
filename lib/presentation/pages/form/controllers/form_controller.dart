@@ -148,6 +148,7 @@ class FormController extends GetxController {
         photo: paths,
         region_f_id: viharaId.value,
         tahun_ikut: tahun_ikut.toString(),
+        active: 1,
       );
       await DBHelper.instance.replacePeserta(data);
 
@@ -212,6 +213,7 @@ class FormController extends GetxController {
         photo: paths,
         region_f_id: viharaId.value,
         tahun_ikut: tahun_ikut.toString(),
+        active: 1,
       );
       await DBHelper.instance.insertPeserta(data);
 

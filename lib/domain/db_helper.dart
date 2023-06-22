@@ -62,7 +62,7 @@ class DBHelper {
     photo           TEXT        NOT NULL,
     tahun_ikut      TEXT        NOT NULL,
     isUpload        INTEGER (1) DEFAULT (0), 
-    active        INTEGER (1) DEFAULT (1) 
+    active        INTEGER (1)   NOT NULL 
     )
     WITHOUT ROWID;
     ''');
@@ -160,7 +160,7 @@ class DBHelper {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.rawInsert(
-          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
           [
             peserta.ktp,
             peserta.region_f_id,
@@ -175,6 +175,7 @@ class DBHelper {
             peserta.meal,
             peserta.photo,
             peserta.tahun_ikut,
+            peserta.active,
           ]);
     });
   }

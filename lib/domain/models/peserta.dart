@@ -46,7 +46,7 @@ class Peserta {
         meal: json['meal'] as String,
         photo: json['ktp'] + '.jpg' as String,
         region_f_id: json['regions_F_id'] as int,
-        tahun_ikut: json['tahun_ikut'] as String,
+        tahun_ikut: '[${json['tahun_ikut']}]' as String,
         active: json['active'] as int,
       );
 

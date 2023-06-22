@@ -17,7 +17,7 @@ class Forms {
   String meal;
   String photo;
   String tahun_ikut;
-  int active = 1;
+  int active;
   int isUpload = 0;
 
   Forms({
@@ -33,6 +33,7 @@ class Forms {
     required this.photo,
     required this.region_f_id,
     required this.tahun_ikut,
+    required this.active,
   });
 
   factory Forms.fromJson(Map<String, dynamic> json) => _$FormsFromJson(json);

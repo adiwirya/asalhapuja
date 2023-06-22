@@ -67,6 +67,19 @@ class HomeScreen extends GetView<HomeController> {
             text: Const.listData,
             onPressed: controller.list,
           ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Center(
+                  child: Text(
+                    '${Const.version} ${Const.appVersion}',
+                    style: fs16fw500,
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
