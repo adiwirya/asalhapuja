@@ -329,6 +329,89 @@ class FailedDialog extends StatelessWidget {
   }
 }
 
+class HapusDialog extends StatelessWidget {
+  const HapusDialog({
+    required this.onPressed,
+    super.key,
+  });
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Material(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Lottie.asset(Assets.assetsLottieNotFound),
+                    const Text(
+                      'Hapus Data ?',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Anda yakin ingin menghapus detail data terpilih ?',
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Theme(
+                            data: Theme.of(context)
+                                .copyWith(elevatedButtonTheme: buttonRed),
+                            child: ElevatedButton(
+                              onPressed: () => onPressed,
+                              child: const Text(
+                                'Hapus',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Theme(
+                            data: Theme.of(context)
+                                .copyWith(elevatedButtonTheme: buttonSuccess),
+                            child: ElevatedButton(
+                              onPressed: Get.back,
+                              child: const Text(
+                                'Kembali',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class DataFound extends StatelessWidget {
   const DataFound({super.key});
 

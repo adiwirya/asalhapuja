@@ -57,6 +57,7 @@ class _Server implements Server {
     String phone_number,
     String meal,
     String tahun_ikut,
+    int active,
     File photo,
   ) async {
     const _extra = <String, dynamic>{};
@@ -106,6 +107,10 @@ class _Server implements Server {
     _data.fields.add(MapEntry(
       'tahun_ikut[]',
       tahun_ikut,
+    ));
+    _data.fields.add(MapEntry(
+      'active',
+      active.toString(),
     ));
     _data.files.add(MapEntry(
       'photo',

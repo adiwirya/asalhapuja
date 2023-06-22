@@ -39,8 +39,9 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    password.text = 'AsalHapujaF2023';
-    nik.text = '0000000000000001';
+    // password.text = 'AsalHapujaF2023';
+    // nik.text = '3323104211990002';
+    // nik.text = '0000000000000001';
   }
 
   Future<void> ceklogin() async {
@@ -76,12 +77,19 @@ class LoginController extends GetxController {
         };
         final res = await client.login(data);
         if (res.message == 'Success Login') {
+          await gs.write('User', res.data);
           final user = User.fromJson(res.data as Map<String, dynamic>);
 
-          await gs.write('User', user.toJson());
           await gs.write('IsLogin', 1);
           for (final region in user.regions) {
             await DBHelper.instance.insertRegion(region);
+          }
+          for (final peserta in user.peserta) {
+            var form = Forms.fromJson(peserta.toJson());
+            await DBHelper.instance.insertPeserta(form);
+            await DBHelper.instance.updatePeserta(form.ktp);
+            await DBHelper.instance.updateFotoPath(form.ktp, form.photo);
+            await downloadImage(form.photo);
           }
           // await Restart.restartApp();
           Get.offAllNamed(Routes.home);

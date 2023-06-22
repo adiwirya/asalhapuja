@@ -17,6 +17,7 @@ class Forms {
   String meal;
   String photo;
   String tahun_ikut;
+  int active = 1;
   int isUpload = 0;
 
   Forms({

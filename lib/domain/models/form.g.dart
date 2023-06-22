@@ -19,7 +19,9 @@ Forms _$FormsFromJson(Map<String, dynamic> json) => Forms(
       photo: json['photo'] as String,
       region_f_id: json['region_f_id'] as int,
       tahun_ikut: json['tahun_ikut'] as String,
-    )..isUpload = json['isUpload'] as int;
+    )
+      ..active = json['active'] as int
+      ..isUpload = json['isUpload'] as int;
 
 Map<String, dynamic> _$FormsToJson(Forms instance) => <String, dynamic>{
       'region_f_id': instance.region_f_id,
@@ -34,5 +36,6 @@ Map<String, dynamic> _$FormsToJson(Forms instance) => <String, dynamic>{
       'meal': instance.meal,
       'photo': instance.photo,
       'tahun_ikut': instance.tahun_ikut,
+      'active': instance.active,
       'isUpload': instance.isUpload,
     };

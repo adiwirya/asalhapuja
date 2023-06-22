@@ -91,6 +91,7 @@ class UploadController extends GetxController {
             forms[i].phone_number,
             forms[i].meal,
             result,
+            forms[i].active,
             File(forms[i].photo),
           );
           print(log);

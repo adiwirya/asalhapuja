@@ -86,13 +86,13 @@ class FormController extends GetxController {
       btnText.value = 'Simpan';
       vihara.value = listRegion[0].vihara;
       viharaId.value = listRegion[0].id;
-      ktp.text = generateRandomString(16);
-      nama.text = 'Dominic';
-      namaCetak.text = 'Dominic';
-      alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
-      nohp.text = '081234567890';
-      meal.value = 'V';
-      jenisKelamin.value = 'L';
+      // ktp.text = generateRandomString(16);
+      // nama.text = 'Dominic';
+      // namaCetak.text = 'Dominic';
+      // alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
+      // nohp.text = '081234567890';
+      // meal.value = 'V';
+      // jenisKelamin.value = 'L';
     }
 
     super.onInit();
@@ -151,7 +151,6 @@ class FormController extends GetxController {
       );
       await DBHelper.instance.replacePeserta(data);
 
-      await gs.write('User', user.toJson());
       final databasePath = await getApplicationDocumentsDirectory();
       final db = File(join(databasePath.path, 'asalhapuja.db'));
       final directory = await getExternalStorageDirectory();
@@ -217,7 +216,9 @@ class FormController extends GetxController {
       await DBHelper.instance.insertPeserta(data);
 
       user.quota_sisa = user.quota_sisa - 1;
-      await gs.write('User', user.toJson());
+      var temp = gs.read('User');
+      temp['quota_sisa'] = user.quota_sisa;
+      await gs.write('User', temp);
       final databasePath = await getApplicationDocumentsDirectory();
       final db = File(join(databasePath.path, 'asalhapuja.db'));
       final directory = await getExternalStorageDirectory();

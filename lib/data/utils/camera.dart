@@ -1,9 +1,25 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:asalhapuja/data/utils/url.dart';
+import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
+
+Future<void> downloadImage(String photo) async {
+  final directory = await getExternalStorageDirectory();
+  var response = await Dio().get(
+    BaseURL.image + photo,
+    options: Options(
+      responseType: ResponseType.bytes,
+    ),
+  );
+  File file = File('${directory!.path}/$photo');
+  file.writeAsBytesSync(response.data as List<int>);
+  
+
+}
 
 Future<String> saveImage(File photo, String nik) async {
   final directory = await getExternalStorageDirectory();

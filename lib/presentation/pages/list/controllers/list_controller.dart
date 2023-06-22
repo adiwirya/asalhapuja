@@ -1,6 +1,8 @@
 import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:asalhapuja/domain/db_helper.dart';
 import 'package:asalhapuja/domain/models/models.dart';
+import 'package:asalhapuja/presentation/widget/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListController extends GetxController {
@@ -10,8 +12,8 @@ class ListController extends GetxController {
   RxString vihara = 'Semua'.obs;
   RxInt viharaId = 0.obs;
   RxList<Forms> peserta = <Forms>[].obs;
-  final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
-
+  User user = User.fromJson(gs.read('User') as Map<String, dynamic>);
+  RxInt sisa = 0.obs;
   @override
   void onInit() async {
     listvihara
@@ -19,7 +21,7 @@ class ListController extends GetxController {
       ..add(Region(id: 0, vihara: 'Semua'));
     peserta.value = await DBHelper.instance.getPesertaAll();
     print(peserta);
-    
+    sisa.value = user.quota_sisa;
     super.onInit();
   }
 
@@ -37,5 +39,28 @@ class ListController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  void hapus(String id) async {
+    await DBHelper.instance.deletePeserta(id);
+    user.quota_sisa = user.quota_sisa + 1;
+    sisa.value = user.quota_sisa;
+    var temp = gs.read('User');
+    temp['quota_sisa'] = user.quota_sisa;
+    await gs.write('User', temp);
+    peserta.value = await DBHelper.instance.getPesertaAll();
+    Snackbar().success('Data berhasil dihapus');
+    update();
+  }
+
+  void setActive(String ktp, int active) async {
+    if (active == 1) {
+      active = 0;
+    } else {
+      active = 1;
+    }
+    await DBHelper.instance.updateActive(ktp, active);
+    peserta.value = await DBHelper.instance.getPesertaAll();
+    update();
   }
 }

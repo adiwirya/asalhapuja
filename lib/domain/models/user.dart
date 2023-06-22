@@ -1,4 +1,5 @@
 import 'package:asalhapuja/domain/models/models.dart';
+import 'package:asalhapuja/domain/models/peserta.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'user.g.dart';
 
@@ -11,6 +12,7 @@ class User {
   int quota_maksimal;
   int quota_sisa;
   List<Region> regions;
+  List<Peserta> peserta;
 
   User({
     required this.nik,
@@ -20,6 +22,7 @@ class User {
     required this.kota,
     required this.quota_maksimal,
     required this.quota_sisa,
+    required this.peserta,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -32,6 +35,7 @@ class User {
       'quota_maksimal': quota_maksimal,
       'quota_sisa': quota_sisa,
       'regions': regions.map((region) => region.toJson()).toList(),
+      'peserta': peserta.map((peserta) => peserta.toJson()).toList(),
     };
   }
 }

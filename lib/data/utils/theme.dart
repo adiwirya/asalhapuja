@@ -71,6 +71,31 @@ ElevatedButtonThemeData buttonGreen = ElevatedButtonThemeData(
   ),
 );
 
+ElevatedButtonThemeData buttonRed = ElevatedButtonThemeData(
+  style: ElevatedButton.styleFrom(
+    foregroundColor: Colors.white,
+    backgroundColor: ThemeColors.error.shade500,
+    textStyle: const TextStyle(fontWeight: FontWeight.w500),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    disabledBackgroundColor: ThemeColors.gray.shade200,
+    disabledForegroundColor: Colors.white,
+  ),
+);
+ElevatedButtonThemeData buttonSuccess = ElevatedButtonThemeData(
+  style: ElevatedButton.styleFrom(
+    foregroundColor: Colors.white,
+    backgroundColor: ThemeColors.success.shade500,
+    textStyle: const TextStyle(fontWeight: FontWeight.w500),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    disabledBackgroundColor: ThemeColors.gray.shade200,
+    disabledForegroundColor: Colors.white,
+  ),
+);
+
 ElevatedButtonThemeData buttonYellow = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
     minimumSize: const Size.fromHeight(50),

@@ -2,6 +2,7 @@ import 'package:asalhapuja/data/utils/utils.dart';
 import 'package:asalhapuja/domain/models/form.dart';
 import 'package:asalhapuja/presentation/pages/list/controllers/list_controller.dart';
 import 'package:asalhapuja/presentation/widget/mydropdownsearch.dart';
+import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:asalhapuja/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,9 +72,11 @@ class ListScreen extends GetView<ListController> {
                         Const.koutaSisa,
                         style: fs14gray,
                       ),
-                      Text(
-                        '${controller.user.quota_sisa} ${Const.data}',
-                        style: fs14gray,
+                      Obx(
+                        () => Text(
+                          '${controller.sisa} ${Const.data}',
+                          style: fs14gray,
+                        ),
                       ),
                     ],
                   ),
@@ -172,6 +175,7 @@ class listCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = ListController.to;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -180,89 +184,206 @@ class listCard extends StatelessWidget {
         horizontal: 16,
         vertical: 4,
       ),
-      child: Stack(
-        children: [
-          Card(
-            surfaceTintColor: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: Dismissible(
+        key: UniqueKey(),
+        onDismissed: (direction) {
+          controller.hapus(peserta.ktp);
+          return;
+        },
+        confirmDismiss: (direction) async {
+          bool check = false;
+          if (direction == DismissDirection.endToStart) {
+            await Get.dialog(
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: ThemeColors.warning,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                          Text(
-                            '$index',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: DecoratedBox(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
                       ),
-                    ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Material(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Lottie.asset(Assets.assetsLottieNotFound),
+                              const Text(
+                                'Hapus Data ?',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              const Text(
+                                'Anda yakin ingin menghapus detail data terpilih ?',
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Theme(
+                                      data: Theme.of(context).copyWith(
+                                        elevatedButtonTheme: buttonRed,
+                                      ),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          check = true;
+                                          Get.back();
+                                        },
+                                        child: const Text(
+                                          'Hapus',
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Theme(
+                                      data: Theme.of(context).copyWith(
+                                          elevatedButtonTheme: buttonSuccess),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          check = false;
+                                          Get.back();
+                                        },
+                                        child: const Text(
+                                          'Kembali',
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        peserta.name,
-                        style: fs14fw500,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            peserta.ktp,
-                            style: fs12gray,
-                          ),
-                          if (peserta.gender == 'L')
-                            Text(
-                              '(Laki-Laki)',
-                              style: fs12gray,
-                            )
-                          else
-                            Text(
-                              '(Perempuan)',
-                              style: fs12gray,
-                            ),
-                        ],
-                      ),
-                      Text(
-                        peserta.organization,
-                        style: fs12gray,
-                      ),
-                      if (peserta.meal == 'V')
-                        Text(
-                          Const.vegetarian,
-                          style: fs12gray,
-                        )
-                      else
-                        Text(
-                          Const.nonVegetarian,
-                          style: fs12gray,
-                        )
-                    ],
-                  ))
                 ],
               ),
-            ),
+            );
+
+            return check;
+          }
+        },
+        background: Container(
+          color: Colors.red,
+          child: const Icon(
+            Remix.delete_bin_line,
+            color: Colors.white,
           ),
-          Padding(
+        ),
+        child: Stack(
+          children: [
+            Card(
+              surfaceTintColor: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: ThemeColors.warning,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                            Text(
+                              '$index',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            peserta.name,
+                            style: fs14fw500,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                peserta.ktp,
+                                style: fs12gray,
+                              ),
+                              if (peserta.gender == 'L')
+                                Text(
+                                  '(Laki-Laki)',
+                                  style: fs12gray,
+                                )
+                              else
+                                Text(
+                                  '(Perempuan)',
+                                  style: fs12gray,
+                                ),
+                            ],
+                          ),
+                          Text(
+                            peserta.organization,
+                            style: fs12gray,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              if (peserta.meal == 'V')
+                                Text(
+                                  Const.vegetarian,
+                                  style: fs12gray,
+                                )
+                              else
+                                Text(
+                                  Const.nonVegetarian,
+                                  style: fs12gray,
+                                ),
+                              Switch(
+                                activeColor: Colors.white,
+                                activeTrackColor: ThemeColors.success,
+                                inactiveThumbColor: ThemeColors.gray,
+                                value: peserta.active == 1 ? true : false,
+                                onChanged: (value) {
+                                  controller.setActive(
+                                    peserta.ktp,
+                                    peserta.active,
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Padding(
               padding: EdgeInsets.only(left: width * 0.89, top: height * 0.035),
               child: peserta.isUpload == 1
                   ? Container(
@@ -274,8 +395,10 @@ class listCard extends StatelessWidget {
                       width: 8,
                       height: 16,
                       color: ThemeColors.error,
-                    ))
-        ],
+                    ),
+            )
+          ],
+        ),
       ),
     );
   }

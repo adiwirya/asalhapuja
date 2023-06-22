@@ -61,7 +61,8 @@ class DBHelper {
     meal            TEXT (2)    NOT NULL,
     photo           TEXT        NOT NULL,
     tahun_ikut      TEXT        NOT NULL,
-    isUpload        INTEGER (1) DEFAULT (0) 
+    isUpload        INTEGER (1) DEFAULT (0), 
+    active        INTEGER (1) DEFAULT (1) 
     )
     WITHOUT ROWID;
     ''');
@@ -257,5 +258,41 @@ class DBHelper {
       );
     });
     return 'Perserta Upload Success';
+  }
+
+  Future<String> updateFotoPath(String id, String foto) async {
+    final directory = await getExternalStorageDirectory();
+    await DBHelper.instance.database.then((db) async {
+      await db.update(
+        'peserta',
+        {'photo': '${directory!.path}/$foto'},
+        where: 'nik = ?',
+        whereArgs: [id],
+      );
+    });
+    return 'Perserta PathFoto Updated';
+  }
+
+  Future<void> updateActive(String ktp, int active) async {
+    await DBHelper.instance.database.then(
+      (db) async {
+        await db.update(
+          'peserta',
+          {'active': active, 'isUpload': 0},
+          where: 'ktp = ?',
+          whereArgs: [ktp],
+        );
+      },
+    );
+  }
+
+  Future<void> deletePeserta(String id) async {
+    await DBHelper.instance.database.then((db) async {
+      await db.delete(
+        'peserta',
+        where: 'nik = ?',
+        whereArgs: [id],
+      );
+    });
   }
 }
