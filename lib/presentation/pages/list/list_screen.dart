@@ -185,6 +185,7 @@ class listCard extends StatelessWidget {
         vertical: 4,
       ),
       child: Dismissible(
+        direction: DismissDirection.endToStart,
         key: UniqueKey(),
         onDismissed: (direction) {
           controller.hapus(peserta.ktp);
