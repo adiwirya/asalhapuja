@@ -324,9 +324,11 @@ class listCard extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                peserta.name,
-                                style: fs14fw500,
+                              Expanded(
+                                child: Text(
+                                  peserta.name,
+                                  style: fs14fw500,
+                                ),
                               ),
                               if (peserta.isUpload == 1)
                                 Container(
@@ -381,19 +383,25 @@ class listCard extends StatelessWidget {
                                   Const.nonVegetarian,
                                   style: fs12gray,
                                 ),
-                              Switch(
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
-                                activeColor: Colors.white,
-                                activeTrackColor: ThemeColors.success,
-                                inactiveThumbColor: ThemeColors.gray,
-                                value: peserta.active == 1 ? true : false,
-                                onChanged: (value) {
-                                  controller.setActive(
-                                    peserta.ktp,
-                                    peserta.active,
-                                  );
-                                },
+                              SizedBox(
+                                height: 26,
+                                child: FittedBox(
+                                  fit: BoxFit.fill,
+                                  child: Switch(
+                                    materialTapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    activeColor: Colors.white,
+                                    activeTrackColor: ThemeColors.success,
+                                    inactiveThumbColor: ThemeColors.gray,
+                                    value: peserta.active == 1 ? true : false,
+                                    onChanged: (value) {
+                                      controller.setActive(
+                                        peserta.ktp,
+                                        peserta.active,
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
                             ],
                           ),

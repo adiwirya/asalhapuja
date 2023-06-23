@@ -56,11 +56,22 @@ class ListController extends GetxController {
   void setActive(String ktp, int active) async {
     if (active == 1) {
       active = 0;
+      user.quota_sisa = user.quota_sisa + 1;
+      sisa.value = user.quota_sisa;
+      var temp = gs.read('User');
+      temp['quota_sisa'] = user.quota_sisa;
+      await gs.write('User', temp);
     } else {
       active = 1;
+      user.quota_sisa = user.quota_sisa - 1;
+      sisa.value = user.quota_sisa;
+      var temp = gs.read('User');
+      temp['quota_sisa'] = user.quota_sisa;
+      await gs.write('User', temp);
     }
     await DBHelper.instance.updateActive(ktp, active);
     peserta.value = await DBHelper.instance.getPesertaAll();
+
     update();
   }
 }
