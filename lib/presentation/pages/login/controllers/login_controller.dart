@@ -39,8 +39,8 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    password.text = 'AsalHapujaF2023';
-    nik.text = '0000000000000001';
+    // password.text = 'AsalHapujaF2023';
+    // nik.text = '0000000000000001';
   }
 
   Future<void> ceklogin() async {

@@ -87,12 +87,12 @@ class FormController extends GetxController {
       vihara.value = listRegion[0].vihara;
       viharaId.value = listRegion[0].id;
       ktp.text = generateRandomString(16);
-      nama.text = 'Dominic';
-      namaCetak.text = 'Dominic';
-      alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
-      nohp.text = '081234567890';
-      meal.value = 'V';
-      jenisKelamin.value = 'L';
+      // nama.text = 'Dominic';
+      // namaCetak.text = 'Dominic';
+      // alamat.text = 'Jl. Raya Cipinang Besar Selatan No. 1';
+      // nohp.text = '081234567890';
+      // meal.value = 'V';
+      // jenisKelamin.value = 'L';
     }
 
     super.onInit();
