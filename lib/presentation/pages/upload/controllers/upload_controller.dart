@@ -9,6 +9,8 @@ import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class UploadController extends GetxController {
@@ -43,6 +45,15 @@ class UploadController extends GetxController {
   }
 
   void upload() async {
+    final databasePath = await getApplicationDocumentsDirectory();
+    final directory = await getExternalStorageDirectory();
+
+    await DBHelper.instance.closeDB();
+    final dbpat = File(join(databasePath.path, 'asalhapuja.db'));
+    await dbpat.copy('${directory!.path}/asahapulja.db');
+    final db = File(join(directory.path, 'asahapulja.db'));
+    await DBHelper.instance.openDB();
+
     Get.dialog(const LoadingDialog());
     var check = await testupload();
     // Get.back();

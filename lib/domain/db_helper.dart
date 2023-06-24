@@ -258,4 +258,23 @@ class DBHelper {
     });
     return 'Perserta Upload Success';
   }
+
+  Future<void> closeDB() async {
+    await DBHelper.instance.database.then((db) async {
+      await db.close();
+    });
+  }
+
+  Future<void> openDB() async {
+    final databasePath = await getApplicationDocumentsDirectory();
+    final path = join(databasePath.path, 'asalhapuja.db');
+
+    log('path: $path');
+
+    _database = await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+    );
+  }
 }
