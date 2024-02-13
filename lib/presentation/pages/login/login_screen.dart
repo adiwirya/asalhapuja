@@ -57,7 +57,7 @@ class LoginScreen extends GetView<LoginController> {
                 onPressed: controller.ceklogin,
                 text: Const.masuk,
               ),
-              const LogoVer(logo: false)
+              const LogoVer(logo: false),
             ],
           ),
         ),

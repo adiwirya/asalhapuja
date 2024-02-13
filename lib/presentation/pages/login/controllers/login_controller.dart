@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:asalhapuja/data/utils/utils.dart';
@@ -5,6 +6,7 @@ import 'package:asalhapuja/domain/db_helper.dart';
 import 'package:asalhapuja/domain/models/models.dart';
 import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:asalhapuja/routes/app_routes.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:asalhapuja/domain/repository/server_repository.dart';
@@ -22,12 +24,7 @@ class LoginController extends GetxController {
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
-          responseBody: true,
           responseHeader: true,
-          error: true,
-          compact: true,
-          maxWidth: 90,
-          request: true,
         ),
       ),
   );
@@ -39,25 +36,28 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // password.text = 'AsalHapujaF2023';
-    // nik.text = '3323104211990002';
-    // nik.text = '0000000000000001';
+    if (kDebugMode) {
+      password.text = 'AsalHapujaF2023';
+      nik.text = '0000000000000001';
+    }
   }
 
   Future<void> ceklogin() async {
+    await DBHelper.instance.openDB();
     try {
       if (!loginKey.currentState!.validate()) {
         Snackbar().error('Input Tidak valid');
         return;
       }
-      Get.dialog(const LoadingDialog());
+      unawaited(Get.dialog(const LoadingDialog()));
       if (gs.read('User') != null) {
         log('offline');
         final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
         if (user.nik == nik.text && user.password == password.text) {
           await gs.write('IsLogin', 1);
           Snackbar().success('Login Berhasil');
-          Get.offAllNamed(Routes.home);
+          await DBHelper.instance.closeDB();
+          await Get.offAllNamed(Routes.home);
         } else {
           Get.back();
           Snackbar().error('NIK atau Password Salah');
@@ -85,14 +85,15 @@ class LoginController extends GetxController {
             await DBHelper.instance.insertRegion(region);
           }
           for (final peserta in user.peserta) {
-            var form = Forms.fromJson(peserta.toJson());
+            final form = Forms.fromJson(peserta.toJson());
             await DBHelper.instance.insertPeserta(form);
             await DBHelper.instance.updatePeserta(form.ktp);
             await DBHelper.instance.updateFotoPath(form.ktp, form.photo);
             await downloadImage(form.photo);
           }
           // await Restart.restartApp();
-          Get.offAllNamed(Routes.home);
+          await DBHelper.instance.closeDB();
+          await Get.offAllNamed(Routes.home);
         } else {
           Get.back();
           Snackbar().error('NIK atau Password Salah');

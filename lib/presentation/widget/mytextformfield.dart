@@ -14,6 +14,7 @@ class MyTextFormField extends StatelessWidget {
     this.onChanged,
     this.maxLength = 100,
     this.enabled = true,
+    this.keyType = TextInputType.text,
   });
 
   final TextEditingController controller;
@@ -26,9 +27,11 @@ class MyTextFormField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final int maxLength;
   final bool enabled;
+  final TextInputType keyType;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyType,
       enabled: enabled,
       maxLength: maxLength,
       controller: controller,

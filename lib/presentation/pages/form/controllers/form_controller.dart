@@ -34,7 +34,7 @@ class FormController extends GetxController {
   RxString imagePath = ''.obs;
   RxList<Region> listRegion = <Region>[].obs;
   RxList<bool> isChecked =
-      [false, false, false, false, false, false, false, false].obs;
+      [false, false, false, false, false, false, false, false, false].obs;
   final client = Server(
     Dio(
       BaseOptions(
@@ -43,8 +43,8 @@ class FormController extends GetxController {
     ),
   );
   @override
-  void onInit() async {
-    var nik = Get.arguments;
+  Future<void> onInit() async {
+    final nik = Get.arguments;
     final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
     listRegion.value = user.regions;
     print(nik);
@@ -52,7 +52,9 @@ class FormController extends GetxController {
       isEdit.value = true;
       title.value = 'Edit Data';
       btnText.value = 'Ubah';
-      var data = await DBHelper.instance.getPesertabyNik(nik as String);
+      await DBHelper.instance.openDB();
+      final data = await DBHelper.instance.getPesertabyNik(nik as String);
+      await DBHelper.instance.closeDB();
       ktp.text = data.ktp;
       nama.text = data.name;
       namaCetak.text = data.printed_name;
@@ -69,10 +71,10 @@ class FormController extends GetxController {
           break;
         }
       }
-      var listTahun = jsonDecode(data.tahun_ikut) as List<dynamic>;
+      final listTahun = jsonDecode(data.tahun_ikut) as List<dynamic>;
       var tahun = 2015;
-      for (int i = 0; i < isChecked.length; i++) {
-        for (int j = 0; j < listTahun.length; j++) {
+      for (var i = 0; i < isChecked.length; i++) {
+        for (var j = 0; j < listTahun.length; j++) {
           if (listTahun[j] == tahun) {
             isChecked[i] = true;
           }
@@ -107,31 +109,39 @@ class FormController extends GetxController {
 
   Future<void> submit() async {
     if (isEdit.value) {
-      ubah();
+      await ubah();
     } else {
-      simpan();
+      await simpan();
     }
     return;
   }
 
   Future<void> ubah() async {
     final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
-    final isValid = formKey.currentState!.validate();
-    if (!isValid) {
-      Snackbar().error('Input tidak valid');
+    if (meal.value == '') {
+      Snackbar().error('Jenis Makanan Wajib Diisi');
+      return;
+    }
+    if (jenisKelamin.value == '') {
+      Snackbar().error('Jenis Kelamin Wajib Diisi');
       return;
     }
     if (imagePath.value == '') {
       Snackbar().error('Foto belum diambil');
       return;
     }
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      Snackbar().error('Input masih ada yang kosong');
+      return;
+    }
     try {
       final paths = await saveImage(File(imagePath.value), ktp.text);
-      List<String> tahun_ikut = [];
+      final tahunIkut = <String>[];
       var tahun = 2015;
-      for (int i = 0; i < isChecked.length; i++) {
+      for (var i = 0; i < isChecked.length; i++) {
         if (isChecked[i]) {
-          tahun_ikut.add(tahun.toString());
+          tahunIkut.add(tahun.toString());
         }
         tahun = tahun + 1;
       }
@@ -147,17 +157,18 @@ class FormController extends GetxController {
         meal: meal.value,
         photo: paths,
         region_f_id: viharaId.value,
-        tahun_ikut: tahun_ikut.toString(),
+        tahun_ikut: tahunIkut.toString(),
         active: 1,
       );
+      await DBHelper.instance.openDB();
       await DBHelper.instance.replacePeserta(data);
-
+      await DBHelper.instance.closeDB();
       final databasePath = await getApplicationDocumentsDirectory();
       final db = File(join(databasePath.path, 'asalhapuja.db'));
       final directory = await getExternalStorageDirectory();
       await db.copy('${directory!.path}/asalhapuja.db');
       Snackbar().success('Data berhasil diubah');
-      await Timer(const Duration(seconds: 3), () {
+      Timer(const Duration(seconds: 3), () {
         Get.offAllNamed(Routes.home);
       });
     } catch (e) {
@@ -168,17 +179,27 @@ class FormController extends GetxController {
 
   Future<void> simpan() async {
     final user = User.fromJson(gs.read('User') as Map<String, dynamic>);
-    final isValid = formKey.currentState!.validate();
-    if (!isValid) {
-      Snackbar().error('Input tidak valid');
+    if (meal.value == '') {
+      Snackbar().error('Jenis Makanan Wajib Diisi');
+      return;
+    }
+    if (jenisKelamin.value == '') {
+      Snackbar().error('Jenis Kelamin Wajib Diisi');
       return;
     }
     if (imagePath.value == '') {
       Snackbar().error('Foto belum diambil');
       return;
     }
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      Snackbar().error('Input masih ada yang kosong');
+      return;
+    }
     try {
+      await DBHelper.instance.openDB();
       final check = await DBHelper.instance.checkNik(ktp.text);
+      await DBHelper.instance.closeDB();
       if (check > 0) {
         Snackbar().error('NIK sudah terdaftar');
         return;
@@ -192,10 +213,10 @@ class FormController extends GetxController {
 
       //check
       var tahun = 2015;
-      List<String> tahun_ikut = [];
-      for (int i = 0; i < isChecked.length; i++) {
+      final tahunIkut = <String>[];
+      for (var i = 0; i < isChecked.length; i++) {
         if (isChecked[i]) {
-          tahun_ikut.add(tahun.toString());
+          tahunIkut.add(tahun.toString());
         }
         tahun = tahun + 1;
       }
@@ -212,21 +233,23 @@ class FormController extends GetxController {
         meal: meal.value,
         photo: paths,
         region_f_id: viharaId.value,
-        tahun_ikut: tahun_ikut.toString(),
+        tahun_ikut: tahunIkut.toString(),
         active: 1,
       );
+      await DBHelper.instance.openDB();
       await DBHelper.instance.insertPeserta(data);
 
       user.quota_sisa = user.quota_sisa - 1;
-      var temp = gs.read('User');
+      final temp = gs.read('User');
       temp['quota_sisa'] = user.quota_sisa;
+      await DBHelper.instance.closeDB();
       await gs.write('User', temp);
       final databasePath = await getApplicationDocumentsDirectory();
       final db = File(join(databasePath.path, 'asalhapuja.db'));
       final directory = await getExternalStorageDirectory();
       await db.copy('${directory!.path}/asalhapuja.db');
       Snackbar().success('Data berhasil disimpan');
-      await Timer(const Duration(seconds: 3), () {
+      Timer(const Duration(seconds: 2), () {
         Get.offAllNamed(Routes.home);
       });
     } catch (e) {

@@ -1,4 +1,5 @@
 import 'package:asalhapuja/data/utils/utils.dart';
+import 'package:asalhapuja/domain/db_helper.dart';
 
 import 'package:asalhapuja/domain/models/models.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,15 @@ class HomeController extends GetxController {
 
   void list() {
     Get.toNamed('/list');
+  }
+
+  Future<void> logout() async {
+    await gs.remove('IsLogin');
+    await gs.remove('User');
+    await DBHelper.instance.openDB();
+    await DBHelper.instance.deleteAllData();
+    await DBHelper.instance.closeDB();
+    await Get.toNamed('/login');
   }
 
   void upload() {

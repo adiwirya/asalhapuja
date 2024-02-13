@@ -25,53 +25,55 @@ class UploadController extends GetxController {
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
-          responseBody: true,
           responseHeader: true,
-          error: true,
-          compact: true,
-          maxWidth: 90,
-          request: true,
         ),
       ),
   );
 
   @override
   Future<void> onInit() async {
+    await DBHelper.instance.openDB();
     forms.value = await DBHelper.instance.getPesertaAll();
     blmUpload.value = await DBHelper.instance.getBlmUpload();
+    await DBHelper.instance.closeDB();
     super.onInit();
   }
 
-  void upload() async {
-    Get.dialog(const LoadingDialog());
-    var check = await testupload();
+  Future<void> upload() async {
+    unawaited(Get.dialog(const LoadingDialog()));
+    final check = await testupload();
     // Get.back();
     if (check == 1) {
       if (count.value == forms.length) {
+        await DBHelper.instance.openDB();
         blmUpload.value = await DBHelper.instance.getBlmUpload();
         Get.back();
+        await DBHelper.instance.closeDB();
         Snackbar().success('Upload Selesai');
-        await Timer(const Duration(seconds: 3), () {});
+        Timer(const Duration(seconds: 3), () {});
       } else {
+        await DBHelper.instance.openDB();
         blmUpload.value = await DBHelper.instance.getBlmUpload();
-        var gagal = forms.length - count.value;
+        final gagal = forms.length - count.value;
+        await DBHelper.instance.closeDB();
         Snackbar().error('Upload ada $gagal Gagal');
       }
     }
   }
 
   Future<int> testupload() async {
+    await DBHelper.instance.openDB();
     final connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       Get.back();
       Snackbar().error('Tidak ada koneksi internet');
-      await Timer(const Duration(seconds: 3), () {});
+      Timer(const Duration(seconds: 3), () {});
       return 0;
     }
     if (blmUpload.value == 0) {
       Get.back();
       Snackbar().error('Tidak ada data yang diupload');
-      await Timer(const Duration(seconds: 3), () {});
+      Timer(const Duration(seconds: 3), () {});
       return 0;
     }
     for (var i = 0; i < forms.length; i++) {
@@ -79,7 +81,7 @@ class UploadController extends GetxController {
         final result =
             forms[i].tahun_ikut.replaceAll('[', '').replaceAll(']', '');
         if (forms[i].isUpload == 0) {
-          var log = await client.form(
+          final log = await client.form(
             forms[i].region_f_id,
             forms[i].nik_koordinator,
             forms[i].organization,
@@ -96,7 +98,7 @@ class UploadController extends GetxController {
           );
           print(log);
           count = count + 1;
-          var msg = await DBHelper.instance.updatePeserta(forms[i].ktp);
+          final msg = await DBHelper.instance.updatePeserta(forms[i].ktp);
           log(msg);
         }
         print('Count $count');
@@ -104,14 +106,14 @@ class UploadController extends GetxController {
         // Get.back();
         if (e.response!.statusCode == 302) {
           log('upload $i ${e.response!.statusCode}');
-          var msg = await DBHelper.instance.updatePeserta(forms[i].ktp);
+          final msg = await DBHelper.instance.updatePeserta(forms[i].ktp);
           log(msg);
           count = count + 1;
 
           continue;
         } else {
           Get.back();
-          print(e.toString());
+          print(e);
           Snackbar().error(e.toString());
           Timer(const Duration(seconds: 3), () {});
           continue;
@@ -119,10 +121,11 @@ class UploadController extends GetxController {
       } catch (e) {
         Get.back();
         Snackbar().error(e.toString());
-        await Timer(const Duration(seconds: 3), () {});
+        Timer(const Duration(seconds: 3), () {});
         continue;
       }
     }
+    await DBHelper.instance.closeDB();
     return 1;
   }
 }

@@ -60,7 +60,7 @@ class DBHelper {
     phone_number    TEXT        NOT NULL,
     meal            TEXT (2)    NOT NULL,
     photo           TEXT        NOT NULL,
-    tahun_ikut      TEXT        NOT NULL,
+    tahun_ikut      TEXT        ,
     isUpload        INTEGER (1) DEFAULT (0), 
     active        INTEGER (1)   NOT NULL 
     )
@@ -77,6 +77,25 @@ class DBHelper {
 
     final res = await batch.commit();
     log('res: $res');
+  }
+
+  Future<void> closeDB() async {
+    await DBHelper.instance.database.then((db) async {
+      await db.close();
+    });
+  }
+
+  Future<void> openDB() async {
+    final databasePath = await getApplicationDocumentsDirectory();
+    final path = join(databasePath.path, 'asalhapuja.db');
+
+    log('path: $path');
+
+    _database = await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+    );
   }
 
   Future<List<Region>> getRegion() async {
@@ -122,7 +141,7 @@ class DBHelper {
       );
     });
 
-    Forms peserta = Forms.fromJson(data[0] as Map<String, dynamic>);
+    final peserta = Forms.fromJson(data[0] as Map<String, dynamic>);
 
     return peserta;
   }
@@ -183,23 +202,20 @@ class DBHelper {
   Future<void> replacePeserta(Forms peserta) async {
     var data;
     await DBHelper.instance.database.then((db) async {
-      data = await db.rawQuery(
-          'REPLACE INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-          [
-            peserta.ktp,
-            peserta.region_f_id,
-            peserta.nik_koordinator,
-            peserta.organization,
-            peserta.ktp,
-            peserta.name,
-            peserta.printed_name,
-            peserta.gender,
-            peserta.address,
-            peserta.phone_number,
-            peserta.meal,
-            peserta.photo,
-            peserta.tahun_ikut,
-          ]);
+      data = await db.rawUpdate('''
+      UPDATE peserta 
+      SET region_f_id = ${peserta.region_f_id},
+          organization = "${peserta.organization}",
+          gender = "${peserta.gender}",
+          address = "${peserta.address}",
+          phone_number = "${peserta.phone_number}",
+          meal = "${peserta.meal}",
+          photo = "${peserta.photo}",
+          tahun_ikut = "${peserta.tahun_ikut}",
+          isUpload = 0
+      WHERE nik = "${peserta.ktp}" AND ktp = "${peserta.ktp}"
+''');
+      print(data);
     });
   }
 
@@ -294,6 +310,13 @@ class DBHelper {
         where: 'nik = ?',
         whereArgs: [id],
       );
+    });
+  }
+
+  Future<void> deleteAllData() async {
+    await DBHelper.instance.database.then((db) async {
+      await db.rawQuery('DELETE FROM peserta');
+      await db.rawQuery('DELETE FROM region');
     });
   }
 }

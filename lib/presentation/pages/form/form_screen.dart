@@ -135,6 +135,7 @@ class FormScreen extends GetView<FormController> {
                   )
                 else
                   MyTextFormField(
+                    keyType: TextInputType.number,
                     controller: controller.ktp,
                     hintText: Const.desknoKTP,
                     maxLength: 16,
@@ -184,13 +185,22 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 Obx(
-                  () => RadioButton(
-                    value1: Const.l,
-                    text1: Const.laki,
-                    value2: Const.p,
-                    text2: Const.perempuan,
-                    groupValue: controller.jenisKelamin.value,
-                    onChanged: controller.setJenis,
+                  () => Row(
+                    children: [
+                      Radio(
+                        value: Const.l,
+                        groupValue: controller.jenisKelamin.value,
+                        onChanged: (value) => controller.setJenis(value!),
+                      ),
+                      const Text(Const.laki),
+                      const SizedBox(width: 40),
+                      Radio(
+                        value: Const.p,
+                        groupValue: controller.jenisKelamin.value,
+                        onChanged: (value) => controller.setJenis(value!),
+                      ),
+                      const Text(Const.perempuan),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -211,7 +221,7 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
-                  validate: false,
+                  keyType: TextInputType.phone,
                   controller: controller.nohp,
                   hintText: Const.desknoHP,
                 ),
@@ -222,13 +232,22 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 Obx(
-                  () => RadioButton(
-                    value1: Const.v,
-                    text1: Const.vegetarian,
-                    value2: Const.nv,
-                    text2: Const.nonVegetarian,
-                    groupValue: controller.meal.value,
-                    onChanged: controller.setMeal,
+                  () => Row(
+                    children: [
+                      Radio(
+                        value: Const.v,
+                        groupValue: controller.meal.value,
+                        onChanged: (value) => controller.setMeal(value!),
+                      ),
+                      const Text(Const.vegetarian),
+                      const SizedBox(width: 40),
+                      Radio(
+                        value: Const.nv,
+                        groupValue: controller.meal.value,
+                        onChanged: (value) => controller.setMeal(value!),
+                      ),
+                      const Text(Const.nonVegetarian),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -284,49 +303,16 @@ class Check extends StatelessWidget {
               },
             ),
             const Text('2015'),
-            const SizedBox(width: 60),
+            const SizedBox(width: 45),
             Checkbox(
-              value: values[4],
+              value: values[3],
               checkColor: Colors.white,
               onChanged: (value) {
-                onChanged(value, 4); //selected value
+                onChanged(value, 3); //selected value
               },
             ),
-            const Text('2019'),
-          ],
-        ),
-        Row(
-          children: [
-            Checkbox(
-              value: values[1],
-              checkColor: Colors.white,
-              onChanged: (value) {
-                onChanged(value, 1); //selected value
-              },
-            ),
-            const Text('2016'),
-            const SizedBox(width: 60),
-            Checkbox(
-              value: values[5],
-              checkColor: Colors.white,
-              onChanged: (value) {
-                onChanged(value, 5); //selected value
-              },
-            ),
-            const Text('2020'),
-          ],
-        ),
-        Row(
-          children: [
-            Checkbox(
-              value: values[2],
-              checkColor: Colors.white,
-              onChanged: (value) {
-                onChanged(value, 2); //selected value
-              },
-            ),
-            const Text('2017'),
-            const SizedBox(width: 60),
+            const Text('2018'),
+            const SizedBox(width: 45),
             Checkbox(
               value: values[6],
               checkColor: Colors.white,
@@ -340,14 +326,23 @@ class Check extends StatelessWidget {
         Row(
           children: [
             Checkbox(
-              value: values[3],
+              value: values[1],
               checkColor: Colors.white,
               onChanged: (value) {
-                onChanged(value, 3); //selected value
+                onChanged(value, 1); //selected value
               },
             ),
-            const Text('2018'),
-            const SizedBox(width: 60),
+            const Text('2016'),
+            const SizedBox(width: 45),
+            Checkbox(
+              value: values[4],
+              checkColor: Colors.white,
+              onChanged: (value) {
+                onChanged(value, 4); //selected value
+              },
+            ),
+            const Text('2019'),
+            const SizedBox(width: 45),
             Checkbox(
               value: values[7],
               checkColor: Colors.white,
@@ -358,50 +353,36 @@ class Check extends StatelessWidget {
             const Text('2022'),
           ],
         ),
-      ],
-    );
-  }
-}
-
-class RadioButton extends StatelessWidget {
-  const RadioButton({
-    required this.value1,
-    required this.text1,
-    required this.value2,
-    required this.text2,
-    required this.groupValue,
-    required this.onChanged,
-    super.key,
-  });
-
-  final String value1;
-  final String value2;
-  final String text1;
-  final String text2;
-  final String groupValue;
-  final Function onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Radio(
-          value: value1,
-          groupValue: groupValue,
-          onChanged: (value) {
-            onChanged(value); //selected value
-          },
+        Row(
+          children: [
+            Checkbox(
+              value: values[2],
+              checkColor: Colors.white,
+              onChanged: (value) {
+                onChanged(value, 2); //selected value
+              },
+            ),
+            const Text('2017'),
+            const SizedBox(width: 45),
+            Checkbox(
+              value: values[5],
+              checkColor: Colors.white,
+              onChanged: (value) {
+                onChanged(value, 5); //selected value
+              },
+            ),
+            const Text('2020'),
+            const SizedBox(width: 45),
+            Checkbox(
+              value: values[8],
+              checkColor: Colors.white,
+              onChanged: (value) {
+                onChanged(value, 8); //selected value
+              },
+            ),
+            const Text('2023'),
+          ],
         ),
-        Text(text1),
-        const SizedBox(width: 40),
-        Radio(
-          value: value2,
-          groupValue: groupValue,
-          onChanged: (value) {
-            onChanged(value); //selected value
-          },
-        ),
-        Text(text2),
       ],
     );
   }

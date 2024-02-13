@@ -48,7 +48,7 @@ class HomeScreen extends GetView<HomeController> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
           const SizedBox(height: 20),
@@ -67,6 +67,11 @@ class HomeScreen extends GetView<HomeController> {
             text: Const.listData,
             onPressed: controller.list,
           ),
+          RowMenu(
+            asset: Assets.assetsImagesListdata,
+            text: Const.logout,
+            onPressed: controller.logout,
+          ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -76,10 +81,10 @@ class HomeScreen extends GetView<HomeController> {
                     '${Const.version} ${Const.appVersion}',
                     style: fs16fw500,
                   ),
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -133,7 +138,7 @@ class RowMenu extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
