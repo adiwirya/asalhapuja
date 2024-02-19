@@ -100,7 +100,7 @@ class LoginController extends GetxController {
           return;
         }
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       Get.back();
       if (e.response!.statusCode == 401) {
         Snackbar().error('NIK atau Password Salah');

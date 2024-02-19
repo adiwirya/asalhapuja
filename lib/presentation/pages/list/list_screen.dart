@@ -123,9 +123,9 @@ class ListScreen extends GetView<ListController> {
                           const SizedBox(width: 8),
                           const Text(Const.dataLokal),
                         ],
-                      )
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -192,7 +192,7 @@ class listCard extends StatelessWidget {
           return;
         },
         confirmDismiss: (direction) async {
-          bool check = false;
+          var check = false;
           if (direction == DismissDirection.endToStart) {
             await Get.dialog(
               Column(
@@ -249,7 +249,8 @@ class listCard extends StatelessWidget {
                                   Expanded(
                                     child: Theme(
                                       data: Theme.of(context).copyWith(
-                                          elevatedButtonTheme: buttonSuccess),
+                                        elevatedButtonTheme: buttonSuccess,
+                                      ),
                                       child: ElevatedButton(
                                         onPressed: () {
                                           check = false;
@@ -275,6 +276,7 @@ class listCard extends StatelessWidget {
             );
             return check;
           }
+          return null;
         },
         background: const ColoredBox(
           color: Colors.red,
@@ -408,7 +410,7 @@ class listCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

@@ -102,7 +102,7 @@ class UploadController extends GetxController {
           log(msg);
         }
         print('Count $count');
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         // Get.back();
         if (e.response!.statusCode == 302) {
           log('upload $i ${e.response!.statusCode}');
