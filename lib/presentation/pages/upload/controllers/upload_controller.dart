@@ -54,9 +54,8 @@ class UploadController extends GetxController {
       } else {
         await DBHelper.instance.openDB();
         blmUpload.value = await DBHelper.instance.getBlmUpload();
-        final gagal = forms.length - count.value;
         await DBHelper.instance.closeDB();
-        Snackbar().error('Upload ada $gagal Gagal');
+        // Snackbar().error('Upload ada $gagal Gagal');
       }
     }
   }
@@ -103,25 +102,14 @@ class UploadController extends GetxController {
         }
         print('Count $count');
       } on DioException catch (e) {
-        // Get.back();
-        if (e.response!.statusCode == 302) {
-          log('upload $i ${e.response!.statusCode}');
-          final msg = await DBHelper.instance.updatePeserta(forms[i].ktp);
-          log(msg);
-          count = count + 1;
-
-          continue;
-        } else {
-          Get.back();
-          print(e);
-          Snackbar().error(e.toString());
-          Timer(const Duration(seconds: 3), () {});
-          continue;
-        }
+        Get.back();
+        print(e);
+        Snackbar().error(e.toString());
+        continue;
+        // }
       } catch (e) {
         Get.back();
         Snackbar().error(e.toString());
-        Timer(const Duration(seconds: 3), () {});
         continue;
       }
     }
