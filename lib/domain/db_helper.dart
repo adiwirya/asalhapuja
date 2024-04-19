@@ -61,6 +61,7 @@ class DBHelper {
     meal            TEXT (2)    NOT NULL,
     photo           TEXT        NOT NULL,
     tahun_ikut      TEXT        ,
+    clothes_size    TEXT        ,
     isUpload        INTEGER (1) DEFAULT (0), 
     active        INTEGER (1)   NOT NULL 
     )
@@ -179,7 +180,7 @@ class DBHelper {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.rawInsert(
-          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut, active, clothes_size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
           [
             peserta.ktp,
             peserta.region_f_id,
@@ -195,6 +196,7 @@ class DBHelper {
             peserta.photo,
             peserta.tahun_ikut,
             peserta.active,
+            peserta.size,
           ]);
     });
   }
@@ -212,6 +214,7 @@ class DBHelper {
           meal = "${peserta.meal}",
           photo = "${peserta.photo}",
           tahun_ikut = "${peserta.tahun_ikut}",
+          clothes_size = "${peserta.size}",
           isUpload = 0
       WHERE nik = "${peserta.ktp}" AND ktp = "${peserta.ktp}"
 ''');

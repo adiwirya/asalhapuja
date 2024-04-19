@@ -1,3 +1,4 @@
+import 'package:asalhapuja/presentation/pages/photo/photo_screen.dart';
 import 'package:get/get.dart';
 
 import 'package:asalhapuja/presentation/pages/screens.dart';
@@ -36,10 +37,5 @@ class Nav {
       page: () => const ListScreen(),
       binding: ListFormControllerBinding(),
     ),
-    // GetPage(
-    //   name: Routes.edit,
-    //   page: () => const EditScreen(),
-    //   binding: EditFormControllerBinding(),
-    // ),
   ];
 }

@@ -92,13 +92,15 @@ class UploadController extends GetxController {
             forms[i].phone_number,
             forms[i].meal,
             result,
+            forms[i].size,
             forms[i].active,
             File(forms[i].photo),
           );
           print(log);
           count = count + 1;
-          final msg = await DBHelper.instance.updatePeserta(forms[i].ktp);
-          log(msg);
+          // final msg = await DBHelper.instance.updatePeserta(forms[i].ktp);
+          await DBHelper.instance.updatePeserta(forms[i].ktp);
+          // log(msg);
         }
         print('Count $count');
       } on DioException catch (e) {

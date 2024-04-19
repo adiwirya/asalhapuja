@@ -5,13 +5,14 @@ final gs = GetStorage();
 
 class Const {
   static const String appName = 'Asalha Puja';
-  static const String appVersion = '1.2.1';
+  static const String appVersion = '1.2.2';
   static const String password = 'Password';
   static const String nik = 'Nik';
   static const String masuk = 'Masuk';
   static const String version = 'Version';
   static const String vihara = 'Vihara';
   static const String deskvihara = 'Masukkan Vihara';
+  static const String deskBaju = 'Masukkan Ukuran Kaos';
   static const String namaLengkap = 'Nama Lengkap';
   static const String desknamaLengkap = 'Masukkan Nama Lengkap';
   static const String namaCetak = 'Nama Cetak';
@@ -57,5 +58,6 @@ class Const {
   static const String kouta = 'Kouta';
   static const String koutaSisa = 'Kouta Sisa';
   static const String kota = 'Kota';
+  static const String ukuranKaos = 'Ukuran Kaos';
   // static const String uploadData = ;
 }

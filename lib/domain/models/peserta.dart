@@ -15,6 +15,7 @@ class Peserta {
   String meal;
   String photo;
   String tahun_ikut;
+  String clothes_size;
   int active;
   int isUpload = 1;
 
@@ -31,6 +32,7 @@ class Peserta {
     required this.meal,
     required this.photo,
     required this.region_f_id,
+    required this.clothes_size,
     required this.tahun_ikut,
   });
 
@@ -47,6 +49,7 @@ class Peserta {
         photo: json['ktp'] + '.jpg' as String,
         region_f_id: json['regions_F_id'] as int,
         tahun_ikut: '[${json['tahun_ikut']}]' as String,
+        clothes_size: '${json['clothes_size']}' as String,
         active: json['active'] as int,
       );
 
@@ -63,6 +66,7 @@ class Peserta {
         'meal': meal,
         'photo': photo,
         'tahun_ikut': tahun_ikut,
+        'clothes_size': clothes_size,
         'isUpload': isUpload,
         'active': active,
       };

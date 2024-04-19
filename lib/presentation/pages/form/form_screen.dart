@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:asalhapuja/data/utils/utils.dart';
+import 'package:asalhapuja/presentation/pages/photo/photo_screen.dart';
 import 'package:asalhapuja/presentation/widget/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -205,6 +206,52 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 Text(
+                  Const.ukuranKaos,
+                  style: fs14fw500,
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Obx(
+                      () => Expanded(
+                        child: MyDropdownSearch(
+                          hint: Const.deskvihara,
+                          icon: const Icon(Remix.arrow_down_s_line),
+                          selectedItem: controller.baju.value,
+                          onChanged: (value) =>
+                              controller.baju.value = value ?? '',
+                          items: (String filter) async {
+                            return controller.listSize.map((e) => e).toList();
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const PhotoScreen(Assets.assetsImagesSizekaos),
+                        ),
+                      ),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: ThemeColors.warning,
+                        ),
+                        child: const Icon(
+                          Remix.ruler_line,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text(
                   Const.alamat,
                   style: fs14fw500,
                 ),
@@ -221,6 +268,7 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
+                  
                   keyType: TextInputType.phone,
                   controller: controller.nohp,
                   hintText: Const.desknoHP,

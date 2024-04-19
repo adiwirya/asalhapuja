@@ -33,6 +33,7 @@ abstract class Server {
     @Part() String phone_number,
     @Part() String meal,
     @Part() String tahun_ikut,
+    @Part() String clothes_size,
     @Part() int active,
     @Part() File photo,
   );

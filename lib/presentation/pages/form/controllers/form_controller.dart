@@ -24,6 +24,7 @@ class FormController extends GetxController {
   TextEditingController nohp = TextEditingController();
   RxString vihara = ''.obs;
   RxInt viharaId = 0.obs;
+  RxString baju = 'XS'.obs;
   RxString meal = ''.obs;
   RxString title = ''.obs;
   RxString btnText = ''.obs;
@@ -42,6 +43,7 @@ class FormController extends GetxController {
       ),
     ),
   );
+  List<String> listSize = ['XS', 'SS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   @override
   Future<void> onInit() async {
     final nik = Get.arguments;
@@ -64,6 +66,7 @@ class FormController extends GetxController {
       jenisKelamin.value = data.gender;
       vihara.value = data.organization;
       imagePath.value = data.photo;
+      baju.value = data.size;
       isPhoto.value = true;
       for (final region in listRegion) {
         if (region.vihara == vihara.value) {
@@ -158,6 +161,7 @@ class FormController extends GetxController {
         photo: paths,
         region_f_id: viharaId.value,
         tahun_ikut: tahunIkut.toString(),
+        size: baju.value,
         active: 1,
       );
       await DBHelper.instance.openDB();
@@ -234,6 +238,7 @@ class FormController extends GetxController {
         photo: paths,
         region_f_id: viharaId.value,
         tahun_ikut: tahunIkut.toString(),
+        size: baju.value,
         active: 1,
       );
       await DBHelper.instance.openDB();

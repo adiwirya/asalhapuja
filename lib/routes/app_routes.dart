@@ -10,4 +10,5 @@ class Routes {
   static const upload = '/upload';
   static const list = '/list';
   static const edit = '/edit';
+  static const photo = '/photo';
 }

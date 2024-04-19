@@ -412,11 +412,17 @@ class HapusDialog extends StatelessWidget {
   }
 }
 
-class DataFound extends StatelessWidget {
-  const DataFound({super.key});
+class ImageDialog extends StatelessWidget {
+  final String asset;
+  const ImageDialog(this.asset, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Dialog(
+      child: Image.asset(
+        asset,
+        fit: BoxFit.cover,
+      ),
+    );
   }
 }

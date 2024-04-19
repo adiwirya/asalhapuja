@@ -22,7 +22,7 @@ class _Server implements Server {
 
   @override
   Future<Result> login(Map<String, String> data) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -39,7 +39,11 @@ class _Server implements Server {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = Result.fromJson(_result.data!);
     return value;
   }
@@ -57,10 +61,11 @@ class _Server implements Server {
     String phone_number,
     String meal,
     String tahun_ikut,
+    String clothes_size,
     int active,
     File photo,
   ) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = FormData();
@@ -109,6 +114,10 @@ class _Server implements Server {
       tahun_ikut,
     ));
     _data.fields.add(MapEntry(
+      'clothes_size',
+      clothes_size,
+    ));
+    _data.fields.add(MapEntry(
       'active',
       active.toString(),
     ));
@@ -131,7 +140,11 @@ class _Server implements Server {
           queryParameters: queryParameters,
           data: _data,
         )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
     final value = _result.data;
     return value;
   }
@@ -147,5 +160,22 @@ class _Server implements Server {
       }
     }
     return requestOptions;
+  }
+
+  String _combineBaseUrls(
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
+      return dioBaseUrl;
+    }
+
+    final url = Uri.parse(baseUrl);
+
+    if (url.isAbsolute) {
+      return url.toString();
+    }
+
+    return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }
