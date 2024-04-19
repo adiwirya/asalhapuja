@@ -44,7 +44,7 @@ class UploadController extends GetxController {
     final check = await testupload();
     // Get.back();
     if (check == 1) {
-      if (count.value == forms.length) {
+      if (count.value == blmUpload.value) {
         await DBHelper.instance.openDB();
         blmUpload.value = await DBHelper.instance.getBlmUpload();
         Get.back();
@@ -55,7 +55,10 @@ class UploadController extends GetxController {
         await DBHelper.instance.openDB();
         blmUpload.value = await DBHelper.instance.getBlmUpload();
         await DBHelper.instance.closeDB();
-        // Snackbar().error('Upload ada $gagal Gagal');
+        Get.back();
+        final gagal = blmUpload.value - count.value;
+        Snackbar().success('Ada $gagal Upload Gagal');
+        Timer(const Duration(seconds: 3), () {});
       }
     }
   }

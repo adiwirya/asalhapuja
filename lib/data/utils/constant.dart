@@ -5,7 +5,7 @@ final gs = GetStorage();
 
 class Const {
   static const String appName = 'Asalha Puja';
-  static const String appVersion = '1.2.2';
+  static const String appVersion = '1.2.3';
   static const String password = 'Password';
   static const String nik = 'Nik';
   static const String masuk = 'Masuk';
@@ -41,7 +41,7 @@ class Const {
   static const String lihatFoto = 'Lihat Foto';
   static const String deskform = 'Form untuk \nmenambahkan peserta.';
   static const String tambahPeserta = 'Tambah Peserta';
-  static const String logout = 'Logout';
+  static const String logout = 'Keluar';
   static const String keluar = 'Keluar dari aplikasi \n';
   static const String infoVihara = 'Informasi Vihara';
   static const String uploadData = 'Upload Data';
