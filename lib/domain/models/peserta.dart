@@ -16,6 +16,8 @@ class Peserta {
   String photo;
   String tahun_ikut;
   String clothes_size;
+  String white_cloth_size;
+  String white_pants_size;
   int active;
   int isUpload = 1;
 
@@ -33,6 +35,8 @@ class Peserta {
     required this.photo,
     required this.region_f_id,
     required this.clothes_size,
+    required this.white_cloth_size,
+    required this.white_pants_size,
     required this.tahun_ikut,
   });
 
@@ -50,6 +54,8 @@ class Peserta {
         region_f_id: json['regions_F_id'] as int,
         tahun_ikut: '[${json['tahun_ikut']}]' as String,
         clothes_size: '${json['clothes_size']}' as String,
+        white_cloth_size: '${json['white_cloth_size']}' as String? ?? '',
+        white_pants_size: '${json['white_pants_size']}' as String? ?? '',
         active: json['active'] as int,
       );
 
@@ -67,6 +73,8 @@ class Peserta {
         'photo': photo,
         'tahun_ikut': tahun_ikut,
         'clothes_size': clothes_size,
+        'white_cloth_size': white_cloth_size,
+        'white_pants_size': white_pants_size,
         'isUpload': isUpload,
         'active': active,
       };

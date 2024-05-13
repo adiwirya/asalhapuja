@@ -34,6 +34,8 @@ abstract class Server {
     @Part() String meal,
     @Part() String tahun_ikut,
     @Part() String clothes_size,
+    @Part() String white_cloth_size,
+    @Part() String white_pants_size,
     @Part() int active,
     @Part() File photo,
   );

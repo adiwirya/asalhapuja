@@ -96,6 +96,8 @@ class UploadController extends GetxController {
             forms[i].meal,
             result,
             forms[i].size,
+            forms[i].baju,
+            forms[i].celana,
             forms[i].active,
             File(forms[i].photo),
           );

@@ -42,10 +42,28 @@ class Forms {
     required this.tahun_ikut,
     required this.active,
     required this.size,
-    this.baju = '',
-    this.celana = '',
+    required this.baju,
+    required this.celana,
   });
 
-  factory Forms.fromJson(Map<String, dynamic> json) => _$FormsFromJson(json);
+  factory Forms.fromJson(Map<String, dynamic> json) => Forms(
+        nik_koordinator: json['nik_koordinator'] as String,
+        organization: json['organization'] as String,
+        ktp: json['ktp'] as String,
+        name: json['name'] as String,
+        printed_name: json['printed_name'] as String,
+        gender: json['gender'] as String,
+        address: json['address'] as String,
+        phone_number: json['phone_number'] as String,
+        meal: json['meal'] as String,
+        photo: json['photo'] as String,
+        region_f_id: json['region_f_id'] as int,
+        tahun_ikut: json['tahun_ikut'] as String,
+        active: json['active'] as int,
+        size: json['clothes_size'] as String,
+        baju: json['white_cloth_size'] as String? ?? '',
+        celana: json['white_pants_size'] as String? ?? '',
+      )..isUpload = json['isUpload'] as int;
+
   Map<String, dynamic> toJson() => _$FormsToJson(this);
 }

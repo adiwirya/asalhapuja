@@ -62,6 +62,8 @@ class _Server implements Server {
     String meal,
     String tahun_ikut,
     String clothes_size,
+    String white_cloth_size,
+    String white_pants_size,
     int active,
     File photo,
   ) async {
@@ -116,6 +118,14 @@ class _Server implements Server {
     _data.fields.add(MapEntry(
       'clothes_size',
       clothes_size,
+    ));
+    _data.fields.add(MapEntry(
+      'white_cloth_size',
+      white_cloth_size,
+    ));
+    _data.fields.add(MapEntry(
+      'white_pants_size',
+      white_pants_size,
     ));
     _data.fields.add(MapEntry(
       'active',
