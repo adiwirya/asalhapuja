@@ -5,7 +5,7 @@ final gs = GetStorage();
 
 class Const {
   static const String appName = 'Asalha Puja';
-  static const String appVersion = '1.2.3';
+  static const String appVersion = '1.2.5';
   static const String password = 'Password';
   static const String nik = 'Nik';
   static const String masuk = 'Masuk';
@@ -59,5 +59,7 @@ class Const {
   static const String koutaSisa = 'Kouta Sisa';
   static const String kota = 'Kota';
   static const String ukuranKaos = 'Ukuran Kaos';
+  static const String ukuranBaju = 'Ukuran Baju Putih';
+  static const String ukuranCelana = 'Ukuran Celana Putih';
   // static const String uploadData = ;
 }

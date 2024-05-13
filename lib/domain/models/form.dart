@@ -17,7 +17,12 @@ class Forms {
   String meal;
   String photo;
   String tahun_ikut;
+  @JsonKey(name: 'clothes_size')
   String size;
+  @JsonKey(name: 'white_cloth_size')
+  String baju;
+  @JsonKey(name: 'white_pants_size')
+  String celana;
 
   int active;
   int isUpload = 0;
@@ -36,7 +41,9 @@ class Forms {
     required this.region_f_id,
     required this.tahun_ikut,
     required this.active,
-    required this.size ,
+    required this.size,
+    this.baju = '',
+    this.celana = '',
   });
 
   factory Forms.fromJson(Map<String, dynamic> json) => _$FormsFromJson(json);

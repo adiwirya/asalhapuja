@@ -217,9 +217,9 @@ class FormScreen extends GetView<FormController> {
                         child: MyDropdownSearch(
                           hint: Const.deskvihara,
                           icon: const Icon(Remix.arrow_down_s_line),
-                          selectedItem: controller.baju.value,
+                          selectedItem: controller.size.value,
                           onChanged: (value) =>
-                              controller.baju.value = value ?? '',
+                              controller.size.value = value ?? '',
                           items: (String filter) async {
                             return controller.listSize.map((e) => e).toList();
                           },
@@ -233,6 +233,92 @@ class FormScreen extends GetView<FormController> {
                         MaterialPageRoute(
                           builder: (context) =>
                               const PhotoScreen(Assets.assetsImagesSizekaos),
+                        ),
+                      ),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: ThemeColors.warning,
+                        ),
+                        child: const Icon(
+                          Remix.ruler_line,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        Const.ukuranBaju,
+                        style: fs14fw500,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        Const.ukuranCelana,
+                        style: fs14fw500,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Icon(
+                        Remix.ruler_line,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Obx(
+                      () => Expanded(
+                        child: MyDropdownSearch(
+                          hint: Const.deskvihara,
+                          icon: const Icon(Remix.arrow_down_s_line),
+                          selectedItem: controller.baju.value,
+                          onChanged: (value) =>
+                              controller.baju.value = value ?? '',
+                          items: (String filter) async {
+                            return controller.listBaju.map((e) => e).toList();
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Obx(
+                      () => Expanded(
+                        child: MyDropdownSearch(
+                          hint: Const.deskvihara,
+                          icon: const Icon(Remix.arrow_down_s_line),
+                          selectedItem: controller.celana.value,
+                          onChanged: (value) =>
+                              controller.celana.value = value ?? '',
+                          items: (String filter) async {
+                            return controller.listCelana.map((e) => e).toList();
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const PhotoScreen(Assets.assetsImagesSizeCelana),
                         ),
                       ),
                       child: Container(
@@ -268,7 +354,6 @@ class FormScreen extends GetView<FormController> {
                 ),
                 const SizedBox(height: 16),
                 MyTextFormField(
-                  
                   keyType: TextInputType.phone,
                   controller: controller.nohp,
                   hintText: Const.desknoHP,

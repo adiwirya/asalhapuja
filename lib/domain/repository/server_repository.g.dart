@@ -110,7 +110,7 @@ class _Server implements Server {
       meal,
     ));
     _data.fields.add(MapEntry(
-      'tahun_ikut[]',
+      'tahun_ikut',
       tahun_ikut,
     ));
     _data.fields.add(MapEntry(

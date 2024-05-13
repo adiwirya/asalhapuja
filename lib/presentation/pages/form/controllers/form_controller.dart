@@ -24,13 +24,16 @@ class FormController extends GetxController {
   TextEditingController nohp = TextEditingController();
   RxString vihara = ''.obs;
   RxInt viharaId = 0.obs;
+  RxString size = 'XS'.obs;
   RxString baju = 'XS'.obs;
+  RxString celana = '26'.obs;
   RxString meal = ''.obs;
   RxString title = ''.obs;
   RxString btnText = ''.obs;
   RxString jenisKelamin = ''.obs;
   RxBool isPhoto = false.obs;
   RxBool isEdit = false.obs;
+  RxBool isChange = false.obs;
   File image = File('');
   RxString imagePath = ''.obs;
   RxList<Region> listRegion = <Region>[].obs;
@@ -44,6 +47,30 @@ class FormController extends GetxController {
     ),
   );
   List<String> listSize = ['XS', 'SS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+  List<String> listBaju = ['XS', 'SS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+  List<String> listCelana = [
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31',
+    '32',
+    '33',
+    '34',
+    '35',
+    '36',
+    '37',
+    '38',
+    '39',
+    '40',
+    '41',
+    '42',
+    '43',
+    '44',
+    '45',
+    '46'
+  ];
   @override
   Future<void> onInit() async {
     final nik = Get.arguments;
@@ -66,7 +93,9 @@ class FormController extends GetxController {
       jenisKelamin.value = data.gender;
       vihara.value = data.organization;
       imagePath.value = data.photo;
-      baju.value = data.size;
+      size.value = data.size;
+      baju.value = data.baju;
+      celana.value = data.celana;
       isPhoto.value = true;
       for (final region in listRegion) {
         if (region.vihara == vihara.value) {
@@ -139,7 +168,12 @@ class FormController extends GetxController {
       return;
     }
     try {
-      final paths = await saveImage(File(imagePath.value), ktp.text);
+      String paths;
+      if (isChange.value) {
+        paths = await saveImage(File(imagePath.value), ktp.text);
+      } else {
+        paths = imagePath.value;
+      }
       final tahunIkut = <String>[];
       var tahun = 2015;
       for (var i = 0; i < isChecked.length; i++) {
@@ -161,7 +195,9 @@ class FormController extends GetxController {
         photo: paths,
         region_f_id: viharaId.value,
         tahun_ikut: tahunIkut.toString(),
-        size: baju.value,
+        size: size.value,
+        baju: baju.value,
+        celana: celana.value,
         active: 1,
       );
       await DBHelper.instance.openDB();
@@ -238,7 +274,9 @@ class FormController extends GetxController {
         photo: paths,
         region_f_id: viharaId.value,
         tahun_ikut: tahunIkut.toString(),
-        size: baju.value,
+        size: size.value,
+        baju: baju.value,
+        celana: celana.value,
         active: 1,
       );
       await DBHelper.instance.openDB();
@@ -300,11 +338,14 @@ class FormController extends GetxController {
     if (photo != null) {
       isPhoto.value = true;
       imagePath.value = photo.path as String;
+      update();
+      if (isEdit.value) {
+        isChange.value = true;
+      }
     } else {
       Snackbar().error('Foto belum diambil');
     }
     print('$imagePath - $isPhoto');
-    update();
   }
 
   Future<void> imageFromCamera() async {
@@ -314,12 +355,15 @@ class FormController extends GetxController {
     if (photo != null) {
       isPhoto.value = true;
       imagePath.value = photo.path as String;
+      update();
+      imagePath.refresh();
+      if (isEdit.value) {
+        isChange.value = true;
+      }
     } else {
       Snackbar().error('Foto belum diambil');
     }
     print('$imagePath - $isPhoto');
-    update();
-    imagePath.refresh();
   }
 
   String generateRandomString(int length) {

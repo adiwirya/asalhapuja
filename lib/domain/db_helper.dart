@@ -62,8 +62,10 @@ class DBHelper {
     photo           TEXT        NOT NULL,
     tahun_ikut      TEXT        ,
     clothes_size    TEXT        ,
+    white_cloth_size TEXT        ,
+    white_pants_size TEXT        ,
     isUpload        INTEGER (1) DEFAULT (0), 
-    active        INTEGER (1)   NOT NULL 
+    active          INTEGER (1)   NOT NULL 
     )
     WITHOUT ROWID;
     ''');
@@ -180,7 +182,7 @@ class DBHelper {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.rawInsert(
-          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut, active, clothes_size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut, active, clothes_size, white_cloth_size, white_pants_size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
           [
             peserta.ktp,
             peserta.region_f_id,
@@ -197,6 +199,8 @@ class DBHelper {
             peserta.tahun_ikut,
             peserta.active,
             peserta.size,
+            peserta.baju,
+            peserta.celana,
           ]);
     });
   }
@@ -215,6 +219,8 @@ class DBHelper {
           photo = "${peserta.photo}",
           tahun_ikut = "${peserta.tahun_ikut}",
           clothes_size = "${peserta.size}",
+          white_cloth_size = "${peserta.baju}",
+          white_pants_size = "${peserta.celana}",
           isUpload = 0
       WHERE nik = "${peserta.ktp}" AND ktp = "${peserta.ktp}"
 ''');

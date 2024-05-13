@@ -29,6 +29,10 @@ class Assets {
   /// assets/images/logo.png
   static const String assetsImagesLogo = "assets/images/logo.png";
 
+  /// Assets for assetsImagesSizeCelana
+  /// assets/images/SizeCelana.jpg
+  static const String assetsImagesSizeCelana = "assets/images/SizeCelana.jpg";
+
   /// Assets for assetsImagesSizekaos
   /// assets/images/sizekaos.jpg
   static const String assetsImagesSizekaos = "assets/images/sizekaos.jpg";
