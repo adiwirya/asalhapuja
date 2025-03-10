@@ -6,7 +6,7 @@ class MyDropdownSearch extends StatelessWidget {
   const MyDropdownSearch({
     required this.hint,
     required this.icon,
-    this.items,
+    required this.items,
     this.selectedItem,
     this.onChanged,
     super.key,
@@ -15,16 +15,16 @@ class MyDropdownSearch extends StatelessWidget {
   final String hint;
   final Widget icon;
   final Function(String?)? onChanged;
-  final Future<List<String>> Function(String)? items;
+  final List<String> items;
   final String? selectedItem;
 
   @override
   Widget build(BuildContext context) {
     return DropdownSearch<String>(
       validator: emptyValue,
-      dropdownDecoratorProps: DropDownDecoratorProps(
+      decoratorProps: DropDownDecoratorProps(
         baseStyle: const TextStyle(fontSize: 14),
-        dropdownSearchDecoration: InputDecoration(
+        decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(8),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -35,26 +35,19 @@ class MyDropdownSearch extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              color: ThemeColors.gray.shade900,
-            ),
+            borderSide: BorderSide(color: ThemeColors.gray.shade900),
           ),
           hintText: hint,
-          hintStyle: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
+          hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
         ),
-      ),
-      dropdownButtonProps: DropdownButtonProps(
-        icon: icon,
       ),
       popupProps: const PopupProps.menu(
         showSearchBox: true,
         showSelectedItems: true,
       ),
+
       onChanged: onChanged,
-      asyncItems: items,
+      items: (filter, infiniteScrollProps) => items,
       selectedItem: selectedItem,
     );
   }

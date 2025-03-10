@@ -1,0 +1,8 @@
+# dart run package_rename
+package_rename_config:
+  android:
+    app_name: asalhapuja
+    package_name: id.or.asalhapuja.
+    override_old_package: com.summarecon.asalhapuja
+
+  

@@ -38,26 +38,19 @@ class ListScreen extends GetView<ListController> {
                   Obx(
                     () => MyDropdownSearch(
                       hint: 'Vihara',
-                      icon: const Icon(
-                        Remix.arrow_drop_down_line,
-                      ),
+                      icon: const Icon(Remix.arrow_drop_down_line),
                       selectedItem: controller.vihara.value,
                       onChanged: (value) => controller.setVihara(value!),
-                      items: (String filter) async {
-                        return controller.listvihara
-                            .map((e) => e.vihara)
-                            .toList();
-                      },
+                      items: controller.listvihara
+                          .map((e) => e.vihara)
+                          .toList(),
                     ),
                   ),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        Const.kouta,
-                        style: fs14gray,
-                      ),
+                      Text(Const.kouta, style: fs14gray),
                       Text(
                         '${controller.user.quota_maksimal} ${Const.data}',
                         style: fs14gray,
@@ -68,10 +61,7 @@ class ListScreen extends GetView<ListController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        Const.koutaSisa,
-                        style: fs14gray,
-                      ),
+                      Text(Const.koutaSisa, style: fs14gray),
                       Obx(
                         () => Text(
                           '${controller.sisa} ${Const.data}',
@@ -84,10 +74,7 @@ class ListScreen extends GetView<ListController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        Const.banyakData,
-                        style: fs14gray,
-                      ),
+                      Text(Const.banyakData, style: fs14gray),
                       Obx(
                         () => Text(
                           '${controller.peserta.length} ${Const.data}',
@@ -132,30 +119,29 @@ class ListScreen extends GetView<ListController> {
           ),
           const SizedBox(height: 16),
           Obx(
-            () => controller.peserta.isNotEmpty
-                ? Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) =>
-                          GestureDetector(
-                        onTap: () => Get.toNamed(
-                          Routes.form,
-                          arguments: controller.peserta[index].ktp,
-                        ),
-                        child: listCard(
-                          peserta: controller.peserta[index],
-                          index: index + 1,
-                        ),
+            () =>
+                controller.peserta.isNotEmpty
+                    ? Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder:
+                            (BuildContext context, int index) =>
+                                GestureDetector(
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.form,
+                                        arguments:
+                                            controller.peserta[index].ktp,
+                                      ),
+                                  child: listCard(
+                                    peserta: controller.peserta[index],
+                                    index: index + 1,
+                                  ),
+                                ),
+                        itemCount: controller.peserta.length,
                       ),
-                      itemCount: controller.peserta.length,
-                    ),
-                  )
-                : Center(
-                    child: Text(
-                      'Tidak Ada Data',
-                      style: fs16fw500,
-                    ),
-                  ),
+                    )
+                    : Center(child: Text('Tidak Ada Data', style: fs16fw500)),
           ),
         ],
       ),
@@ -164,11 +150,7 @@ class ListScreen extends GetView<ListController> {
 }
 
 class listCard extends StatelessWidget {
-  const listCard({
-    required this.index,
-    required this.peserta,
-    super.key,
-  });
+  const listCard({required this.index, required this.peserta, super.key});
 
   final int index;
   final Forms peserta;
@@ -180,10 +162,7 @@ class listCard extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 4,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Dismissible(
         direction: DismissDirection.endToStart,
         key: UniqueKey(),
@@ -279,15 +258,13 @@ class listCard extends StatelessWidget {
           // }
           return null;
         },
-        background: peserta.isUpload == 1
-            ? const ColoredBox(color: Colors.white)
-            : const ColoredBox(
-                color: Colors.red,
-                child: Icon(
-                  Remix.delete_bin_line,
-                  color: Colors.white,
+        background:
+            peserta.isUpload == 1
+                ? const ColoredBox(color: Colors.white)
+                : const ColoredBox(
+                  color: Colors.red,
+                  child: Icon(Remix.delete_bin_line, color: Colors.white),
                 ),
-              ),
         child: Stack(
           children: [
             Card(
@@ -331,10 +308,7 @@ class listCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: Text(
-                                  peserta.name,
-                                  style: fs14fw500,
-                                ),
+                                child: Text(peserta.name, style: fs14fw500),
                               ),
                               if (peserta.isUpload == 1)
                                 Container(
@@ -354,41 +328,23 @@ class listCard extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                peserta.ktp,
-                                style: fs12gray,
-                              ),
+                              Text(peserta.ktp, style: fs12gray),
                               if (peserta.gender == 'L')
-                                Text(
-                                  '(Laki-Laki)',
-                                  style: fs12gray,
-                                )
+                                Text('(Laki-Laki)', style: fs12gray)
                               else
-                                Text(
-                                  '(Perempuan)',
-                                  style: fs12gray,
-                                ),
+                                Text('(Perempuan)', style: fs12gray),
                             ],
                           ),
                           const SizedBox(width: 8),
-                          Text(
-                            peserta.organization,
-                            style: fs12gray,
-                          ),
+                          Text(peserta.organization, style: fs12gray),
                           const SizedBox(width: 8),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               if (peserta.meal == 'V')
-                                Text(
-                                  Const.vegetarian,
-                                  style: fs12gray,
-                                )
+                                Text(Const.vegetarian, style: fs12gray)
                               else
-                                Text(
-                                  Const.nonVegetarian,
-                                  style: fs12gray,
-                                ),
+                                Text(Const.nonVegetarian, style: fs12gray),
                               SizedBox(
                                 height: 26,
                                 child: FittedBox(

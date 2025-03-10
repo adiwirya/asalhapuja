@@ -15,9 +15,7 @@ class FormScreen extends GetView<FormController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(controller.title.value),
-      ),
+      appBar: AppBar(title: Text(controller.title.value)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
@@ -30,14 +28,8 @@ class FormScreen extends GetView<FormController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      Const.uploadFoto,
-                      style: fs14fw500,
-                    ),
-                    Text(
-                      Const.contohFoto,
-                      style: fs14fw500,
-                    ),
+                    Text(Const.uploadFoto, style: fs14fw500),
+                    Text(Const.contohFoto, style: fs14fw500),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -51,26 +43,28 @@ class FormScreen extends GetView<FormController> {
                             width: 80,
                             height: 80,
                             color: ThemeColors.gray.shade50,
-                            child: controller.isPhoto.value
-                                ? Image.file(
-                                    File(controller.imagePath.value),
-                                    fit: BoxFit.cover,
-                                  )
-                                : Center(
-                                    child: Icon(
-                                      Remix.image_fill,
-                                      color: ThemeColors.gray.shade200,
-                                      size: 30,
+                            child:
+                                controller.isPhoto.value
+                                    ? Image.file(
+                                      File(controller.imagePath.value),
+                                      fit: BoxFit.cover,
+                                    )
+                                    : Center(
+                                      child: Icon(
+                                        Remix.image_fill,
+                                        color: ThemeColors.gray.shade200,
+                                        size: 30,
+                                      ),
                                     ),
-                                  ),
                           ),
                         ),
                         const SizedBox(width: 12),
                         Column(
                           children: [
                             Theme(
-                              data: Theme.of(context)
-                                  .copyWith(elevatedButtonTheme: buttonGreen),
+                              data: Theme.of(
+                                context,
+                              ).copyWith(elevatedButtonTheme: buttonGreen),
                               child: ElevatedButton(
                                 onPressed: () => controller.imageFromGallery(),
                                 child: const Text(
@@ -80,9 +74,9 @@ class FormScreen extends GetView<FormController> {
                               ),
                             ),
                             Theme(
-                              data: Theme.of(context).copyWith(
-                                elevatedButtonTheme: buttonGreen,
-                              ),
+                              data: Theme.of(
+                                context,
+                              ).copyWith(elevatedButtonTheme: buttonGreen),
                               child: ElevatedButton(
                                 onPressed: () => controller.imageFromCamera(),
                                 child: const Text(
@@ -103,10 +97,7 @@ class FormScreen extends GetView<FormController> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.kota,
-                  style: fs14fw500,
-                ),
+                Text(Const.kota, style: fs14fw500),
                 const SizedBox(height: 16),
                 Obx(
                   () => MyDropdownSearch(
@@ -114,18 +105,11 @@ class FormScreen extends GetView<FormController> {
                     icon: const Icon(Remix.arrow_down_s_line),
                     selectedItem: controller.vihara.value,
                     onChanged: (value) => controller.setVihara(value!),
-                    items: (String filter) async {
-                      return controller.listRegion
-                          .map((e) => e.vihara)
-                          .toList();
-                    },
+                    items: controller.listRegion.map((e) => e.vihara).toList(),
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.noKTP,
-                  style: fs14fw500,
-                ),
+                Text(Const.noKTP, style: fs14fw500),
                 const SizedBox(height: 16),
                 if (controller.isEdit.value)
                   MyTextFormField(
@@ -142,10 +126,7 @@ class FormScreen extends GetView<FormController> {
                     maxLength: 16,
                   ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.namaLengkap,
-                  style: fs14fw500,
-                ),
+                Text(Const.namaLengkap, style: fs14fw500),
                 const SizedBox(height: 16),
                 if (controller.isEdit.value)
                   MyTextFormField(
@@ -161,10 +142,7 @@ class FormScreen extends GetView<FormController> {
                     onChanged: (value) => controller.setNamaCetak(value),
                   ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.namaCetak,
-                  style: fs14fw500,
-                ),
+                Text(Const.namaCetak, style: fs14fw500),
                 const SizedBox(height: 16),
                 if (controller.isEdit.value)
                   MyTextFormField(
@@ -180,10 +158,7 @@ class FormScreen extends GetView<FormController> {
                     maxLength: 25,
                   ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.jenisKelamin,
-                  style: fs14fw500,
-                ),
+                Text(Const.jenisKelamin, style: fs14fw500),
                 const SizedBox(height: 16),
                 Obx(
                   () => Row(
@@ -205,10 +180,7 @@ class FormScreen extends GetView<FormController> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.ukuranKaos,
-                  style: fs14fw500,
-                ),
+                Text(Const.ukuranKaos, style: fs14fw500),
                 const SizedBox(height: 16),
                 Row(
                   children: [
@@ -218,23 +190,24 @@ class FormScreen extends GetView<FormController> {
                           hint: Const.deskvihara,
                           icon: const Icon(Remix.arrow_down_s_line),
                           selectedItem: controller.size.value,
-                          onChanged: (value) =>
-                              controller.size.value = value ?? '',
-                          items: (String filter) async {
-                            return controller.listSize.map((e) => e).toList();
-                          },
+                          onChanged:
+                              (value) => controller.size.value = value ?? '',
+                          items: controller.listSize.map((e) => e).toList(),
                         ),
                       ),
                     ),
                     const SizedBox(width: 8),
                     GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const PhotoScreen(Assets.assetsImagesSizekaos),
-                        ),
-                      ),
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => const PhotoScreen(
+                                    Assets.assetsImagesSizekaos,
+                                  ),
+                            ),
+                          ),
                       child: Container(
                         width: 40,
                         height: 40,
@@ -253,19 +226,9 @@ class FormScreen extends GetView<FormController> {
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        Const.ukuranBaju,
-                        style: fs14fw500,
-                      ),
-                    ),
+                    Expanded(child: Text(Const.ukuranBaju, style: fs14fw500)),
                     const SizedBox(width: 16),
-                    Expanded(
-                      child: Text(
-                        Const.ukuranCelana,
-                        style: fs14fw500,
-                      ),
-                    ),
+                    Expanded(child: Text(Const.ukuranCelana, style: fs14fw500)),
                     const SizedBox(width: 8),
                     Container(
                       width: 40,
@@ -273,10 +236,7 @@ class FormScreen extends GetView<FormController> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(
-                        Remix.ruler_line,
-                        color: Colors.white,
-                      ),
+                      child: const Icon(Remix.ruler_line, color: Colors.white),
                     ),
                   ],
                 ),
@@ -289,11 +249,9 @@ class FormScreen extends GetView<FormController> {
                           hint: Const.deskvihara,
                           icon: const Icon(Remix.arrow_down_s_line),
                           selectedItem: controller.baju.value,
-                          onChanged: (value) =>
-                              controller.baju.value = value ?? '',
-                          items: (String filter) async {
-                            return controller.listBaju.map((e) => e).toList();
-                          },
+                          onChanged:
+                              (value) => controller.baju.value = value ?? '',
+                          items: controller.listBaju.map((e) => e).toList(),
                         ),
                       ),
                     ),
@@ -304,23 +262,24 @@ class FormScreen extends GetView<FormController> {
                           hint: Const.deskvihara,
                           icon: const Icon(Remix.arrow_down_s_line),
                           selectedItem: controller.celana.value,
-                          onChanged: (value) =>
-                              controller.celana.value = value ?? '',
-                          items: (String filter) async {
-                            return controller.listCelana.map((e) => e).toList();
-                          },
+                          onChanged:
+                              (value) => controller.celana.value = value ?? '',
+                          items: controller.listCelana.map((e) => e).toList(),
                         ),
                       ),
                     ),
                     const SizedBox(width: 8),
                     GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const PhotoScreen(Assets.assetsImagesSizeCelana),
-                        ),
-                      ),
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => const PhotoScreen(
+                                    Assets.assetsImagesSizeCelana,
+                                  ),
+                            ),
+                          ),
                       child: Container(
                         width: 40,
                         height: 40,
@@ -337,10 +296,7 @@ class FormScreen extends GetView<FormController> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.alamat,
-                  style: fs14fw500,
-                ),
+                Text(Const.alamat, style: fs14fw500),
                 const SizedBox(height: 16),
                 MyTextFormField(
                   controller: controller.alamat,
@@ -348,10 +304,7 @@ class FormScreen extends GetView<FormController> {
                   hintText: Const.deskalamat,
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.noHP,
-                  style: fs14fw500,
-                ),
+                Text(Const.noHP, style: fs14fw500),
                 const SizedBox(height: 16),
                 MyTextFormField(
                   keyType: TextInputType.phone,
@@ -359,10 +312,7 @@ class FormScreen extends GetView<FormController> {
                   hintText: Const.desknoHP,
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.makanan,
-                  style: fs14fw500,
-                ),
+                Text(Const.makanan, style: fs14fw500),
                 const SizedBox(height: 16),
                 Obx(
                   () => Row(
@@ -384,10 +334,7 @@ class FormScreen extends GetView<FormController> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  Const.pernahIkut,
-                  style: fs14fw500,
-                ),
+                Text(Const.pernahIkut, style: fs14fw500),
                 const SizedBox(height: 16),
                 Obx(
                   () => Check(
@@ -413,11 +360,7 @@ class FormScreen extends GetView<FormController> {
 }
 
 class Check extends StatelessWidget {
-  const Check({
-    required this.onChanged,
-    required this.values,
-    super.key,
-  });
+  const Check({required this.onChanged, required this.values, super.key});
 
   final List<bool> values;
   final Function onChanged;
@@ -522,18 +465,14 @@ class Check extends StatelessWidget {
 }
 
 class RowBorder extends StatelessWidget {
-  const RowBorder({
-    super.key,
-  });
+  const RowBorder({super.key});
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: Colors.grey,
-        ),
+        border: Border.all(color: Colors.grey),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -541,17 +480,12 @@ class RowBorder extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.all(8),
-              child: LogoButtonGray(
-                icon: Remix.image_2_line,
-              ),
+              child: LogoButtonGray(icon: Remix.image_2_line),
             ),
             const Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(Const.uploadData),
-                  Text(Const.lihatFoto),
-                ],
+                children: [Text(Const.uploadData), Text(Const.lihatFoto)],
               ),
             ),
             Padding(
@@ -566,10 +500,7 @@ class RowBorder extends StatelessWidget {
 }
 
 class LogoButtonGray extends StatelessWidget {
-  const LogoButtonGray({
-    required this.icon,
-    super.key,
-  });
+  const LogoButtonGray({required this.icon, super.key});
 
   final IconData icon;
   @override
@@ -578,16 +509,11 @@ class LogoButtonGray extends StatelessWidget {
       decoration: BoxDecoration(
         color: ThemeColors.gray.shade50,
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(
-          color: ThemeColors.gray.shade100,
-        ),
+        border: Border.all(color: ThemeColors.gray.shade100),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: Icon(
-          icon,
-          color: const Color.fromRGBO(208, 211, 217, 1),
-        ),
+        child: Icon(icon, color: const Color.fromRGBO(208, 211, 217, 1)),
       ),
     );
   }
