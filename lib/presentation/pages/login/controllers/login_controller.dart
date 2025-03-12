@@ -16,11 +16,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class LoginController extends GetxController {
   final client = Server(
-    Dio(
-      BaseOptions(
-        contentType: 'application/json',
-      ),
-    )..interceptors.add(
+    Dio(BaseOptions(contentType: 'application/json'))
+      ..interceptors.add(
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
@@ -71,10 +68,7 @@ class LoginController extends GetxController {
           Snackbar().error('Tidak ada koneksi internet');
           return;
         }
-        final data = {
-          'nik': nik.text,
-          'password': password.text,
-        };
+        final data = {'nik': nik.text, 'password': password.text};
         final res = await client.login(data);
         if (res.message == 'Success Login') {
           await gs.write('User', res.data);
@@ -91,6 +85,12 @@ class LoginController extends GetxController {
             await DBHelper.instance.updateFotoPath(form.ktp, form.photo);
             await downloadImage(form.photo);
           }
+
+          final nik = await client.getNik(data);
+          for (final peserta in nik) {
+            await DBHelper.instance.insertNIK(peserta);
+          }
+
           // await Restart.restartApp();
           await DBHelper.instance.closeDB();
           await Get.offAllNamed(Routes.home);

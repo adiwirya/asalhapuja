@@ -34,16 +34,11 @@ class DBHelper {
     //   }
     // }
     log('path: $path');
-    return openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    return openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future<dynamic> _onCreate(Database db, int version) async {
     final batch = db.batch();
-    // batch.execute('DROP DATABASE IF EXISTS patrol.db');
 
     batch.execute('''
     CREATE TABLE IF NOT EXISTS peserta (
@@ -78,6 +73,13 @@ class DBHelper {
     WITHOUT ROWID;
     ''');
 
+    batch.execute('''
+    CREATE TABLE IF NOT EXISTS user (
+    nik TEXT PRIMARY KEY
+    )
+    WITHOUT ROWID;
+    ''');
+
     final res = await batch.commit();
     log('res: $res');
   }
@@ -94,11 +96,7 @@ class DBHelper {
 
     log('path: $path');
 
-    _database = await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    _database = await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future<List<Region>> getRegion() async {
@@ -152,10 +150,7 @@ class DBHelper {
   Future<List<Forms>> getPesertaAll() async {
     var data;
     await DBHelper.instance.database.then((db) async {
-      data = await db.query(
-        'peserta',
-        orderBy: 'isUpload',
-      );
+      data = await db.query('peserta', orderBy: 'isUpload');
     });
     final peserta = <Forms>[];
     final len = data.length as int;
@@ -182,26 +177,27 @@ class DBHelper {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.rawInsert(
-          'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut, active, clothes_size, white_cloth_size, white_pants_size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-          [
-            peserta.ktp,
-            peserta.region_f_id,
-            peserta.nik_koordinator,
-            peserta.organization,
-            peserta.ktp,
-            peserta.name,
-            peserta.printed_name,
-            peserta.gender,
-            peserta.address,
-            peserta.phone_number,
-            peserta.meal,
-            peserta.photo,
-            peserta.tahun_ikut,
-            peserta.active,
-            peserta.size,
-            peserta.baju,
-            peserta.celana,
-          ]);
+        'INSERT INTO peserta ( nik,region_f_id,nik_koordinator,organization,ktp,name,printed_name,gender,address,phone_number,meal,photo, tahun_ikut, active, clothes_size, white_cloth_size, white_pants_size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [
+          peserta.ktp,
+          peserta.region_f_id,
+          peserta.nik_koordinator,
+          peserta.organization,
+          peserta.ktp,
+          peserta.name,
+          peserta.printed_name,
+          peserta.gender,
+          peserta.address,
+          peserta.phone_number,
+          peserta.meal,
+          peserta.photo,
+          peserta.tahun_ikut,
+          peserta.active,
+          peserta.size,
+          peserta.baju,
+          peserta.celana,
+        ],
+      );
     });
   }
 
@@ -239,11 +235,10 @@ class DBHelper {
   Future<void> insertRegion(Region region) async {
     var data;
     await DBHelper.instance.database.then((db) async {
-      data =
-          await db.rawInsert('INSERT INTO region (id, vihara) VALUES (?, ?)', [
-        region.id,
-        region.vihara,
-      ]);
+      data = await db.rawInsert(
+        'INSERT INTO region (id, vihara) VALUES (?, ?)',
+        [region.id, region.vihara],
+      );
       // data = await db.insert('region', region.toJson());
     });
     log(data.toString());
@@ -300,25 +295,19 @@ class DBHelper {
   }
 
   Future<void> updateActive(String ktp, int active) async {
-    await DBHelper.instance.database.then(
-      (db) async {
-        await db.update(
-          'peserta',
-          {'active': active, 'isUpload': 0},
-          where: 'ktp = ?',
-          whereArgs: [ktp],
-        );
-      },
-    );
+    await DBHelper.instance.database.then((db) async {
+      await db.update(
+        'peserta',
+        {'active': active, 'isUpload': 0},
+        where: 'ktp = ?',
+        whereArgs: [ktp],
+      );
+    });
   }
 
   Future<void> deletePeserta(String id) async {
     await DBHelper.instance.database.then((db) async {
-      await db.delete(
-        'peserta',
-        where: 'nik = ?',
-        whereArgs: [id],
-      );
+      await db.delete('peserta', where: 'nik = ?', whereArgs: [id]);
     });
   }
 
@@ -327,5 +316,19 @@ class DBHelper {
       await db.rawQuery('DELETE FROM peserta');
       await db.rawQuery('DELETE FROM region');
     });
+  }
+
+  Future<void> insertNIK(String nik) async {
+    await DBHelper.instance.database.then((db) async {
+      await db.rawInsert('INSERT INTO user (nik) VALUES (?)', [nik]);
+    });
+  }
+
+  Future<int> checkNIK(String nik) async {
+    var data;
+    await DBHelper.instance.database.then((db) async {
+      data = await db.query('user', where: 'nik = ?', whereArgs: [nik]);
+    });
+    return data.length as int;
   }
 }

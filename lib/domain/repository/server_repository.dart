@@ -2,6 +2,7 @@
 
 import 'package:asalhapuja/data/utils/url.dart';
 import 'package:asalhapuja/domain/models/result.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
 import 'package:asalhapuja/domain/models/models.dart';
@@ -14,9 +15,10 @@ abstract class Server {
   factory Server(Dio dio, {String baseUrl}) = _Server;
 
   @POST(BaseURL.login)
-  Future<Result> login(
-    @Body() Map<String, String> data,
-  );
+  Future<Result> login(@Body() Map<String, String> data);
+
+  @POST(BaseURL.nik)
+  Future<List<String>> getNik(@Body() Map<String, String> data);
 
   @POST(BaseURL.form)
   @MultiPart()

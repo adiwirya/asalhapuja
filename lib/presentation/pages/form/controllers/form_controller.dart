@@ -34,18 +34,13 @@ class FormController extends GetxController {
   RxBool isPhoto = false.obs;
   RxBool isEdit = false.obs;
   RxBool isChange = false.obs;
+  RxBool isNew = false.obs;
   File image = File('');
   RxString imagePath = ''.obs;
   RxList<Region> listRegion = <Region>[].obs;
   RxList<bool> isChecked =
       [false, false, false, false, false, false, false, false, false].obs;
-  final client = Server(
-    Dio(
-      BaseOptions(
-        contentType: 'application/json',
-      ),
-    ),
-  );
+  final client = Server(Dio(BaseOptions(contentType: 'application/json')));
   List<String> listSize = ['XS', 'SS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   List<String> listBaju = ['XS', 'SS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   List<String> listCelana = [
@@ -64,12 +59,6 @@ class FormController extends GetxController {
     '38',
     '39',
     '40',
-    '41',
-    '42',
-    '43',
-    '44',
-    '45',
-    '46'
   ];
   @override
   Future<void> onInit() async {
@@ -136,6 +125,24 @@ class FormController extends GetxController {
     final debouncer = Debouncer(milliseconds: 1);
     if (value.length < 26) {
       debouncer.run(() => namaCetak.text = value);
+    }
+  }
+
+  void cekNik(String value) {
+    final debouncer = Debouncer(milliseconds: 1);
+    if (value.length == 16) {
+      debouncer.run(() async {
+        await DBHelper.instance.openDB();
+        final check = await DBHelper.instance.checkNik(value);
+        await DBHelper.instance.closeDB();
+        if (check > 0) {
+          print(Const.nik);
+          isNew.value = false;
+        } else {
+          print(Const.nik);
+          isNew.value = true;
+        }
+      });
     }
   }
 
@@ -324,11 +331,7 @@ class FormController extends GetxController {
   }
 
   void getImage() {
-    Get.dialog(
-      SelectPic(
-        controller: FormController(),
-      ),
-    );
+    Get.dialog(SelectPic(controller: FormController()));
   }
 
   Future<void> imageFromGallery() async {
@@ -369,10 +372,11 @@ class FormController extends GetxController {
   String generateRandomString(int length) {
     final random = Random();
     const availableChars = '1234567890';
-    final randomString = List.generate(
-      length,
-      (index) => availableChars[random.nextInt(availableChars.length)],
-    ).join();
+    final randomString =
+        List.generate(
+          length,
+          (index) => availableChars[random.nextInt(availableChars.length)],
+        ).join();
 
     return randomString;
   }

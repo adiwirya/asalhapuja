@@ -19,13 +19,13 @@ class HomeScreen extends GetView<HomeController> {
         children: [
           Stack(
             children: [
-              Image.asset(
-                Assets.assetsImagesCandi1,
-              ),
+              Image.asset(Assets.assetsImagesCandi1),
               Positioned(
-                top: height * 0.24,
+                top: height * 0.22,
+                width: width,
                 child: Obx(
                   () => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DecoratedBox(
                         decoration: const BoxDecoration(
@@ -43,17 +43,12 @@ class HomeScreen extends GetView<HomeController> {
                                 'Hi, ${controller.name.value}',
                                 style: fs16fw500,
                               ),
-                              Text(
-                                controller.kota.value,
-                                style: fs12grayW500,
-                              ),
+                              Text(controller.kota.value, style: fs12grayW500),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: width * 0.3,
-                      ),
+                      SizedBox(width: width * 0.3),
                       GestureDetector(
                         onTap: () => Get.dialog(const SettingsDialog()),
                         child: DecoratedBox(
@@ -66,17 +61,14 @@ class HomeScreen extends GetView<HomeController> {
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 const Icon(
                                   Remix.logout_box_r_line,
                                   color: ThemeColors.warning,
                                 ),
                                 const SizedBox(width: 10),
-                                Text(
-                                  Const.logout,
-                                  style: fs16fw500,
-                                ),
+                                Text(Const.logout, style: fs16fw500),
                               ],
                             ),
                           ),
@@ -140,18 +132,12 @@ class RowMenu extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 8,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             boxShadow: const [
-              BoxShadow(
-                color: Colors.grey,
-                offset: Offset(0, 1),
-              ),
+              BoxShadow(color: Colors.grey, offset: Offset(0, 1)),
             ],
             color: Colors.white,
           ),
@@ -164,10 +150,7 @@ class RowMenu extends StatelessWidget {
                   children: [
                     SvgPicture.asset(asset),
                     const SizedBox(width: 24),
-                    Text(
-                      text,
-                      style: fs14fw500,
-                    ),
+                    Text(text, style: fs14fw500),
                   ],
                 ),
               ),
@@ -192,9 +175,7 @@ class SettingsDialog extends GetView<HomeController> {
           child: DecoratedBox(
             decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -215,16 +196,18 @@ class SettingsDialog extends GetView<HomeController> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Theme(
-                          data: Theme.of(context)
-                              .copyWith(elevatedButtonTheme: buttonRed),
+                          data: Theme.of(
+                            context,
+                          ).copyWith(elevatedButtonTheme: buttonRed),
                           child: ElevatedButton(
                             onPressed: () => Get.back(),
                             child: const Text('Tidak'),
                           ),
                         ),
                         Theme(
-                          data: Theme.of(context)
-                              .copyWith(elevatedButtonTheme: buttonGreen),
+                          data: Theme.of(
+                            context,
+                          ).copyWith(elevatedButtonTheme: buttonGreen),
                           child: ElevatedButton(
                             onPressed: () => controller.logout(),
                             child: const Text('  Iya  '),

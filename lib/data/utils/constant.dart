@@ -5,7 +5,7 @@ final gs = GetStorage();
 
 class Const {
   static const String appName = 'Asalha Puja';
-  static const String appVersion = '1.2.5';
+  static const String appVersion = '1.3.0';
   static const String password = 'Password';
   static const String nik = 'Nik';
   static const String masuk = 'Masuk';
