@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.summarecon.asalhapuja"
+    namespace = "id.or.asalhapuja"
     compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.summarecon.asalhapuja"
+        applicationId = "id.or.asalhapuja"
         minSdk = 26
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
