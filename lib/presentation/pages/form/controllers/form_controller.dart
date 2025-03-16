@@ -39,7 +39,18 @@ class FormController extends GetxController {
   RxString imagePath = ''.obs;
   RxList<Region> listRegion = <Region>[].obs;
   RxList<bool> isChecked =
-      [false, false, false, false, false, false, false, false, false].obs;
+      [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ].obs;
   final client = Server(Dio(BaseOptions(contentType: 'application/json')));
   List<String> listSize = ['XS', 'SS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   List<String> listBaju = ['XS', 'SS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
