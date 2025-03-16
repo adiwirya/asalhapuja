@@ -117,13 +117,13 @@ class FormScreen extends GetView<FormController> {
                     hintText: Const.desknoKTP,
                     maxLength: 16,
                     enabled: false,
-                    onChanged: (value) => controller.cekNik(value),
                   )
                 else
                   MyTextFormField(
                     keyType: TextInputType.number,
                     controller: controller.ktp,
                     hintText: Const.desknoKTP,
+                    onChanged: (value) => controller.cekNik(value),
                     maxLength: 16,
                   ),
                 const SizedBox(height: 16),

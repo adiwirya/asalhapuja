@@ -130,16 +130,14 @@ class FormController extends GetxController {
 
   void cekNik(String value) {
     final debouncer = Debouncer(milliseconds: 1);
-    if (value.length == 16) {
+    if (15 < value.length) {
       debouncer.run(() async {
         await DBHelper.instance.openDB();
-        final check = await DBHelper.instance.checkNik(value);
+        final check = await DBHelper.instance.checkStatus(value);
         await DBHelper.instance.closeDB();
         if (check > 0) {
-          print(Const.nik);
           isNew.value = false;
         } else {
-          print(Const.nik);
           isNew.value = true;
         }
       });

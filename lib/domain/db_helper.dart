@@ -324,7 +324,7 @@ class DBHelper {
     });
   }
 
-  Future<int> checkNIK(String nik) async {
+  Future<int> checkStatus(String nik) async {
     var data;
     await DBHelper.instance.database.then((db) async {
       data = await db.query('user', where: 'nik = ?', whereArgs: [nik]);
