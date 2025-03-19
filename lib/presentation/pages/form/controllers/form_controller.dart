@@ -25,8 +25,8 @@ class FormController extends GetxController {
   RxString vihara = ''.obs;
   RxInt viharaId = 0.obs;
   RxString size = 'XS'.obs;
-  RxString baju = 'XS'.obs;
-  RxString celana = '26'.obs;
+  RxString baju = ''.obs;
+  RxString celana = ''.obs;
   RxString meal = ''.obs;
   RxString title = ''.obs;
   RxString btnText = ''.obs;
@@ -148,8 +148,16 @@ class FormController extends GetxController {
         await DBHelper.instance.closeDB();
         if (check > 0) {
           isNew.value = false;
+          baju.value = '';
+          celana.value = '';
         } else {
           isNew.value = true;
+          baju.value = 'XS';
+          if (value == 'P') {
+            celana.value = '27';
+          } else if (value == 'L') {
+            celana.value = '26';
+          }
         }
       });
     }
@@ -322,6 +330,11 @@ class FormController extends GetxController {
 
   void setJenis(String value) {
     jenisKelamin.value = value;
+    if (value == 'P') {
+      listCelana = ['27', '29', '31', '33', '35', '37', '39'];
+    } else if (value == 'L') {
+      listCelana = ['26', '28', '30', '32', '34', '36', '38', '40'];
+    }
   }
 
   void setChecked(bool value, int index) {

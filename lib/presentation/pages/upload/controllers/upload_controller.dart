@@ -17,11 +17,8 @@ class UploadController extends GetxController {
   RxInt blmUpload = 0.obs;
 
   final client = Server(
-    Dio(
-      BaseOptions(
-        contentType: 'multipart/form-data',
-      ),
-    )..interceptors.add(
+    Dio(BaseOptions(contentType: 'multipart/form-data'))
+      ..interceptors.add(
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
@@ -80,8 +77,9 @@ class UploadController extends GetxController {
     }
     for (var i = 0; i < forms.length; i++) {
       try {
-        final result =
-            forms[i].tahun_ikut.replaceAll('[', '').replaceAll(']', '');
+        final result = forms[i].tahun_ikut
+            .replaceAll('[', '')
+            .replaceAll(']', '');
         if (forms[i].isUpload == 0) {
           final log = await client.form(
             forms[i].region_f_id,

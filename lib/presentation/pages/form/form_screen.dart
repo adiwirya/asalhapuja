@@ -337,6 +337,119 @@ class FormScreen extends GetView<FormController> {
                           )
                           : const SizedBox(),
                 ),
+                Obx(
+                  () =>
+                      controller.celana.value != '' &&
+                              controller.baju.value != ''
+                          ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(Const.ukuranBaju, style: fs14fw500),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Obx(
+                                    () => Expanded(
+                                      child: MyDropdownSearch(
+                                        hint: Const.deskvihara,
+                                        icon: const Icon(
+                                          Remix.arrow_down_s_line,
+                                        ),
+                                        selectedItem: controller.celana.value,
+                                        onChanged:
+                                            (value) =>
+                                                controller.celana.value =
+                                                    value ?? '',
+                                        items:
+                                            controller.listCelana
+                                                .map((e) => e)
+                                                .toList(),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  GestureDetector(
+                                    onTap:
+                                        () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => const PhotoScreen(
+                                                  Assets
+                                                      .assetsImagesSizeBajuPutih,
+                                                ),
+                                          ),
+                                        ),
+                                    child: Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: ThemeColors.warning,
+                                      ),
+                                      child: const Icon(
+                                        Remix.ruler_line,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              Text(Const.ukuranCelana, style: fs14fw500),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Obx(
+                                    () => Expanded(
+                                      child: MyDropdownSearch(
+                                        hint: Const.deskvihara,
+                                        icon: const Icon(
+                                          Remix.arrow_down_s_line,
+                                        ),
+                                        selectedItem: controller.baju.value,
+                                        onChanged:
+                                            (value) =>
+                                                controller.baju.value =
+                                                    value ?? '',
+                                        items:
+                                            controller.listBaju
+                                                .map((e) => e)
+                                                .toList(),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  GestureDetector(
+                                    onTap:
+                                        () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => const PhotoScreen(
+                                                  Assets.assetsImagesSizeCelana,
+                                                ),
+                                          ),
+                                        ),
+                                    child: Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: ThemeColors.warning,
+                                      ),
+                                      child: const Icon(
+                                        Remix.ruler_line,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                          : const SizedBox(),
+                ),
                 const SizedBox(height: 16),
                 Text(Const.alamat, style: fs14fw500),
                 const SizedBox(height: 16),
@@ -423,7 +536,7 @@ class Check extends StatelessWidget {
             const Text('2015'),
             const SizedBox(width: 45),
             Checkbox(
-              value: values[3],
+              value: values[4],
               checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 4); //selected value
@@ -432,7 +545,7 @@ class Check extends StatelessWidget {
             const Text('2019'),
             const SizedBox(width: 45),
             Checkbox(
-              value: values[6],
+              value: values[8],
               checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 8); //selected value
@@ -453,7 +566,7 @@ class Check extends StatelessWidget {
             const Text('2016'),
             const SizedBox(width: 45),
             Checkbox(
-              value: values[4],
+              value: values[5],
               checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 5); //selected value
@@ -462,7 +575,7 @@ class Check extends StatelessWidget {
             const Text('2020'),
             const SizedBox(width: 45),
             Checkbox(
-              value: values[7],
+              value: values[9],
               checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 9); //selected value
@@ -483,7 +596,7 @@ class Check extends StatelessWidget {
             const Text('2017'),
             const SizedBox(width: 45),
             Checkbox(
-              value: values[5],
+              value: values[6],
               checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 6); //selected value
@@ -513,7 +626,7 @@ class Check extends StatelessWidget {
             const Text('2018'),
             const SizedBox(width: 45),
             Checkbox(
-              value: values[9],
+              value: values[7],
               checkColor: Colors.white,
               onChanged: (value) {
                 onChanged(value, 7); //selected value

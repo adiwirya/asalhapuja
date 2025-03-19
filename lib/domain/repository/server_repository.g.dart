@@ -108,7 +108,7 @@ class _Server implements Server {
     _data.fields.add(MapEntry('address', address));
     _data.fields.add(MapEntry('phone_number', phone_number));
     _data.fields.add(MapEntry('meal', meal));
-    _data.fields.add(MapEntry('tahun_ikut', tahun_ikut));
+    _data.fields.add(MapEntry('tahun_ikut[]', tahun_ikut));
     _data.fields.add(MapEntry('clothes_size', clothes_size));
     _data.fields.add(MapEntry('white_cloth_size', white_cloth_size));
     _data.fields.add(MapEntry('white_pants_size', white_pants_size));
